@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bwjrqpu803ove"
+path="res://.godot/imported/alien remarks 3.ogg-dd6546500589a6cecb25ab57838c200a.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/Sound Effects/alien remarks 3.ogg"
+dest_files=["res://.godot/imported/alien remarks 3.ogg-dd6546500589a6cecb25ab57838c200a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
