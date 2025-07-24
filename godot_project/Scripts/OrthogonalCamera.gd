@@ -4,37 +4,34 @@ extends Node3D
 
 @export var mouse_sensitivity = 0.1# camera rotation speed
 
-@export var physical_skel:Skeleton3D# character physical skeleton
+@export var ortho_camera: Camera3D
+@export var camera_angle_vertical: float = -25.0
 
-@export var camera_angle: float = -25.0
+@export var camera_change_rate: float = 5.0
+
+@export var minimum_camera_size: float = 5
+@export var maximum_camera_size: float = 45
+
 
 @onready var spring_arm = $SpringArm3D
 
-var mouse_lock = false # is mouse locked
 
 func _physics_process(delta):
-	for child in physical_skel.get_children():
-		# prevent the camera from clipping into the character
-		if child is PhysicalBone3D:spring_arm.add_excluded_object(child.get_rid())
-		
 	if target_node != null:
 		# lerp position to the target position
 		global_position = lerp(global_position,target_node.global_position,0.5)
 	
 	# Always clamp the camera
-	rotation_degrees.x = clamp(rotation_degrees.x, camera_angle, camera_angle)
-
-func _input(event):
-	# mouse lock
-	if Input.is_action_just_pressed("exit_camera"):
-		mouse_lock = false
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-		mouse_lock = true
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	rotation_degrees.x = clamp(rotation_degrees.x, camera_angle_vertical, camera_angle_vertical)
+	ortho_camera.size = clamp(ortho_camera.size, minimum_camera_size, maximum_camera_size)
 	
-	#rotate camera
-	if event is InputEventMouseMotion and mouse_lock:
-		rotation_degrees.y -= mouse_sensitivity*event.relative.x
-	
-		
+	if Input.is_action_pressed("rotate_camera_left"):
+		rotation_degrees.y -= camera_change_rate
+	elif Input.is_action_pressed("rotate_camera_right"):
+		rotation_degrees.y += camera_change_rate
+	elif Input.is_action_just_pressed("camera_zoom_in"):
+		if (ortho_camera.size - camera_change_rate) > minimum_camera_size:
+			ortho_camera.size -= camera_change_rate
+	elif Input.is_action_just_pressed("camera_zoom_out"):
+		if (ortho_camera.size + camera_change_rate) < maximum_camera_size:
+			ortho_camera.size += camera_change_rate
