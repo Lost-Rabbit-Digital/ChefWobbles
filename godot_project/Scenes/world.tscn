@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bwfbnvkr1oku7"]
+[gd_scene load_steps=31 format=3 uid="uid://bwfbnvkr1oku7"]
 
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://Scenes/character.tscn" id="2_ew4qk"]
 [ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://Assets/godot-prototype-texture/PNG/logo_blue_512x512.png" id="3_e5hi0"]
@@ -11,11 +11,10 @@
 [ext_resource type="AudioStream" uid="uid://c5b8mjpjj7txe" path="res://audio/Forgotten Biomes.ogg" id="11_0pcbe"]
 [ext_resource type="AudioStream" uid="uid://d1n0obngvv6k4" path="res://audio/Gentle Breeze.ogg" id="12_axeuq"]
 [ext_resource type="AudioStream" uid="uid://dppngpsx8ctmp" path="res://audio/Polar Lights.ogg" id="14_1cojt"]
+[ext_resource type="Texture2D" uid="uid://gs6n3sg4t772" path="res://Assets/godot-prototype-texture/PNG/checker_black_512x512.png" id="15_kn0ld"]
 [ext_resource type="AudioStream" uid="uid://c58316sy0yjlm" path="res://audio/Strange Worlds.ogg" id="15_yq1aw"]
-[ext_resource type="PackedScene" uid="uid://by0v432wwnp5g" path="res://Assets/environment/Tree_2.fbx" id="16_hgpy0"]
 [ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/Sunlight Through Leaves.ogg" id="16_pyn1s"]
 [ext_resource type="AudioStream" uid="uid://bmq805hd2t7ae" path="res://audio/Wanderers Tale.ogg" id="17_no8kt"]
-[ext_resource type="PackedScene" uid="uid://bbgk4adpb5b5" path="res://Assets/environment/Terrain_2.fbx" id="17_t2t4p"]
 
 [sub_resource type="Sky" id="Sky_khtaw"]
 sky_material = ExtResource("3_hnrcy")
@@ -53,6 +52,13 @@ size = Vector3(4, 4, 4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_kiokv"]
 size = Vector3(4, 4, 4)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hgpy0"]
+albedo_texture = ExtResource("15_kn0ld")
+
+[sub_resource type="BoxMesh" id="BoxMesh_t2t4p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0pcbe"]
+
 [node name="World" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -62,73 +68,11 @@ transform = Transform3D(1, 0, 0, 0, -0.216372, 0.976311, 0, -0.976311, -0.216372
 environment = SubResource("Environment_md4pe")
 
 [node name="Character" parent="." instance=ExtResource("2_ew4qk")]
-transform = Transform3D(1, 0, 7.35137e-08, 0, 1, 0, -7.35137e-08, 0, 1, -40.3855, 10.1408, -8.02514)
+transform = Transform3D(1, 0, 7.35137e-08, 0, 1, 0, -7.35137e-08, 0, 1, 0.11497, 1.90377, -0.239787)
 
-[node name="Level" type="Node" parent="."]
-
-[node name="RigidBody3D5" type="RigidBody3D" parent="Level"]
-transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -3.9607, 7.36571, -12.1175)
-mass = 5.0
-physics_material_override = SubResource("PhysicsMaterial_k3kff")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Level/RigidBody3D5"]
-mesh = SubResource("BoxMesh_043w2")
-surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/RigidBody3D5"]
-shape = SubResource("BoxShape3D_h88w0")
-
-[node name="RigidBody3D3" type="RigidBody3D" parent="Level"]
-transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -4.09444, 9.27946, -10.1181)
-mass = 2.0
-physics_material_override = SubResource("PhysicsMaterial_k3kff")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Level/RigidBody3D3"]
-mesh = SubResource("BoxMesh_5dh5q")
-surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/RigidBody3D3"]
-shape = SubResource("BoxShape3D_bxftt")
-
-[node name="RigidBody3D6" type="RigidBody3D" parent="Level"]
-transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -4.09444, 15.6248, -10.1181)
-mass = 2.0
-physics_material_override = SubResource("PhysicsMaterial_k3kff")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Level/RigidBody3D6"]
-mesh = SubResource("BoxMesh_5dh5q")
-surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/RigidBody3D6"]
-shape = SubResource("BoxShape3D_bxftt")
-
-[node name="RigidBody3D7" type="RigidBody3D" parent="Level"]
-transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -4.09444, 12.6248, -10.1181)
-mass = 2.0
-physics_material_override = SubResource("PhysicsMaterial_k3kff")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Level/RigidBody3D7"]
-mesh = SubResource("BoxMesh_7dkeg")
-surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/RigidBody3D7"]
-shape = SubResource("BoxShape3D_v56dp")
-
-[node name="RigidBody3D8" type="RigidBody3D" parent="Level"]
-transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -3.28708, 11.8747, -15.1095)
-mass = 2.0
-physics_material_override = SubResource("PhysicsMaterial_k3kff")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Level/RigidBody3D8"]
-mesh = SubResource("BoxMesh_e4kem")
-surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/RigidBody3D8"]
-shape = SubResource("BoxShape3D_kiokv")
-
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Controls" type="Label" parent="."]
+offset_right = 189.0
+offset_bottom = 179.0
 text = "Walk - WASD
 Jump - Space
 Grab left - Left mouse
@@ -136,6 +80,68 @@ Grab right - Right mouse
 Toggle ragdoll - R
 Show cursor - Esc
 "
+
+[node name="Interactables" type="Node" parent="."]
+
+[node name="RigidBody3D5" type="RigidBody3D" parent="Interactables"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 6.03294, 1.38336, -3.37082)
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_k3kff")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/RigidBody3D5"]
+mesh = SubResource("BoxMesh_043w2")
+surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/RigidBody3D5"]
+shape = SubResource("BoxShape3D_h88w0")
+
+[node name="RigidBody3D3" type="RigidBody3D" parent="Interactables"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.8992, 3.29711, -1.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_k3kff")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/RigidBody3D3"]
+mesh = SubResource("BoxMesh_5dh5q")
+surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/RigidBody3D3"]
+shape = SubResource("BoxShape3D_bxftt")
+
+[node name="RigidBody3D6" type="RigidBody3D" parent="Interactables"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.8992, 9.64245, -1.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_k3kff")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/RigidBody3D6"]
+mesh = SubResource("BoxMesh_5dh5q")
+surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/RigidBody3D6"]
+shape = SubResource("BoxShape3D_bxftt")
+
+[node name="RigidBody3D7" type="RigidBody3D" parent="Interactables"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.8992, 6.64245, -1.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_k3kff")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/RigidBody3D7"]
+mesh = SubResource("BoxMesh_7dkeg")
+surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/RigidBody3D7"]
+shape = SubResource("BoxShape3D_v56dp")
+
+[node name="RigidBody3D8" type="RigidBody3D" parent="Interactables"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 6.70656, 5.89235, -6.36282)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_k3kff")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/RigidBody3D8"]
+mesh = SubResource("BoxMesh_e4kem")
+surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/RigidBody3D8"]
+shape = SubResource("BoxShape3D_kiokv")
 
 [node name="Music" type="Node" parent="."]
 
@@ -196,11 +202,13 @@ bus = &"Music"
 
 [node name="Environment" type="Node" parent="."]
 
-[node name="Terrain_2" parent="Environment" instance=ExtResource("17_t2t4p")]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+[node name="Ground" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(39.9349, 0, 0, 0, 1, 0, 0, 0, 37.6494, 0, 0, 0)
 
-[node name="Tree_2" parent="Environment" instance=ExtResource("16_hgpy0")]
-transform = Transform3D(0.993451, 0.114261, 0, -0.114261, 0.993451, 0, 0, 0, 1, -31.6372, 6.40572, -16.453)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground"]
+material_override = SubResource("StandardMaterial3D_hgpy0")
+mesh = SubResource("BoxMesh_t2t4p")
+skeleton = NodePath("../../root/@EditorNode@21272/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/World/Environment")
 
-[node name="Tree_3" parent="Environment" instance=ExtResource("16_hgpy0")]
-transform = Transform3D(-0.475587, -0.0546993, 0.877966, 0.0937475, 0.989229, 0.112414, -0.874659, 0.13577, -0.465337, -31.6372, 6.454, 6.78018)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground"]
+shape = SubResource("BoxShape3D_0pcbe")
