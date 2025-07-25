@@ -10,8 +10,9 @@ extends Node3D
 
 @export var camera_change_rate: float = 1.0
 
-@export var minimum_arm_distance: float = 2
+@export var minimum_arm_distance: float = -2
 @export var maximum_arm_distance: float = 45
+@export var camera_angle_lock: float = 65
 
 var mouse_lock = false # is mouse locked
 
@@ -44,6 +45,6 @@ func _input(event):
 	if event is InputEventMouseMotion and mouse_lock:
 		rotation_degrees.y -= mouse_sensitivity*event.relative.x
 		rotation_degrees.x -= mouse_sensitivity*event.relative.y
-		rotation_degrees.x = clamp(rotation_degrees.x, -45,45)
+		rotation_degrees.x = clamp(rotation_degrees.x, -camera_angle_lock, camera_angle_lock)
 	
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bwfbnvkr1oku7"]
+[gd_scene load_steps=32 format=3 uid="uid://bwfbnvkr1oku7"]
 
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://Scenes/character.tscn" id="2_ew4qk"]
 [ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://Assets/godot-prototype-texture/PNG/logo_blue_512x512.png" id="3_e5hi0"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://dppngpsx8ctmp" path="res://audio/Polar Lights.ogg" id="14_1cojt"]
 [ext_resource type="Texture2D" uid="uid://gs6n3sg4t772" path="res://Assets/godot-prototype-texture/PNG/checker_black_512x512.png" id="15_kn0ld"]
 [ext_resource type="AudioStream" uid="uid://c58316sy0yjlm" path="res://audio/Strange Worlds.ogg" id="15_yq1aw"]
+[ext_resource type="PackedScene" uid="uid://b3hmjle2dtc0h" path="res://Assets/interactables/knife.tscn" id="16_hgpy0"]
 [ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/Sunlight Through Leaves.ogg" id="16_pyn1s"]
 [ext_resource type="AudioStream" uid="uid://bmq805hd2t7ae" path="res://audio/Wanderers Tale.ogg" id="17_no8kt"]
 
@@ -96,7 +97,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_t3ptc")
 shape = SubResource("BoxShape3D_h88w0")
 
 [node name="RigidBody3D3" type="RigidBody3D" parent="Interactables"]
-transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.8992, 3.29711, -1.37142)
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.89373, 3.27871, -1.38654)
 mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_k3kff")
 
@@ -212,3 +213,6 @@ skeleton = NodePath("../../root/@EditorNode@21272/@Panel@14/@VBoxContainer@15/Do
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground"]
 shape = SubResource("BoxShape3D_0pcbe")
+
+[node name="Knife" parent="." instance=ExtResource("16_hgpy0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.749276, 1.39239, -3.41325)

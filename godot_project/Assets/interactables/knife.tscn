@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3hmjle2dtc0h"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vv6sm"]
+friction = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_vv6sm"]
+size = Vector3(1, 0.3, 0.15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vv6sm"]
+albedo_color = Color(0, 0.83, 0.594833, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s2rpv"]
+
+[node name="Knife" type="RigidBody3D"]
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_vv6sm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_vv6sm")
+surface_material_override/0 = SubResource("StandardMaterial3D_vv6sm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.3, 0, 0, 0, 0.15, 0, 0, 0)
+shape = SubResource("BoxShape3D_s2rpv")
