@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bwfbnvkr1oku7"]
+[gd_scene load_steps=28 format=3 uid="uid://bwfbnvkr1oku7"]
 
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://Scenes/character.tscn" id="2_ew4qk"]
 [ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://Assets/godot-prototype-texture/PNG/logo_blue_512x512.png" id="3_e5hi0"]
@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://by0v432wwnp5g" path="res://Assets/environment/Tree_2.fbx" id="16_hgpy0"]
 [ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/Sunlight Through Leaves.ogg" id="16_pyn1s"]
 [ext_resource type="AudioStream" uid="uid://bmq805hd2t7ae" path="res://audio/Wanderers Tale.ogg" id="17_no8kt"]
-[ext_resource type="PackedScene" uid="uid://bbgk4adpb5b5" path="res://Assets/environment/Terrain_2.fbx" id="17_t2t4p"]
 
 [sub_resource type="Sky" id="Sky_khtaw"]
 sky_material = ExtResource("3_hnrcy")
@@ -195,9 +194,6 @@ autoplay = true
 bus = &"Music"
 
 [node name="Environment" type="Node" parent="."]
-
-[node name="Terrain_2" parent="Environment" instance=ExtResource("17_t2t4p")]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
 [node name="Tree_2" parent="Environment" instance=ExtResource("16_hgpy0")]
 transform = Transform3D(0.993451, 0.114261, 0, -0.114261, 0.993451, 0, 0, 0, 1, -31.6372, 6.40572, -16.453)
