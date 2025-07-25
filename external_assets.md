@@ -11,7 +11,13 @@ https://godotshaders.com/shader/toon-water-shader/
 https://godotshaders.com/shader/stylized-water-with-depthfade/
 https://shapeforms.itch.io/shapeforms-audio-free-sfx
 https://toonlab.itch.io/toonlab-toon-nature-pack
-
+https://toonlab.itch.io/toonlab-ultimate-toon-camp-pack
+https://toonlab.itch.io/toonlab-fruit-vegetable-toon-pack
+https://runemarkstudio.itch.io/poly-desert
+This stuff has a nice theme:
+https://acornbringer.itch.io/assets-low-poly-nature-objects
+https://acornbringer.itch.io/assets-low-poly-fantasy-houses
+https://acornbringer.itch.io/assets-low-poly-structures
 
 Reference Games:
 https://store.steampowered.com/app/715560/Eastshade/
