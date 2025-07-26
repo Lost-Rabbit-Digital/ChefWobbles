@@ -5,14 +5,14 @@
   
   <p>
     <a href="https://store.steampowered.com/app/XXXXXXX/Chef_Wobbles/" target="_blank"><img src="https://img.shields.io/badge/Steam-Coming_Soon-blue?style=for-the-badge&logo=steam" alt="Steam"></a>
-    <a href="https://lost-rabbit-digital.itch.io/chef-wobbles" target="_blank"><img src="https://img.shields.io/badge/itch.io-Available-red?style=for-the-badge&logo=itch.io" alt="itch.io"></a>
-    <a href="https://godotengine.org/" target="_blank"><img src="https://img.shields.io/badge/Godot-4.0+-blue?style=for-the-badge&logo=godot-engine" alt="Godot 4.0+"></a>
+    <a href="https://lost-rabbit-digital.itch.io/chef-wobbles" target="_blank"><img src="https://img.shields.io/badge/itch.io-Coming_Soon-red?style=for-the-badge&logo=itch.io" alt="itch.io"></a>
+    <a href="https://godotengine.org/" target="_blank"><img src="https://img.shields.io/badge/Godot-4.4+-blue?style=for-the-badge&logo=godot-engine" alt="Godot 4.4+"></a>
     <img src="https://img.shields.io/badge/license-MPL_2.0-yellow?style=for-the-badge" alt="MPL 2.0 License">
   </p>
 </div>
 
 <div align="center">
-  <img src="project_management/dist/main_game_screenshot_v100.png" alt="Game Screenshot" width="600"/>
+  <img src="project_management/dist/main_game_screenshot.png" alt="Game Screenshot" width="600"/>
 </div>
 
 ---
@@ -63,7 +63,7 @@ In this relaxing culinary world, your goal is to:
   <table>
     <tr>
       <td align="center"><img src="https://godotengine.org/assets/press/icon_color.svg" width="48"/></td>
-      <td><a href="https://godotengine.org/download">Godot Engine 4.0+</a></td>
+      <td><a href="https://godotengine.org/download">Godot Engine 4.4+</a></td>
     </tr>
   </table>
 </div>
@@ -115,10 +115,6 @@ godot -e
     <tr>
       <td align="center">🎮</td>
       <td><a href="https://godotengine.org/" target="_blank">Godot Engine</a></td>
-    </tr>
-    <tr>
-      <td align="center">🎨</td>
-      <td><a href="https://ashorthike.com/" target="_blank">A Short Hike</a> for visual inspiration</td>
     </tr>
     <tr>
       <td align="center">🍳</td>
