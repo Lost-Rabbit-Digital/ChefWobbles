@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://wjiot7od4cla"
-path="res://.godot/imported/tomato_slice.fbx-7ef03ea2c398ff7b6042ef02c02ec411.scn"
+uid="uid://dxgo5oyhdtr37"
+path="res://.godot/imported/prep_station.fbx-1d7e3690027edd03e7efc4982c7ee86a.scn"
 
 [deps]
 
-source_file="res://models/food/tomato_slice.fbx"
-dest_files=["res://.godot/imported/tomato_slice.fbx-7ef03ea2c398ff7b6042ef02c02ec411.scn"]
+source_file="res://models/stations/prep_station.fbx"
+dest_files=["res://.godot/imported/prep_station.fbx-1d7e3690027edd03e7efc4982c7ee86a.scn"]
 
 [params]
 
@@ -32,14 +32,7 @@ animation/trimming=true
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={
-"materials": {
-"tomato_texture.png": {
-"use_external/enabled": true,
-"use_external/path": "uid://damdg3i1gjydu"
-}
-}
-}
+_subresources={}
 fbx/importer=0
 fbx/allow_geometry_helper_nodes=false
 fbx/embedded_image_handling=1

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dt15bbvrnw4bj"
-path.s3tc="res://.godot/imported/tomato_texture.png-1cb976cfa1b03fea3510c7733fbec640.s3tc.ctex"
+uid="uid://cstoxmf5lqc2l"
+path.s3tc="res://.godot/imported/texture.png-e885ed8543476f1cdd23e864b644b905.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://models/food/tomato_texture.png"
-dest_files=["res://.godot/imported/tomato_texture.png-1cb976cfa1b03fea3510c7733fbec640.s3tc.ctex"]
+source_file="res://models/food/texture.png"
+dest_files=["res://.godot/imported/texture.png-e885ed8543476f1cdd23e864b644b905.s3tc.ctex"]
 
 [params]
 
