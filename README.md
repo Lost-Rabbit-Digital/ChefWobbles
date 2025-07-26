@@ -28,4 +28,4 @@ cd ChefWobbles
 
 ---
 
-**Lost Rabbit Digital** | *Making games that feel like warm hugs*
+🍳 © 2025 Lost Rabbit Digital LLC. All rights reserved. 🍳 
