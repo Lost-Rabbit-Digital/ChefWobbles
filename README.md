@@ -1,6 +1,5 @@
 <div align="center">
   <h1>Chef Wobbles</h1> 
-  <a href="https://github.com/Lost-Rabbit-Digital/ChefWobbles/actions/workflows/static_checks.yml" target="_blank"><img src="https://github.com/Lost-Rabbit-Digital/ChefWobbles/actions/workflows/static_checks.yml/badge.svg" alt="Static Checks"></a>
   <h3>A physics-based cooking game with cute, wobbly characters and calming pastel aesthetics</h3>
   
   <p>
