@@ -1,7 +1,7 @@
 [gd_scene load_steps=27 format=3 uid="uid://c6i2mlgfgnhg7"]
 
-[ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="1_8iuhj"]
-[ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="2_21int"]
+[ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://Resources/sky.tres" id="1_8iuhj"]
+[ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://Scenes/character.tscn" id="2_21int"]
 [ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://textures/prototype_textures/PNG/logo_blue_512x512.png" id="3_r10i8"]
 [ext_resource type="AudioStream" uid="uid://0vhuw27xogj8" path="res://audio/music/Cuddle Clouds.ogg" id="4_tk8g1"]
 [ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="5_ybsmm"]
