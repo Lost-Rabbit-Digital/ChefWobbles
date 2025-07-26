@@ -1,6 +1,5 @@
 <div align="center">
   <h1>Chef Wobbles</h1> 
-  <a href="https://github.com/Lost-Rabbit-Digital/ChefWobbles/actions/workflows/static_checks.yml" target="_blank"><img src="https://github.com/Lost-Rabbit-Digital/ChefWobbles/actions/workflows/static_checks.yml/badge.svg" alt="Static Checks"></a>
   <h3>A physics-based cooking game with cute, wobbly characters and calming pastel aesthetics</h3>
   
   <p>
@@ -63,7 +62,7 @@ In this relaxing culinary world, your goal is to:
   <table>
     <tr>
       <td align="center"><img src="https://godotengine.org/assets/press/icon_color.svg" width="48"/></td>
-      <td><a href="https://godotengine.org/download">Godot Engine 4.0+</a></td>
+      <td><a href="https://godotengine.org/download">Godot Engine 4.4+</a></td>
     </tr>
   </table>
 </div>
@@ -87,7 +86,7 @@ godot -e
 ## 📚 Documentation
 
 <div align="center">
-  <a href="design_document.md">
+  <a href="project_management/design_document.md">
     <img src="https://img.shields.io/badge/Design_Document-blue?style=for-the-badge" alt="Design Document">
   </a>
 </div>
@@ -110,15 +109,11 @@ godot -e
   <table>
     <tr>
       <td align="center">📄</td>
-      <td><a href="external_assets.md">External Assets & Attributions</a></td>
+      <td><a href="project_management/external_assets.md">External Assets & Attributions</a></td>
     </tr>
     <tr>
       <td align="center">🎮</td>
       <td><a href="https://godotengine.org/" target="_blank">Godot Engine</a></td>
-    </tr>
-    <tr>
-      <td align="center">🎨</td>
-      <td><a href="https://ashorthike.com/" target="_blank">A Short Hike</a> for visual inspiration</td>
     </tr>
     <tr>
       <td align="center">🍳</td>
@@ -130,7 +125,7 @@ godot -e
 ---
 
 <div align="center">
-  <img src="project_management/dist/marketing/splashscreen.png" alt="Chef Wobbles" width="600"/>
+  <img src="project_management/screenshots/splashscreen.png" alt="Chef Wobbles" width="600"/>
   
 🐰 **Lost Rabbit Digital LLC**
 </div>

@@ -15,13 +15,15 @@ A 16-color pastel palette inspired by "A Short Hike" for cartoon-style cooking g
 - **Dairy:** `#fff9f2` - Milk, cream, vanilla
 
 ### Cooking States
-- **Cooked Meat:** `#d9b399` - Properly cooked proteins
-- **Burnt Food:** `#8c6b4d` - Overcooked/burnt ingredients
-- **Golden Brown:** `#f2d680` - Perfectly toasted bread, pastries
-- **Caramelized:** `#ccad80` - Caramelized onions, sugars
+- **Cooking Meat:** `#d9b399` - Properly cooked proteins
+- **Cooked Meat:** `#8c6b4d` - Overcooked/burnt ingredients
+- **Burnt Meat:** `#513c27` - Perfectly toasted bread, pastries
 
 ### Environment
-- **Kitchen Tools:** `#e6e6e6` - Metal utensils, appliances
+- **Metal Base:** `#a9a9a9` - Metal utensils, appliances
+- **Metal Accent:** `#8b8b8b`
+- **Stove Top:** `#242325`
+- **Stove Top Accent:** `#2d2c30`
 - **Wood Elements:** `#e6ccb3` - Cutting boards, furniture
 - **Floor:** `#f5f0eb` - Kitchen floor tiles
 - **Walls:** `#fff5eb` - Kitchen wall colors
