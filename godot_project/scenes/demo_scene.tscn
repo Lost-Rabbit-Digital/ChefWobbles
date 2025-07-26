@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=29 format=3 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="1_8iuhj"]
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="2_21int"]
@@ -14,7 +14,8 @@
 [ext_resource type="AudioStream" uid="uid://c58316sy0yjlm" path="res://audio/music/Strange Worlds.ogg" id="12_akofh"]
 [ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/music/Sunlight Through Leaves.ogg" id="13_ijjr1"]
 [ext_resource type="AudioStream" uid="uid://bmq805hd2t7ae" path="res://audio/music/Wanderers Tale.ogg" id="14_xjtv6"]
-[ext_resource type="PackedScene" uid="uid://64mdognmqsv4" path="res://models/food/tomato_slice.glb" id="15_8iuhj"]
+[ext_resource type="PackedScene" uid="uid://cbplwoxnlv6i0" path="res://models/food/tomato_slice/tomato_slice.glb" id="15_8iuhj"]
+[ext_resource type="PackedScene" uid="uid://cyf5xg3ui47sh" path="res://models/stations/base_prep_station/prep_station.gltf" id="16_21int"]
 
 [sub_resource type="Sky" id="Sky_67mw3"]
 sky_material = ExtResource("1_8iuhj")
@@ -294,5 +295,13 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground9"]
 shape = SubResource("BoxShape3D_kfml7")
 
+[node name="BlockBench" type="Node" parent="."]
+
+[node name="blockbench_export2" parent="BlockBench" instance=ExtResource("16_21int")]
+transform = Transform3D(-1.81474e-07, 0, -4.15163, 0, 4.15163, 0, 4.15163, 0, -1.81474e-07, -8.61963, 0.482825, -2.61825)
+
 [node name="blockbench_export" parent="." instance=ExtResource("15_8iuhj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.83988, 0.471393, -1.23876)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.81904, 2.55864, -1.40242)
+
+[node name="blockbench_export2" parent="." instance=ExtResource("15_8iuhj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.81904, 2.85182, -1.84805)

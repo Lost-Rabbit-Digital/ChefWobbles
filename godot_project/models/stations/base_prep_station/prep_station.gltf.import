@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://64mdognmqsv4"
-path="res://.godot/imported/tomato_slice.glb-df98110c62b1ba772d9580311d956c83.scn"
+uid="uid://cyf5xg3ui47sh"
+path="res://.godot/imported/prep_station.gltf-4a2af071d34c0e8f0ef17a5d9be5afb2.scn"
 
 [deps]
 
-source_file="res://models/food/tomato_slice.glb"
-dest_files=["res://.godot/imported/tomato_slice.glb-df98110c62b1ba772d9580311d956c83.scn"]
+source_file="res://models/stations/base_prep_station/prep_station.gltf"
+dest_files=["res://.godot/imported/prep_station.gltf-4a2af071d34c0e8f0ef17a5d9be5afb2.scn"]
 
 [params]
 
@@ -32,6 +32,13 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={}
+_subresources={
+"nodes": {
+"PATH:Node/root/cuboid": {
+"generate/physics": true,
+"physics/shape_type": 2
+}
+}
+}
 gltf/naming_version=1
 gltf/embedded_image_handling=1
