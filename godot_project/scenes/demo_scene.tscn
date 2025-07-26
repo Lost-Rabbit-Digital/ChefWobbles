@@ -14,7 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://c58316sy0yjlm" path="res://audio/music/Strange Worlds.ogg" id="12_akofh"]
 [ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/music/Sunlight Through Leaves.ogg" id="13_ijjr1"]
 [ext_resource type="AudioStream" uid="uid://bmq805hd2t7ae" path="res://audio/music/Wanderers Tale.ogg" id="14_xjtv6"]
-[ext_resource type="ArrayMesh" uid="uid://fpvgo6c366fb" path="res://models/food/tomato_slice.obj" id="15_8iuhj"]
+[ext_resource type="PackedScene" uid="uid://wjiot7od4cla" path="res://models/food/tomato_slice.fbx" id="15_8iuhj"]
 
 [sub_resource type="Sky" id="Sky_67mw3"]
 sky_material = ExtResource("1_8iuhj")
@@ -294,6 +294,5 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground9"]
 shape = SubResource("BoxShape3D_kfml7")
 
-[node name="TomatoSlice" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25189, 0.471393, -2.66768)
-mesh = ExtResource("15_8iuhj")
+[node name="tomato_slice" parent="." instance=ExtResource("15_8iuhj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4934, 0.471393, -2.3235)
