@@ -15,8 +15,8 @@ A 16-color pastel palette inspired by "A Short Hike" for cartoon-style cooking g
 - **Dairy:** `#fff9f2` - Milk, cream, vanilla
 
 ### Cooking States
-- **Cooked Meat:** `#d9b399` - Properly cooked proteins
-- **Burnt Food:** `#8c6b4d` - Overcooked/burnt ingredients
+- **Cooking Meat:** `#d9b399` - Properly cooked proteins
+- **Cooked Meat:** `#8c6b4d` - Overcooked/burnt ingredients
 - **Golden Brown:** `#f2d680` - Perfectly toasted bread, pastries
 - **Caramelized:** `#ccad80` - Caramelized onions, sugars
 
