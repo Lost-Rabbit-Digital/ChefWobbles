@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://6p0677d3nwdn"]
+
+[ext_resource type="Texture2D" uid="uid://c11e5okndykct" path="res://models/food/burger_patty/burger_patty_burnt_texture.png" id="1_otgvf"]
+
+[resource]
+albedo_texture = ExtResource("1_otgvf")
+texture_filter = 0

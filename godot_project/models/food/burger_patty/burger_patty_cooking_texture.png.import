@@ -2,20 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bphmvpjh21irx"
-path.s3tc="res://.godot/imported/prep_station_0.png-14ea1e18b4682170379301328d6d7c74.s3tc.ctex"
+uid="uid://u8xavi40y21a"
+path.s3tc="res://.godot/imported/burger_patty_cooking_texture.png-576dc4afa433f95bd18bdeaf399d2673.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "fe103340f0bf0ae5379413395ce137d6"
-}
 
 [deps]
 
-source_file="res://models/stations/base_prep_station/prep_station_0.png"
-dest_files=["res://.godot/imported/prep_station_0.png-14ea1e18b4682170379301328d6d7c74.s3tc.ctex"]
+source_file="res://models/food/burger_patty/burger_patty_cooking_texture.png"
+dest_files=["res://.godot/imported/burger_patty_cooking_texture.png-576dc4afa433f95bd18bdeaf399d2673.s3tc.ctex"]
 
 [params]
 
