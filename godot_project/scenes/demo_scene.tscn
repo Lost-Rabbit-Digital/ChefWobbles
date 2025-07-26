@@ -1,0 +1,294 @@
+[gd_scene load_steps=27 format=3 uid="uid://c6i2mlgfgnhg7"]
+
+[ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="1_8iuhj"]
+[ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="2_21int"]
+[ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://textures/prototype_textures/PNG/logo_blue_512x512.png" id="3_r10i8"]
+[ext_resource type="AudioStream" uid="uid://0vhuw27xogj8" path="res://audio/music/Cuddle Clouds.ogg" id="4_tk8g1"]
+[ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="5_ybsmm"]
+[ext_resource type="AudioStream" uid="uid://dempf1idxhdvw" path="res://audio/music/Evening Harmony.ogg" id="6_7be4u"]
+[ext_resource type="AudioStream" uid="uid://bp1u1j3y0evjm" path="res://audio/music/Floating Dream.ogg" id="7_wmaes"]
+[ext_resource type="AudioStream" uid="uid://c5b8mjpjj7txe" path="res://audio/music/Forgotten Biomes.ogg" id="8_wdbwv"]
+[ext_resource type="AudioStream" uid="uid://d1n0obngvv6k4" path="res://audio/music/Gentle Breeze.ogg" id="9_bwta0"]
+[ext_resource type="AudioStream" uid="uid://d0bbu53enpg0v" path="res://audio/music/Golden Gleam.ogg" id="10_lc5yn"]
+[ext_resource type="AudioStream" uid="uid://dppngpsx8ctmp" path="res://audio/music/Polar Lights.ogg" id="11_l6vgw"]
+[ext_resource type="AudioStream" uid="uid://c58316sy0yjlm" path="res://audio/music/Strange Worlds.ogg" id="12_akofh"]
+[ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/music/Sunlight Through Leaves.ogg" id="13_ijjr1"]
+[ext_resource type="AudioStream" uid="uid://bmq805hd2t7ae" path="res://audio/music/Wanderers Tale.ogg" id="14_xjtv6"]
+
+[sub_resource type="Sky" id="Sky_67mw3"]
+sky_material = ExtResource("1_8iuhj")
+
+[sub_resource type="Environment" id="Environment_217oh"]
+background_mode = 2
+sky = SubResource("Sky_67mw3")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wjfg5"]
+friction = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_2rf26"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dle54"]
+albedo_texture = ExtResource("3_r10i8")
+uv1_scale = Vector3(3, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kfml7"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lq0of"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ah2if"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_nkmtj"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7n8oy"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pigdn"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1cc2y"]
+size = Vector3(4, 4, 4)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.216372, 0.976311, 0, -0.976311, -0.216372, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_217oh")
+
+[node name="Character" parent="." instance=ExtResource("2_21int")]
+transform = Transform3D(1, 0, 7.35137e-08, 0, 1, 0, -7.35137e-08, 0, 1, 0.11497, 1.90377, -0.239787)
+
+[node name="Controls" type="Label" parent="."]
+offset_right = 189.0
+offset_bottom = 179.0
+text = "Walk - WASD
+Jump - Space
+Grab left - Left mouse
+Grab right - Right mouse
+Toggle ragdoll - R
+Show cursor - Esc
+"
+
+[node name="Interactables" type="Node" parent="."]
+
+[node name="RigidBody3D5" type="RigidBody3D" parent="Interactables"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 6.03294, 1.38336, -3.37082)
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/RigidBody3D5"]
+mesh = SubResource("BoxMesh_2rf26")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/RigidBody3D5"]
+shape = SubResource("BoxShape3D_kfml7")
+
+[node name="RigidBody3D3" type="RigidBody3D" parent="Interactables"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.89373, 3.27871, -1.38654)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/RigidBody3D3"]
+mesh = SubResource("BoxMesh_lq0of")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/RigidBody3D3"]
+shape = SubResource("BoxShape3D_ah2if")
+
+[node name="RigidBody3D6" type="RigidBody3D" parent="Interactables"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.8992, 9.64245, -1.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/RigidBody3D6"]
+mesh = SubResource("BoxMesh_lq0of")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/RigidBody3D6"]
+shape = SubResource("BoxShape3D_ah2if")
+
+[node name="RigidBody3D7" type="RigidBody3D" parent="Interactables"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.8992, 6.64245, -1.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/RigidBody3D7"]
+mesh = SubResource("BoxMesh_nkmtj")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/RigidBody3D7"]
+shape = SubResource("BoxShape3D_7n8oy")
+
+[node name="RigidBody3D8" type="RigidBody3D" parent="Interactables"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 6.70656, 5.89235, -6.36282)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/RigidBody3D8"]
+mesh = SubResource("BoxMesh_pigdn")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/RigidBody3D8"]
+shape = SubResource("BoxShape3D_1cc2y")
+
+[node name="Music" type="Node" parent="."]
+
+[node name="CuddleClouds" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("4_tk8g1")
+autoplay = true
+bus = &"Music"
+
+[node name="DriftingMemories" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("5_ybsmm")
+autoplay = true
+bus = &"Music"
+
+[node name="EveningHarmony" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("6_7be4u")
+autoplay = true
+bus = &"Music"
+
+[node name="FloatingDream" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("7_wmaes")
+autoplay = true
+bus = &"Music"
+
+[node name="ForgottonBiomes" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("8_wdbwv")
+autoplay = true
+bus = &"Music"
+
+[node name="GentleBreeze" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("9_bwta0")
+autoplay = true
+bus = &"Music"
+
+[node name="GoldenGleam" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("10_lc5yn")
+autoplay = true
+bus = &"Music"
+
+[node name="PolarLights" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("11_l6vgw")
+autoplay = true
+bus = &"Music"
+
+[node name="StrangeWorlds" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("12_akofh")
+autoplay = true
+bus = &"Music"
+
+[node name="SunlightThroughLeaves" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("13_ijjr1")
+autoplay = true
+bus = &"Music"
+
+[node name="WanderersTale" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("14_xjtv6")
+autoplay = true
+bus = &"Music"
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="Ground" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 0.102698, -0.0286075, -0.200609)
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground"]
+mesh = SubResource("BoxMesh_2rf26")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground"]
+shape = SubResource("BoxShape3D_kfml7")
+
+[node name="Ground2" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, -10.0916, -0.0286075, -0.200609)
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground2"]
+mesh = SubResource("BoxMesh_2rf26")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground2"]
+shape = SubResource("BoxShape3D_kfml7")
+
+[node name="Ground3" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 10.2807, -0.0286075, -0.200609)
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground3"]
+mesh = SubResource("BoxMesh_2rf26")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground3"]
+shape = SubResource("BoxShape3D_kfml7")
+
+[node name="Ground4" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 0.102698, -0.0286075, -10.4244)
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground4"]
+mesh = SubResource("BoxMesh_2rf26")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground4"]
+shape = SubResource("BoxShape3D_kfml7")
+
+[node name="Ground5" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, -10.0916, -0.0286075, -10.4244)
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground5"]
+mesh = SubResource("BoxMesh_2rf26")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground5"]
+shape = SubResource("BoxShape3D_kfml7")
+
+[node name="Ground6" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 10.2807, -0.0286075, -10.4244)
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground6"]
+mesh = SubResource("BoxMesh_2rf26")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground6"]
+shape = SubResource("BoxShape3D_kfml7")
+
+[node name="Ground7" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 0.102698, -0.0286075, 9.90382)
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground7"]
+mesh = SubResource("BoxMesh_2rf26")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground7"]
+shape = SubResource("BoxShape3D_kfml7")
+
+[node name="Ground8" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, -10.0916, -0.0286075, 9.90382)
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground8"]
+mesh = SubResource("BoxMesh_2rf26")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground8"]
+shape = SubResource("BoxShape3D_kfml7")
+
+[node name="Ground9" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 10.2807, -0.0286075, 9.90382)
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground9"]
+mesh = SubResource("BoxMesh_2rf26")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground9"]
+shape = SubResource("BoxShape3D_kfml7")

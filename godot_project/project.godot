@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Godot 4 Active Ragdoll"
-run/main_scene="res://scenes/world.tscn"
+run/main_scene="uid://c6i2mlgfgnhg7"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
