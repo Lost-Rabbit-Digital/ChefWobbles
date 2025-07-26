@@ -125,7 +125,5 @@ godot -e
 ---
 
 <div align="center">
-  <img src="project_management/screenshots/splashscreen.png" alt="Chef Wobbles" width="600"/>
-  
 🐰 **Lost Rabbit Digital LLC**
 </div>
