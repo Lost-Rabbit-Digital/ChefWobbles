@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d0bbu53enpg0v"
+path="res://.godot/imported/Golden Gleam.ogg-678205ad66d53692b845abda2eced90d.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/Golden Gleam.ogg"
+dest_files=["res://.godot/imported/Golden Gleam.ogg-678205ad66d53692b845abda2eced90d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

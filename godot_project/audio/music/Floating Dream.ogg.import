@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bp1u1j3y0evjm"
+path="res://.godot/imported/Floating Dream.ogg-62f167ddf2cf0c547aedc5e7c5e4bb8c.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/Floating Dream.ogg"
+dest_files=["res://.godot/imported/Floating Dream.ogg-62f167ddf2cf0c547aedc5e7c5e4bb8c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

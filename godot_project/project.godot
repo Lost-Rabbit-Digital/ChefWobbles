@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Godot 4 Active Ragdoll"
-run/main_scene="res://Scenes/world.tscn"
+run/main_scene="res://scenes/world.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="res://audio/default_bus_layout.tres"
 
 [autoload]
 

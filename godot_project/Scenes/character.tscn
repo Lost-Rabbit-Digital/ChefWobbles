@@ -1,9 +1,9 @@
 [gd_scene load_steps=25 format=4 uid="uid://cd70x3de3pbl4"]
 
-[ext_resource type="Script" uid="uid://ccmd0n1s3gvm5" path="res://Scripts/character_controller/movement.gd" id="1_lo1uq"]
-[ext_resource type="PackedScene" uid="uid://byhwdai31bud7" path="res://Assets/Character.glb" id="1_nfcse"]
+[ext_resource type="Script" uid="uid://ccmd0n1s3gvm5" path="res://scripts/character_controller/movement.gd" id="1_lo1uq"]
+[ext_resource type="PackedScene" uid="uid://byhwdai31bud7" path="res://models/Character.glb" id="1_nfcse"]
 [ext_resource type="Material" uid="uid://c15cpsrknohst" path="res://materials/toon_character.tres" id="3_ejsiy"]
-[ext_resource type="Script" uid="uid://ba8yfbx4qeq4j" path="res://Scripts/character_controller/camera.gd" id="3_ya0u6"]
+[ext_resource type="Script" uid="uid://ba8yfbx4qeq4j" path="res://scripts/character_controller/camera.gd" id="3_ya0u6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0mvc"]
 resource_name = "Character"

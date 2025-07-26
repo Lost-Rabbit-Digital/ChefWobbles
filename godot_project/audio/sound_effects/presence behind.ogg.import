@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c7b3228vwj3yl"
+path="res://.godot/imported/presence behind.ogg-cbb4ad52e1cfb5e13138e2ec69bb7d83.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/sound_effects/presence behind.ogg"
+dest_files=["res://.godot/imported/presence behind.ogg-cbb4ad52e1cfb5e13138e2ec69bb7d83.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
