@@ -65,6 +65,7 @@ environment = SubResource("Environment_217oh")
 transform = Transform3D(1, 0, 7.35137e-08, 0, 1, 0, -7.35137e-08, 0, 1, 0.11497, 1.90377, -0.239787)
 
 [node name="Controls" type="Label" parent="."]
+visible = false
 offset_right = 189.0
 offset_bottom = 179.0
 text = "Walk - WASD
