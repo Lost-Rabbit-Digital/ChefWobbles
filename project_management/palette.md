@@ -22,6 +22,8 @@ A 16-color pastel palette inspired by "A Short Hike" for cartoon-style cooking g
 ### Environment
 - **Metal Base:** `#a9a9a9` - Metal utensils, appliances
 - **Metal Accent:** `#8b8b8b`
+- **Stove Top:** `#242325`
+- **Stove Top Accent:** `#2d2c30`
 - **Wood Elements:** `#e6ccb3` - Cutting boards, furniture
 - **Floor:** `#f5f0eb` - Kitchen floor tiles
 - **Walls:** `#fff5eb` - Kitchen wall colors
