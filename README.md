@@ -12,7 +12,7 @@
 </div>
 
 <div align="center">
-  <img src="project_management/dist/main_game_screenshot.png" alt="Game Screenshot" width="600"/>
+  <img src="project_management/screenshots/main_game_screenshot.png" alt="Game Screenshot" width="600"/>
 </div>
 
 ---
