@@ -17,7 +17,7 @@ A 16-color pastel palette inspired by "A Short Hike" for cartoon-style cooking g
 ### Cooking States
 - **Cooking Meat:** `#d9b399` - Properly cooked proteins
 - **Cooked Meat:** `#8c6b4d` - Overcooked/burnt ingredients
-- **Burnt Meat:** `#4d3e30` - Perfectly toasted bread, pastries
+- **Burnt Meat:** `#513c27` - Perfectly toasted bread, pastries
 
 ### Environment
 - **Kitchen Tools:** `#e6e6e6` - Metal utensils, appliances
