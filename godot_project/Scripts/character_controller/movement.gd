@@ -32,6 +32,7 @@ const BALANCE_THRESHOLD = 0.7
 @onready var physical_bone_body: PhysicalBone3D = $"Physical/Armature/Skeleton3D/Physical Bone Body"
 @onready var interaction_audio_player = $InteractionAudioPlayer
 @onready var footstep_audio_player = $FootstepAudioPlayer
+@onready var audio_manipulator = $AudioManipulator
 
 # === GRABBING SYSTEM (KEPT YOUR ORIGINAL SYSTEM) ===
 @onready var grab_joint_right = $Physical/GrabJointRight
@@ -205,19 +206,16 @@ func update_character_rotation():
 
 # === AUDIO FUNCTIONS ===
 func play_grab_audio():
-	if grab_audio and interaction_audio_player:
-		interaction_audio_player.stream = grab_audio
-		interaction_audio_player.play()
+	if grab_audio and interaction_audio_player and audio_manipulator:
+		audio_manipulator.play_audio(interaction_audio_player, grab_audio, AudioManipulator.AudioType.GRAB_SOUNDS)
 
 func play_release_audio():
-	if release_audio and interaction_audio_player:
-		interaction_audio_player.stream = release_audio
-		interaction_audio_player.play()
+	if release_audio and interaction_audio_player and audio_manipulator:
+		audio_manipulator.play_audio(interaction_audio_player, release_audio, AudioManipulator.AudioType.RELEASE_SOUNDS)
 
 func play_footstep_audio():
-	if footstep_audio and footstep_audio_player:
-		footstep_audio_player.stream = footstep_audio
-		footstep_audio_player.play()
+	if footstep_audio and footstep_audio_player and audio_manipulator:
+		audio_manipulator.play_audio(footstep_audio_player, footstep_audio, AudioManipulator.AudioType.FOOTSTEPS)
 
 func handle_footstep_audio(delta):
 	# Play footsteps when landing from a jump/fall

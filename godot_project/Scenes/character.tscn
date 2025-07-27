@@ -118,9 +118,12 @@ node_connections = [&"Blend2 ", 0, &"walking", &"Blend2 ", 1, &"grab_dir", &"out
 [node name="Character" type="Node3D"]
 script = ExtResource("1_lo1uq")
 angular_spring_stiffness = 3000.0
+angular_spring_damping = null
+max_angular_force = null
 grab_audio = ExtResource("2_0lw5n")
 release_audio = ExtResource("3_2cgup")
 footstep_audio = ExtResource("4_2cgup")
+ragdoll_mode = null
 
 [node name="Physical" parent="." instance=ExtResource("1_nfcse")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
