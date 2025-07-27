@@ -3,8 +3,8 @@
   <h3>A physics-based cooking game with cute, wobbly characters and calming pastel aesthetics</h3>
   
   <p>
-    <a href="https://store.steampowered.com/app/XXXXXXX/Chef_Wobbles/" target="_blank"><img src="https://img.shields.io/badge/Steam-Coming_Soon-blue?style=for-the-badge&logo=steam" alt="Steam"></a>
-    <a href="https://lost-rabbit-digital.itch.io/chef-wobbles" target="_blank"><img src="https://img.shields.io/badge/itch.io-Coming_Soon-red?style=for-the-badge&logo=itch.io" alt="itch.io"></a>
+    <a href="https://store.steampowered.com/search/?developer=Lost%20Rabbit%20Digital" target="_blank"><img src="https://img.shields.io/badge/Steam-Coming_Soon-blue?style=for-the-badge&logo=steam" alt="Steam"></a>
+    <a href="https://lost-rabbit-digital.itch.io" target="_blank"><img src="https://img.shields.io/badge/itch.io-Coming_Soon-red?style=for-the-badge&logo=itch.io" alt="itch.io"></a>
     <a href="https://godotengine.org/" target="_blank"><img src="https://img.shields.io/badge/Godot-4.4+-blue?style=for-the-badge&logo=godot-engine" alt="Godot 4.4+"></a>
     <img src="https://img.shields.io/badge/license-MPL_2.0-yellow?style=for-the-badge" alt="MPL 2.0 License">
   </p>
