@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://cd70x3de3pbl4"]
+[gd_scene load_steps=28 format=4 uid="uid://cd70x3de3pbl4"]
 
 [ext_resource type="Script" uid="uid://ccmd0n1s3gvm5" path="res://scripts/character_controller/movement.gd" id="1_lo1uq"]
 [ext_resource type="PackedScene" uid="uid://byhwdai31bud7" path="res://models/character/Character.glb" id="1_nfcse"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://d3gj7rc6r7kpd" path="res://audio/sound_effects/plops/plop_2.mp3" id="3_2cgup"]
 [ext_resource type="Material" uid="uid://b277dmlnwx24i" path="res://models/character/character_material.tres" id="3_ejsiy"]
 [ext_resource type="Script" uid="uid://ba8yfbx4qeq4j" path="res://scripts/character_controller/camera.gd" id="3_ya0u6"]
+[ext_resource type="AudioStream" uid="uid://4u1y6tmi4ae6" path="res://audio/sound_effects/dings/ding_1.mp3" id="4_2cgup"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0mvc"]
 resource_name = "Character"
@@ -119,6 +120,7 @@ script = ExtResource("1_lo1uq")
 angular_spring_stiffness = 3000.0
 grab_audio = ExtResource("2_0lw5n")
 release_audio = ExtResource("3_2cgup")
+footstep_audio = ExtResource("4_2cgup")
 
 [node name="Physical" parent="." instance=ExtResource("1_nfcse")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -157,10 +159,10 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -0.14)
 shape = SubResource("BoxShape3D_fo83p")
 
 [node name="Physical Bone LArm1" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="2"]
-transform = Transform3D(-1.27055e-20, 0, -1, -1, 7.54975e-08, 1.27055e-20, 7.54975e-08, 1, 0, 0.91576, 1, 0)
+transform = Transform3D(-1.3129e-20, 0, -1, -1, 7.54975e-08, 1.3129e-20, 7.54975e-08, 1, 0, 0.91576, 1, 0)
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.91574e-21, 1.11292e-33, 0.31882)
-body_offset = Transform3D(1, 2.84217e-13, -1.2282e-20, -1.2282e-20, 0, -1, -2.84217e-13, 1, 0, 0, 0.31882, 0)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.05077e-21, 1.1513e-33, 0.31882)
+body_offset = Transform3D(1, 2.84217e-13, -1.27055e-20, -1.27055e-20, 0, -1, -2.84217e-13, 1, 0, 0, 0.31882, 0)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -176,10 +178,10 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -0.095)
 shape = SubResource("CapsuleShape3D_qknsb")
 
 [node name="Physical Bone LArm2" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="3"]
-transform = Transform3D(-1.27055e-20, 0, -1, -1, 7.54975e-08, 1.27055e-20, 7.54975e-08, 1, 0, 1.61445, 1, -1.42109e-14)
+transform = Transform3D(-1.3129e-20, 0, -1, -1, 7.54975e-08, 1.3129e-20, 7.54975e-08, 1, 0, 1.61445, 1, -1.42109e-14)
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.66557e-21, 7.10543e-15, 0.379871)
-body_offset = Transform3D(1, 2.84217e-13, -1.2282e-20, -1.2282e-20, 0, -1, -2.84217e-13, 1, 0, 0, 0.379871, -7.10543e-15)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.82645e-21, 7.10543e-15, 0.379871)
+body_offset = Transform3D(1, 2.84217e-13, -1.27055e-20, -1.27055e-20, 0, -1, -2.84217e-13, 1, 0, 0, 0.379871, -7.10543e-15)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -289,10 +291,10 @@ target_position = Vector3(0, 0, -0.4)
 max_results = 10
 
 [node name="Physical Bone RLeg1" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="8"]
-transform = Transform3D(1.14403e-07, 0.999677, 0.0254165, 0.544879, -0.0213122, 0.838244, 0.838515, 0.0138488, -0.544703, -0.386655, -0.241816, 0.145382)
+transform = Transform3D(1.12541e-07, 0.999677, 0.0254165, 0.544879, -0.0213122, 0.838244, 0.838515, 0.0138488, -0.544703, -0.386655, -0.241816, 0.145382)
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.34706e-07, 4.10096e-07, 0.2669)
-body_offset = Transform3D(1, -3.42727e-07, -3.57628e-07, -3.27826e-07, 3.02214e-07, -1, 3.09199e-07, 1, 2.5006e-07, 7.30157e-07, 0.2669, -4.76837e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.57058e-07, 4.10593e-07, 0.2669)
+body_offset = Transform3D(1, -3.39001e-07, -3.57628e-07, -3.27826e-07, 3.00817e-07, -1, 3.07336e-07, 1, 2.48197e-07, 7.52509e-07, 0.2669, -4.76837e-07)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -310,8 +312,8 @@ shape = SubResource("CapsuleShape3D_b1rjh")
 [node name="Physical Bone RLeg2" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="9"]
 transform = Transform3D(1.64828e-07, 1, 9.75556e-07, 0.544879, -9.07829e-07, 0.838515, 0.838515, 3.93348e-07, -0.544879, -0.393438, -0.689271, 0.436144)
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.43663e-07, -6.4315e-07, 0.266814)
-body_offset = Transform3D(1, -3.91908e-07, -3.8743e-07, -3.57628e-07, 3.37075e-07, -1, 3.57628e-07, 1, 2.88239e-07, 4.47035e-07, 0.266814, 5.66244e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.35712e-07, -6.72953e-07, 0.266814)
+body_offset = Transform3D(1, -3.91908e-07, -4.17233e-07, -3.57628e-07, 3.37075e-07, -1, 3.57628e-07, 1, 2.88239e-07, 4.47035e-07, 0.266814, 5.96046e-07)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -407,7 +409,9 @@ fov = 100.0
 size = 30.0
 near = 0.4
 
-[node name="InteractionAudio" type="AudioStreamPlayer3D" parent="."]
+[node name="InteractionAudioPlayer" type="AudioStreamPlayer3D" parent="."]
+
+[node name="FootstepAudioPlayer" type="AudioStreamPlayer3D" parent="."]
 
 [connection signal="skeleton_updated" from="Physical/Armature/Skeleton3D" to="." method="_on_skeleton_3d_skeleton_updated"]
 [connection signal="body_entered" from="Physical/Armature/Skeleton3D/Physical Bone LArm2/LGrabArea" to="." method="_on_l_grab_area_body_entered"]

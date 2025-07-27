@@ -15,6 +15,7 @@ const AIR_DAMPING = 0.95
 # === AUDIO EXPORTS ===
 @export var grab_audio: AudioStream
 @export var release_audio: AudioStream
+@export var footstep_audio: AudioStream
 
 # === STABILITY CONSTANTS ===
 const UPRIGHT_FORCE_MULTIPLIER = 1.5
@@ -29,7 +30,8 @@ const BALANCE_THRESHOLD = 0.7
 @onready var camera_pivot = $CameraPivot
 @onready var animation_tree = $Animated/AnimationTree
 @onready var physical_bone_body: PhysicalBone3D = $"Physical/Armature/Skeleton3D/Physical Bone Body"
-@onready var interaction_audio = $InteractionAudio
+@onready var interaction_audio_player = $InteractionAudioPlayer
+@onready var footstep_audio_player = $FootstepAudioPlayer
 
 # === GRABBING SYSTEM (KEPT YOUR ORIGINAL SYSTEM) ===
 @onready var grab_joint_right = $Physical/GrabJointRight
@@ -51,6 +53,11 @@ var grabbed_object = null
 var grabbing_arm_left = false
 var grabbing_arm_right = false
 var current_delta: float
+
+# === FOOTSTEP AUDIO VARIABLES ===
+var was_on_floor = false
+var footstep_timer = 0.0
+const FOOTSTEP_INTERVAL = 0.35  # Time between footsteps when walking
 
 # === NEW SMOOTHING VARIABLES ===
 var target_velocity: Vector3 = Vector3.ZERO
@@ -99,6 +106,7 @@ func _physics_process(delta):
 		handle_jumping()
 		update_walking_animation()
 		update_character_rotation()
+		handle_footstep_audio(delta)
 
 func update_movement_input():
 	# Get movement input (keep your original direction system)
@@ -124,6 +132,7 @@ func update_movement_input():
 
 func update_floor_detection():
 	# Keep your original floor detection system exactly the same
+	was_on_floor = is_on_floor  # Store previous state for footstep detection
 	is_on_floor = false
 	if on_floor_left.is_colliding():
 		for i in on_floor_left.get_collision_count():
@@ -196,14 +205,35 @@ func update_character_rotation():
 
 # === AUDIO FUNCTIONS ===
 func play_grab_audio():
-	if grab_audio and interaction_audio:
-		interaction_audio.stream = grab_audio
-		interaction_audio.play()
+	if grab_audio and interaction_audio_player:
+		interaction_audio_player.stream = grab_audio
+		interaction_audio_player.play()
 
 func play_release_audio():
-	if release_audio and interaction_audio:
-		interaction_audio.stream = release_audio
-		interaction_audio.play()
+	if release_audio and interaction_audio_player:
+		interaction_audio_player.stream = release_audio
+		interaction_audio_player.play()
+
+func play_footstep_audio():
+	if footstep_audio and footstep_audio_player:
+		footstep_audio_player.stream = footstep_audio
+		footstep_audio_player.play()
+
+func handle_footstep_audio(delta):
+	# Play footsteps when landing from a jump/fall
+	if is_on_floor and not was_on_floor:
+		play_footstep_audio()
+		footstep_timer = 0.0  # Reset timer to prevent immediate repeat
+	
+	# Play footsteps while walking on ground
+	elif is_on_floor and walking:
+		footstep_timer += delta
+		if footstep_timer >= FOOTSTEP_INTERVAL:
+			play_footstep_audio()
+			footstep_timer = 0.0
+	else:
+		# Reset timer when not walking or in air
+		footstep_timer = 0.0
 
 # Keep your original spring function exactly the same
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
