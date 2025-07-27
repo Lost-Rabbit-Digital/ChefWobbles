@@ -89,6 +89,9 @@ godot -e
   <a href="project_management/design_document.md">
     <img src="https://img.shields.io/badge/Design_Document-blue?style=for-the-badge" alt="Design Document">
   </a>
+  <a href="project_management/asset_creation_guidelines.md">
+    <img src="https://img.shields.io/badge/Asset_Creation_Guidelines-green?style=for-the-badge" alt="Asset Creation Guidelines">
+  </a>
 </div>
 
 ---
@@ -108,16 +111,16 @@ godot -e
 <div align="center">
   <table>
     <tr>
-      <td align="center">📄</td>
+      <td align="center"><img src="https://github.com/Lost-Rabbit-Digital/ChefWobbles/blob/main/godot_project/icon.png" width="48"/></td>
       <td><a href="project_management/external_assets.md">External Assets & Attributions</a></td>
     </tr>
     <tr>
-      <td align="center">🎮</td>
-      <td><a href="https://godotengine.org/" target="_blank">Godot Engine</a></td>
+      <td align="center"><img src="https://godotengine.org/assets/press/icon_color.svg" width="48"/></td>
+      <td><a href="https://godotengine.org/download">Godot Engine 4.4+</a></td>
     </tr>
     <tr>
-      <td align="center">🍳</td>
-      <td><a href="https://www.team17.com/games/overcooked/" target="_blank">Overcooked!</a> for gameplay inspiration</td>
+      <td align="center"><img src="https://avatars.githubusercontent.com/u/122909224?v=4" width="48"/></td>
+      <td><a href="https://github.com/PiCode9560/Godot-4-Active-ragdoll" target="_blank">Godot-4-Actiive-ragdoll by PiCode9560</a> for the base of the character controller</td>
     </tr>
   </table>
 </div>
@@ -125,5 +128,5 @@ godot -e
 ---
 
 <div align="center">
-🐰 **Lost Rabbit Digital LLC**
+🐰 Lost Rabbit Digital LLC 🐰
 </div>
