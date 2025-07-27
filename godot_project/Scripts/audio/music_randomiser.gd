@@ -1,30 +1,58 @@
 extends Node
 
-# Steps
-# 1. Get all the children nodes of this node
-# 2. Place them into an array
-# 3. Randomise the order of the array
-# 4. Use built-in move_child() to match the children nodes to the array
+## Children Node Randomiser Script
+##
+## Randomises which AudioStreamPlayer child has autoplay enabled at start.
+## Targets AudioStreamPlayer nodes on the Music bus only.
+##
+## USAGE:
+##   1. Attach to parent node containing AudioStreamPlayer children
+##   2. Ensure AudioStreamPlayer children use "Music" bus
+##   3. Script automatically randomises on scene load
+##
+## EXAMPLE SCENE STRUCTURE:
+##   MusicManager (Node) [This Script Attached]
+##   -> Track01 (AudioStreamPlayer, Bus: Music)
+##   -> Track02 (AudioStreamPlayer, Bus: Music)
+##   -> Track03 (AudioStreamPlayer, Bus: Music)
 
-# Get the children of this node and store them in an array
-# [CuddleClouds:<AudioStreamPlayer#36876322340>, 
-# DriftingMemories:<AudioStreamPlayer#36909876774>,
-# ...:<AudioStreamPlayer#...>]
-@onready var children_nodes: Array = get_children()
+@export_group("Randomisation Settings")
+## Enable or disable the randomisation system entirely
+@export var enable_randomisation: bool = true
 
-# Create an array with the size of the children_nodes array
-# ['0', '1', '2', '...']
-@onready var new_node_positions = range(children_nodes.size())
+@export_group("Debug Options")
+## Print information about the randomisation process
+@export var enable_debug_output: bool = true
 
-func _ready() -> void:
-	# If there are no children nodes, return null
-	if get_child_count() == 0:
-		return	
+func _enter_tree() -> void:
+	randomise_autoplay_selection()
+
+## Randomly selects one Music bus AudioStreamPlayer child to enable autoplay
+##
+## Disables autoplay on all Music bus AudioStreamPlayer children, then
+## randomly selects one to re-enable autoplay for controlled playback.
+func randomise_autoplay_selection():
+	if not enable_randomisation:
+		if enable_debug_output:
+			print("Randomisation disabled - skipping")
+		return
+
+	# Filter for AudioStreamPlayer instances on Music bus
+	var audio_players = []
+	for child in get_children():
+		if child is AudioStreamPlayer and child.bus == "Music":
+			audio_players.append(child)
+			child.autoplay = false
+   
+	# Randomise and enable autoplay on selected player
+	if audio_players.size() > 0:
+		audio_players.shuffle()
+		audio_players[0].autoplay = true
+		
+	# Print the song which played
+	print("Now playing: ", audio_players[0].name)
 	
-	# Shuffle around the order of the songs at the start of the game
-	new_node_positions.shuffle()
-	
-	# Loop through the children node array
-	for i in range(children_nodes.size()):
-		# For each child, move it to the new node position
-		move_child(children_nodes[i], new_node_positions[i])
+	if enable_debug_output:
+		print("Autoplay enabled for: ", audio_players[0].name)
+	elif enable_debug_output:
+		print("Warning: No AudioStreamPlayer children found on Music bus")

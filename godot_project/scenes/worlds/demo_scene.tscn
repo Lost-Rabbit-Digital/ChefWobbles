@@ -226,57 +226,46 @@ script = ExtResource("9_4qt2k")
 
 [node name="CuddleClouds" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("6_7ktdx")
-autoplay = true
 bus = &"Music"
 
 [node name="DriftingMemories" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("7_8sg6o")
-autoplay = true
 bus = &"Music"
 
 [node name="EveningHarmony" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("8_kq5dy")
-autoplay = true
 bus = &"Music"
 
 [node name="FloatingDream" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("9_202kh")
-autoplay = true
 bus = &"Music"
 
 [node name="ForgottonBiomes" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("10_jdejj")
-autoplay = true
 bus = &"Music"
 
 [node name="GentleBreeze" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("11_y1cru")
-autoplay = true
 bus = &"Music"
 
 [node name="WanderersTale" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("15_yj3vi")
-autoplay = true
 bus = &"Music"
 
 [node name="StrangeWorlds" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("14_jjerm")
-autoplay = true
 bus = &"Music"
 
 [node name="PolarLights" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("13_05gbj")
-autoplay = true
 bus = &"Music"
 
 [node name="GoldenGleam" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("12_mttkv")
-autoplay = true
 bus = &"Music"
 
 [node name="SunlightThroughLeaves" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("16_jjhks")
-autoplay = true
 bus = &"Music"
 
 [node name="Ground" type="Node" parent="."]
