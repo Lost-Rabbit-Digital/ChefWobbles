@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=35 format=3 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://Scenes/character.tscn" id="1_j51jv"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://Resources/sky.tres" id="2_0cmys"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="7_8sg6o"]
 [ext_resource type="Material" uid="uid://6p0677d3nwdn" path="res://models/food/burger_patty/burger_patty_burnt_material.tres" id="7_kq5dy"]
 [ext_resource type="AudioStream" uid="uid://dempf1idxhdvw" path="res://audio/music/Evening Harmony.ogg" id="8_kq5dy"]
+[ext_resource type="Script" uid="uid://bqxc6mdey2qtf" path="res://Scripts/audio/music_randomiser.gd" id="9_4qt2k"]
 [ext_resource type="AudioStream" uid="uid://bp1u1j3y0evjm" path="res://audio/music/Floating Dream.ogg" id="9_202kh"]
 [ext_resource type="AudioStream" uid="uid://c5b8mjpjj7txe" path="res://audio/music/Forgotten Biomes.ogg" id="10_jdejj"]
 [ext_resource type="AudioStream" uid="uid://d1n0obngvv6k4" path="res://audio/music/Gentle Breeze.ogg" id="11_y1cru"]
@@ -221,6 +222,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
 shape = SubResource("BoxShape3D_1cc2y")
 
 [node name="Music" type="Node" parent="."]
+script = ExtResource("9_4qt2k")
 
 [node name="CuddleClouds" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("6_7ktdx")
