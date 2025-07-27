@@ -72,11 +72,11 @@ func _setup_derived_class() -> void:
 	"""Override in derived classes for specific setup"""
 	pass
 
-func _on_body_entered(body: Node) -> void:
+func _on_body_entered(_body: Node) -> void:
 	"""Handle collision with other bodies - override for specific behavior"""
 	pass
 
-func _on_body_exited(body: Node) -> void:
+func _on_body_exited(_body: Node) -> void:
 	"""Handle leaving collision with other bodies - override for specific behavior"""
 	pass
 

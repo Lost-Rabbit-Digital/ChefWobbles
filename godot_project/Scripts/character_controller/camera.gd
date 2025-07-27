@@ -14,7 +14,7 @@ extends Node3D
 
 var mouse_lock = false # is mouse locked
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	for child in physical_skel.get_children():
 		# prevent the camera from clipping into the character
 		if child is PhysicalBone3D:spring_arm.add_excluded_object(child.get_rid())

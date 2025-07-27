@@ -27,7 +27,7 @@ func _setup_derived_class() -> void:
 	# Set initial visual quality
 	_update_visual_quality()
 
-func _on_quality_changed(new_quality: FoodQuality) -> void:
+func _on_quality_changed(_new_quality: FoodQuality) -> void:
 	"""Handle quality change visual updates"""
 	_update_visual_quality()
 

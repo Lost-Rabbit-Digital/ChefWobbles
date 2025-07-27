@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=34 format=3 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://Scenes/character.tscn" id="1_j51jv"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://Resources/sky.tres" id="2_0cmys"]
@@ -17,7 +17,6 @@
 [ext_resource type="AudioStream" uid="uid://d1n0obngvv6k4" path="res://audio/music/Gentle Breeze.ogg" id="11_y1cru"]
 [ext_resource type="AudioStream" uid="uid://d0bbu53enpg0v" path="res://audio/music/Golden Gleam.ogg" id="12_mttkv"]
 [ext_resource type="AudioStream" uid="uid://dppngpsx8ctmp" path="res://audio/music/Polar Lights.ogg" id="13_05gbj"]
-[ext_resource type="AudioStream" uid="uid://c58316sy0yjlm" path="res://audio/music/Strange Worlds.ogg" id="14_jjerm"]
 [ext_resource type="AudioStream" uid="uid://bmq805hd2t7ae" path="res://audio/music/Wanderers Tale.ogg" id="15_yj3vi"]
 [ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/music/Sunlight Through Leaves.ogg" id="16_jjhks"]
 [ext_resource type="PackedScene" uid="uid://bjk4e8k421f15" path="res://Scenes/stations/stove_stations/stove_station.tscn" id="17_jc6vo"]
@@ -250,10 +249,6 @@ bus = &"Music"
 
 [node name="WanderersTale" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("15_yj3vi")
-bus = &"Music"
-
-[node name="StrangeWorlds" type="AudioStreamPlayer" parent="Music"]
-stream = ExtResource("14_jjerm")
 bus = &"Music"
 
 [node name="PolarLights" type="AudioStreamPlayer" parent="Music"]

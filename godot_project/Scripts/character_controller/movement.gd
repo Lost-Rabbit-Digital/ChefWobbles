@@ -12,10 +12,10 @@ const AIR_DAMPING = 0.95
 @export var angular_spring_damping: float = 80.0
 @export var max_angular_force: float = 9999.0
 
-# === AUDIO EXPORTS ===
-@export var grab_audio: Array[AudioStream]
-@export var release_audio: Array[AudioStream]
-@export var footstep_audio: Array[AudioStream]
+# === AUDIO EXPORTS (UPDATED FOR FOUR SOURCES) ===
+@onready var grab_audio = preload("res://audio/sound_effects/plops/plop_2.mp3")
+@onready var release_audio = preload("res://audio/sound_effects/dings/ding_2.mp3")
+@onready var footstep_audio = preload("res://audio/sound_effects/plops/plop_1.mp3")
 
 # === STABILITY CONSTANTS ===
 const UPRIGHT_FORCE_MULTIPLIER = 1.5
@@ -30,8 +30,12 @@ const BALANCE_THRESHOLD = 0.7
 @onready var camera_pivot = $CameraPivot
 @onready var animation_tree = $Animated/AnimationTree
 @onready var physical_bone_body: PhysicalBone3D = $"Physical/Armature/Skeleton3D/Physical Bone Body"
-@onready var interaction_audio_player = $InteractionAudioPlayer
-@onready var footstep_audio_player = $FootstepAudioPlayer
+
+# === AUDIO PLAYERS (UPDATED FOR FOUR SOURCES) ===
+@onready var left_hand_audio_player = $"Physical/Armature/Skeleton3D/Physical Bone LArm2/LeftHandAudioPlayer"
+@onready var right_hand_audio_player = $"Physical/Armature/Skeleton3D/Physical Bone RArm2/RightHandAudioPlayer"
+@onready var left_foot_audio_player = $"Physical/Armature/Skeleton3D/Physical Bone LLeg2/LeftFootAudioPlayer"
+@onready var right_foot_audio_player = $"Physical/Armature/Skeleton3D/Physical Bone RLeg2/RightFootAudioPlayer"
 
 # === GRABBING SYSTEM (KEPT YOUR ORIGINAL SYSTEM) ===
 @onready var grab_joint_right = $Physical/GrabJointRight
@@ -54,16 +58,22 @@ var grabbing_arm_left = false
 var grabbing_arm_right = false
 var current_delta: float
 
-# === FOOTSTEP AUDIO VARIABLES ===
+# === FOOTSTEP AUDIO VARIABLES (UPDATED FOR LEFT/RIGHT TRACKING) ===
 var was_on_floor = false
 var footstep_timer = 0.0
+var last_footstep_was_left = false  # Track which foot stepped last
 const FOOTSTEP_INTERVAL = 0.35  # Time between footsteps when walking
 
 # === NEW SMOOTHING VARIABLES ===
 var target_velocity: Vector3 = Vector3.ZERO
 var movement_input: Vector3 = Vector3.ZERO
 
+func test_direct_audio():
+	left_hand_audio_player.stream = grab_audio
+	left_hand_audio_player.play()
+		
 func _ready():
+	test_direct_audio()
 	# Keep your original initialization
 	physical_skel.physical_bones_start_simulation()
 	physics_bones = physical_skel.get_children().filter(func(x): return x is PhysicalBone3D)
@@ -80,13 +90,13 @@ func _input(event):
 		grabbing_arm_left = false
 		grab_joint_left.node_a = NodePath()
 		grab_joint_left.node_b = NodePath()
-		play_release_audio()
+		play_release_audio_left()
 		
 	if (not active_arm_right and grabbing_arm_right) or ragdoll_mode:
 		grabbing_arm_right = false
 		grab_joint_right.node_a = NodePath()
 		grab_joint_right.node_b = NodePath()
-		play_release_audio()
+		play_release_audio_right()
 
 func _process(delta):
 	# Keep your original arm animation system
@@ -203,30 +213,52 @@ func update_character_rotation():
 	# Keep your original rotation system
 	animated_skel.rotation.y = camera_pivot.rotation.y
 
-# === AUDIO FUNCTIONS ===
-func play_grab_audio():
-	if grab_audio and interaction_audio_player:
-		AudioManipulator.play_audio_static(interaction_audio_player, grab_audio, AudioManipulator.AudioType.GRAB_SOUNDS)
+# === AUDIO FUNCTIONS (USING AUDIOMANIPULATOR WITH SINGLE STREAMS) ===
+func play_grab_audio_left():
+	if grab_audio and left_hand_audio_player:
+		AudioManipulator.play_audio_static(left_hand_audio_player, [grab_audio], AudioManipulator.AudioType.GRAB_SOUNDS)
 
-func play_release_audio():
-	if release_audio and interaction_audio_player:
-		AudioManipulator.play_audio_static(interaction_audio_player, release_audio, AudioManipulator.AudioType.RELEASE_SOUNDS)
+func play_grab_audio_right():
+	if grab_audio and right_hand_audio_player:
+		AudioManipulator.play_audio_static(right_hand_audio_player, [grab_audio], AudioManipulator.AudioType.GRAB_SOUNDS)
 
-func play_footstep_audio():
-	if footstep_audio and footstep_audio_player:
-		AudioManipulator.play_audio_static(footstep_audio_player, footstep_audio, AudioManipulator.AudioType.FOOTSTEPS)
+func play_release_audio_left():
+	if release_audio and left_hand_audio_player:
+		AudioManipulator.play_audio_static(left_hand_audio_player, [release_audio], AudioManipulator.AudioType.RELEASE_SOUNDS)
+
+func play_release_audio_right():
+	if release_audio and right_hand_audio_player:
+		AudioManipulator.play_audio_static(right_hand_audio_player, [release_audio], AudioManipulator.AudioType.RELEASE_SOUNDS)
+
+func play_footstep_audio_left():
+	if footstep_audio and left_foot_audio_player:
+		AudioManipulator.play_audio_static(left_foot_audio_player, [footstep_audio], AudioManipulator.AudioType.FOOTSTEPS)
+
+func play_footstep_audio_right():
+	if footstep_audio and right_foot_audio_player:
+		AudioManipulator.play_audio_static(right_foot_audio_player, [footstep_audio], AudioManipulator.AudioType.FOOTSTEPS)
 
 func handle_footstep_audio(delta):
-	# Play footsteps when landing from a jump/fall
+	# Play footsteps when landing from a jump/fall (alternate feet)
 	if is_on_floor and not was_on_floor:
-		play_footstep_audio()
+		if last_footstep_was_left:
+			play_footstep_audio_right()
+			last_footstep_was_left = false
+		else:
+			play_footstep_audio_left()
+			last_footstep_was_left = true
 		footstep_timer = 0.0  # Reset timer to prevent immediate repeat
 	
-	# Play footsteps while walking on ground
+	# Play footsteps while walking on ground (alternate feet)
 	elif is_on_floor and walking:
 		footstep_timer += delta
 		if footstep_timer >= FOOTSTEP_INTERVAL:
-			play_footstep_audio()
+			if last_footstep_was_left:
+				play_footstep_audio_right()
+				last_footstep_was_left = false
+			else:
+				play_footstep_audio_left()
+				last_footstep_was_left = true
 			footstep_timer = 0.0
 	else:
 		# Reset timer when not walking or in air
@@ -236,7 +268,7 @@ func handle_footstep_audio(delta):
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
 
-# Keep your original grabbing functions with audio added
+# Keep your original grabbing functions with updated audio calls
 func _on_r_grab_area_body_entered(body: Node3D):
 	if body is PhysicsBody3D and body.get_parent() != physical_skel:
 		if active_arm_right and not grabbing_arm_right:
@@ -244,7 +276,7 @@ func _on_r_grab_area_body_entered(body: Node3D):
 			grab_joint_right.global_position = r_grab_area.global_position
 			grab_joint_right.node_a = physical_bone_r_arm_2.get_path()
 			grab_joint_right.node_b = body.get_path()
-			play_grab_audio()
+			play_grab_audio_right()
 
 func _on_l_grab_area_body_entered(body: Node3D):
 	if body is PhysicsBody3D and body.get_parent() != physical_skel:
@@ -254,7 +286,7 @@ func _on_l_grab_area_body_entered(body: Node3D):
 			grab_joint_left.global_position = l_grab_area.global_position
 			grab_joint_left.node_a = physical_bone_l_arm_2.get_path()
 			grab_joint_left.node_b = body.get_path()
-			play_grab_audio()
+			play_grab_audio_left()
 
 func _on_jump_timer_timeout():
 	# Keep your original jump timer
