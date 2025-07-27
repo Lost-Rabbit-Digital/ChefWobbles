@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/plop_2.mp3-8af6560810d5e73f75f2742210400b41.m
 [params]
 
 loop=false
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

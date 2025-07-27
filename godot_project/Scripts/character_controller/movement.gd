@@ -12,6 +12,10 @@ const AIR_DAMPING = 0.95
 @export var angular_spring_damping: float = 80.0
 @export var max_angular_force: float = 9999.0
 
+# === AUDIO EXPORTS ===
+@export var grab_audio: AudioStream
+@export var release_audio: AudioStream
+
 # === STABILITY CONSTANTS ===
 const UPRIGHT_FORCE_MULTIPLIER = 1.5
 const BALANCE_THRESHOLD = 0.7
@@ -25,6 +29,7 @@ const BALANCE_THRESHOLD = 0.7
 @onready var camera_pivot = $CameraPivot
 @onready var animation_tree = $Animated/AnimationTree
 @onready var physical_bone_body: PhysicalBone3D = $"Physical/Armature/Skeleton3D/Physical Bone Body"
+@onready var interaction_audio = $InteractionAudio
 
 # === GRABBING SYSTEM (KEPT YOUR ORIGINAL SYSTEM) ===
 @onready var grab_joint_right = $Physical/GrabJointRight
@@ -68,11 +73,13 @@ func _input(event):
 		grabbing_arm_left = false
 		grab_joint_left.node_a = NodePath()
 		grab_joint_left.node_b = NodePath()
+		play_release_audio()
 		
 	if (not active_arm_right and grabbing_arm_right) or ragdoll_mode:
 		grabbing_arm_right = false
 		grab_joint_right.node_a = NodePath()
 		grab_joint_right.node_b = NodePath()
+		play_release_audio()
 
 func _process(delta):
 	# Keep your original arm animation system
@@ -187,11 +194,22 @@ func update_character_rotation():
 	# Keep your original rotation system
 	animated_skel.rotation.y = camera_pivot.rotation.y
 
+# === AUDIO FUNCTIONS ===
+func play_grab_audio():
+	if grab_audio and interaction_audio:
+		interaction_audio.stream = grab_audio
+		interaction_audio.play()
+
+func play_release_audio():
+	if release_audio and interaction_audio:
+		interaction_audio.stream = release_audio
+		interaction_audio.play()
+
 # Keep your original spring function exactly the same
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
 
-# Keep your original grabbing functions exactly the same
+# Keep your original grabbing functions with audio added
 func _on_r_grab_area_body_entered(body: Node3D):
 	if body is PhysicsBody3D and body.get_parent() != physical_skel:
 		if active_arm_right and not grabbing_arm_right:
@@ -199,6 +217,7 @@ func _on_r_grab_area_body_entered(body: Node3D):
 			grab_joint_right.global_position = r_grab_area.global_position
 			grab_joint_right.node_a = physical_bone_r_arm_2.get_path()
 			grab_joint_right.node_b = body.get_path()
+			play_grab_audio()
 
 func _on_l_grab_area_body_entered(body: Node3D):
 	if body is PhysicsBody3D and body.get_parent() != physical_skel:
@@ -208,6 +227,7 @@ func _on_l_grab_area_body_entered(body: Node3D):
 			grab_joint_left.global_position = l_grab_area.global_position
 			grab_joint_left.node_a = physical_bone_l_arm_2.get_path()
 			grab_joint_left.node_b = body.get_path()
+			play_grab_audio()
 
 func _on_jump_timer_timeout():
 	# Keep your original jump timer
