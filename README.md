@@ -44,11 +44,11 @@ In this relaxing culinary world, your goal is to:
 
 ### Why Join Our Discord?
 
-- 💬 **Direct Developer Access** - Chat with the team and influence development
-- 🎮 **Community Events** - Participate in cooking challenges and events
-- 🔍 **Early Updates** - Be the first to know about new features and patches
-- 🐛 **Bug Reports** - Help us improve by reporting issues
-- 🍳 **Recipe Sharing** - Share your best wobbly cooking creations
+- **Direct Developer Access** - Chat with the team and influence development
+- **Community Events** - Participate in cooking challenges and events
+- **Early Updates** - Be the first to know about new features and patches
+- **Bug Reports** - Help us improve by reporting issues
+- **Recipe Sharing** - Share your best wobbly cooking creations
 
 ---
 
