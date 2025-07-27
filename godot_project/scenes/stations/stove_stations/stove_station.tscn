@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=4 uid="uid://bjk4e8k421f15"]
+[gd_scene load_steps=10 format=4 uid="uid://bjk4e8k421f15"]
 
 [ext_resource type="Script" uid="uid://8ke8qu0t6lbl" path="res://scripts/stations/stove_station.gd" id="1_5pjtc"]
 [ext_resource type="Texture2D" uid="uid://dlcixu8xlx5vd" path="res://models/stations/stove_station/stove_station_0.png" id="1_x0nu6"]
+[ext_resource type="AudioStream" uid="uid://c564xbudf67it" path="res://audio/sound_effects/sizzles/sizzling_1.mp3" id="2_lc4m4"]
+[ext_resource type="AudioStream" uid="uid://kf61btfpg481" path="res://audio/sound_effects/plops/plop_1.mp3" id="3_30amm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ysapw"]
 resource_name = "material_0"
@@ -56,6 +58,8 @@ size = Vector3(0.874878, 0.0505371, 0.3125)
 [node name="StoveStation" type="Node3D"]
 transform = Transform3D(-1.81474e-07, 0, -4.15163, 0, 4.15163, 0, 4.15163, 0, -1.81474e-07, 0, 0, 0)
 script = ExtResource("1_5pjtc")
+cooking_start_audio = ExtResource("2_lc4m4")
+stage_change_audio = ExtResource("3_30amm")
 
 [node name="Node" type="Node3D" parent="."]
 
@@ -74,3 +78,8 @@ shape = SubResource("ConcavePolygonShape3D_472ig")
 transform = Transform3D(1, 0, 1.58806e-12, 0, 1, 0, -1.58806e-12, 0, 1, 0.000793458, 0.512329, 0.03125)
 shape = SubResource("BoxShape3D_x0nu6")
 debug_color = Color(0.687178, 0.499728, 1.92523e-07, 0.42)
+
+[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="."]
+
+[node name="CookingTimer" type="Timer" parent="."]
+wait_time = 0.1

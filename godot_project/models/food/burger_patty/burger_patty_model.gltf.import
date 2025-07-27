@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bav11cntvumj7"
-path="res://.godot/imported/burger_patty.gltf-cfbcbcbeb046d5d680ef6ba82c92896d.scn"
+uid="uid://b2w427kb3muef"
+path="res://.godot/imported/burger_patty_model.gltf-a00f72445fbd766158f5cf7367dde6fe.scn"
 
 [deps]
 
-source_file="res://models/food/burger_patty/burger_patty.gltf"
-dest_files=["res://.godot/imported/burger_patty.gltf-cfbcbcbeb046d5d680ef6ba82c92896d.scn"]
+source_file="res://models/food/burger_patty/burger_patty_model.gltf"
+dest_files=["res://.godot/imported/burger_patty_model.gltf-a00f72445fbd766158f5cf7367dde6fe.scn"]
 
 [params]
 
@@ -32,6 +32,21 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={}
+_subresources={
+"materials": {
+"material_0": {
+"use_external/enabled": true,
+"use_external/path": "uid://dua8da6sm17mk"
+}
+},
+"nodes": {
+"PATH:Node/cylinder": {
+"generate/physics": true,
+"physics/body_type": 1,
+"physics/physics_material_override": null,
+"physics/shape_type": 2
+}
+}
+}
 gltf/naming_version=1
 gltf/embedded_image_handling=1

@@ -1,12 +1,9 @@
-
-# ==========================
-# BurgerPatty.gd
-# ==========================
-extends FoodItem
+@tool
 class_name BurgerPatty
+extends FoodItem
 
 ## Burger patty that can be cooked on stoves
-## Demonstrates food-specific cooking behavior
+## This is a scene-ready class - attach to RigidBody3D nodes in scenes
 
 # Cooking materials for each quality level
 @export_group("Cooking Materials")
@@ -16,7 +13,7 @@ class_name BurgerPatty
 @export var overcooked_material: Material
 @export var burnt_material: Material
 
-func _setup_derived_class():
+func _setup_derived_class() -> void:
 	"""Setup burger patty specific properties"""
 	super._setup_derived_class()
 	
@@ -28,11 +25,11 @@ func _setup_derived_class():
 	# Connect quality changes to visual updates
 	quality_changed.connect(_on_quality_changed)
 
-func _on_quality_changed(new_quality: FoodQuality):
+func _on_quality_changed(new_quality: FoodQuality) -> void:
 	"""Handle quality change visual updates"""
 	_update_visual_quality()
 
-func _update_visual_quality():
+func _update_visual_quality() -> void:
 	"""Update patty material based on cooking quality"""
 	if not mesh_instance:
 		return
@@ -54,7 +51,7 @@ func _update_visual_quality():
 	if material_to_use:
 		mesh_instance.material_override = material_to_use
 
-func _on_body_entered(body: Node):
+func _on_body_entered(body: Node) -> void:
 	"""Handle entering cooking stations"""
 	super._on_body_entered(body)
 	
@@ -63,7 +60,7 @@ func _on_body_entered(body: Node):
 		var stove = body as StoveStation
 		stove.start_cooking_food_item(self)
 
-func _on_body_exited(body: Node):
+func _on_body_exited(body: Node) -> void:
 	"""Handle leaving cooking stations"""
 	super._on_body_exited(body)
 	
@@ -73,7 +70,7 @@ func _on_body_exited(body: Node):
 		stove.stop_cooking_food_item(self)
 
 # Public API for cooking system
-func set_cooking_quality(quality: FoodQuality):
+func set_cooking_quality(quality: FoodQuality) -> void:
 	"""Set quality from cooking system"""
 	_change_quality(quality)
 

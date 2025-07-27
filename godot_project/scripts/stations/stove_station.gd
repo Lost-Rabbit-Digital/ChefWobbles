@@ -1,8 +1,10 @@
-extends StaticBody3D
+@tool
 class_name StoveStation
+extends Node3D
 
 ## Cooking station that processes FoodItem objects through cooking stages
 ## Handles audio feedback, timing, and quality progression
+## This is a scene-ready class - attach to StaticBody3D nodes in scenes
 
 # Audio resources
 @export_group("Audio")
@@ -16,10 +18,13 @@ class_name StoveStation
 @export var perfect_to_overcooked_time: float = 2.0
 @export var overcooked_to_burnt_time: float = 1.5
 
-# Node references
-@onready var cooking_surface: Area3D = $CookingSurface
+# Node references - adapted to your scene structure
+@onready var cooking_surface_shape: CollisionShape3D = $Node/root/cuboid/StaticBody3D/CookingSurface
 @onready var audio_player: AudioStreamPlayer3D = $AudioPlayer
 @onready var cooking_timer: Timer = $CookingTimer
+
+# Detection area for food items (created programmatically)
+var detection_area: Area3D
 
 # Cooking state tracking
 var cooking_items: Dictionary = {}  # food_item -> CookingProgress
@@ -37,19 +42,31 @@ class CookingProgress:
 		cooking_id = id
 		target_quality = FoodItem.FoodQuality.RAW
 
-func _ready():
+func _ready() -> void:
 	_setup_cooking_system()
 	_validate_resources()
 
-func _setup_cooking_system():
+func _setup_cooking_system() -> void:
 	"""Initialize cooking detection and timing systems"""
-	# Setup collision detection
-	if not cooking_surface:
-		push_error("CookingSurface Area3D not found")
+	# Create Area3D for detection using existing CollisionShape3D
+	if not cooking_surface_shape:
+		push_error("CookingSurface CollisionShape3D not found - check scene structure")
 		return
 	
-	cooking_surface.body_entered.connect(_on_item_entered_surface)
-	cooking_surface.body_exited.connect(_on_item_left_surface)
+	# Create detection area programmatically
+	detection_area = Area3D.new()
+	detection_area.name = "DetectionArea"
+	add_child(detection_area)
+	
+	# Clone the collision shape for the detection area
+	var detection_shape = CollisionShape3D.new()
+	detection_shape.shape = cooking_surface_shape.shape
+	detection_shape.transform = cooking_surface_shape.transform
+	detection_area.add_child(detection_shape)
+	
+	# Connect detection signals
+	detection_area.body_entered.connect(_on_item_entered_surface)
+	detection_area.body_exited.connect(_on_item_left_surface)
 	
 	# Setup cooking progression timer
 	if not cooking_timer:
@@ -60,7 +77,7 @@ func _setup_cooking_system():
 	cooking_timer.timeout.connect(_process_cooking_progression)
 	cooking_timer.start()
 
-func _validate_resources():
+func _validate_resources() -> void:
 	"""Check for missing audio resources"""
 	var missing = []
 	if not cooking_start_audio: missing.append("cooking_start_audio")
@@ -69,7 +86,7 @@ func _validate_resources():
 	if missing.size() > 0:
 		push_warning("StoveStation missing audio: " + str(missing))
 
-func _on_item_entered_surface(body: Node3D):
+func _on_item_entered_surface(body: Node3D) -> void:
 	"""Handle food item entering cooking surface"""
 	var food_item = body as FoodItem
 	if not food_item or not food_item.can_interact():
@@ -77,7 +94,7 @@ func _on_item_entered_surface(body: Node3D):
 	
 	start_cooking_food_item(food_item)
 
-func _on_item_left_surface(body: Node3D):
+func _on_item_left_surface(body: Node3D) -> void:
 	"""Handle food item leaving cooking surface"""
 	var food_item = body as FoodItem
 	if not food_item:
@@ -85,7 +102,7 @@ func _on_item_left_surface(body: Node3D):
 	
 	stop_cooking_food_item(food_item)
 
-func start_cooking_food_item(food_item: FoodItem):
+func start_cooking_food_item(food_item: FoodItem) -> void:
 	"""Begin cooking process for a food item"""
 	# Skip if already cooking
 	if cooking_items.has(food_item):
@@ -111,7 +128,7 @@ func start_cooking_food_item(food_item: FoodItem):
 	
 	print("Started cooking: ", food_item.food_name, " (ID: ", progress.cooking_id, ")")
 
-func stop_cooking_food_item(food_item: FoodItem):
+func stop_cooking_food_item(food_item: FoodItem) -> void:
 	"""Stop cooking process for a food item"""
 	if not cooking_items.has(food_item):
 		return
@@ -124,7 +141,7 @@ func stop_cooking_food_item(food_item: FoodItem):
 	
 	print("Stopped cooking: ", food_item.food_name, " (ID: ", progress.cooking_id, ")")
 
-func _process_cooking_progression():
+func _process_cooking_progression() -> void:
 	"""Update cooking progression for all active items"""
 	for food_item in cooking_items.keys():
 		var progress = cooking_items[food_item]
@@ -140,7 +157,7 @@ func _process_cooking_progression():
 		# Check for quality progression
 		_check_quality_progression(progress)
 
-func _check_quality_progression(progress: CookingProgress):
+func _check_quality_progression(progress: CookingProgress) -> void:
 	"""Check if food should progress to next quality level"""
 	var current_quality = progress.food_item.get_quality()
 	var required_time = _get_time_for_transition(current_quality)
@@ -148,7 +165,7 @@ func _check_quality_progression(progress: CookingProgress):
 	if progress.time_in_stage >= required_time:
 		_progress_food_quality(progress)
 
-func _progress_food_quality(progress: CookingProgress):
+func _progress_food_quality(progress: CookingProgress) -> void:
 	"""Progress food item to next quality level"""
 	var current_quality = progress.food_item.get_quality()
 	var next_quality = _get_next_quality(current_quality)
@@ -191,7 +208,7 @@ func _get_time_for_transition(from_quality: FoodItem.FoodQuality) -> float:
 		_:
 			return 999.0  # No transition
 
-func _play_audio(audio_stream: AudioStream):
+func _play_audio(audio_stream: AudioStream) -> void:
 	"""Play audio with 3D positioning"""
 	if not audio_stream or not audio_player:
 		return

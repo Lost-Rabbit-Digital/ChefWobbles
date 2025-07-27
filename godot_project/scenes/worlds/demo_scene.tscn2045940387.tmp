@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=35 format=4 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="1_j51jv"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
+[ext_resource type="Material" uid="uid://dua8da6sm17mk" path="res://models/food/burger_patty/burger_patty_raw_material.tres" id="4_mcgj6"]
 [ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://textures/prototype_textures/PNG/logo_blue_512x512.png" id="5_g2hwh"]
 [ext_resource type="AudioStream" uid="uid://0vhuw27xogj8" path="res://audio/music/Cuddle Clouds.ogg" id="6_7ktdx"]
 [ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="7_8sg6o"]
@@ -14,7 +15,6 @@
 [ext_resource type="AudioStream" uid="uid://c58316sy0yjlm" path="res://audio/music/Strange Worlds.ogg" id="14_jjerm"]
 [ext_resource type="AudioStream" uid="uid://bmq805hd2t7ae" path="res://audio/music/Wanderers Tale.ogg" id="15_yj3vi"]
 [ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/music/Sunlight Through Leaves.ogg" id="16_jjhks"]
-[ext_resource type="PackedScene" uid="uid://b2w427kb3muef" path="res://models/food/burger_patty/burger_patty_model.gltf" id="17_3pgq7"]
 [ext_resource type="PackedScene" uid="uid://bjk4e8k421f15" path="res://scenes/stations/stove_stations/stove_station.tscn" id="17_jc6vo"]
 [ext_resource type="PackedScene" uid="uid://dsc5wbn13tt8p" path="res://models/stations/generic_station/generic_station.gltf" id="18_fu8s8"]
 
@@ -24,6 +24,68 @@ sky_material = ExtResource("2_0cmys")
 [sub_resource type="Environment" id="Environment_217oh"]
 background_mode = 2
 sky = SubResource("Sky_67mw3")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tk8g1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7mhq"]
+resource_name = "material_0"
+transparency = 2
+alpha_scissor_threshold = 0.05
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = SubResource("CompressedTexture2D_tk8g1")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_j7mhq"]
+_surfaces = [{
+"aabb": AABB(-0.21875, 0.1875, -0.15625, 0.4375, 0.0625, 0.4375),
+"format": 34896613377,
+"index_count": 96,
+"index_data": PackedByteArray("AAABAAIAAgADAAAAAAADAAQAAAAEAAUABQABAAAAAwAGAAQABQAEAAcABAAGAAcABQAHAAgACAABAAUACAAHAAkABwAGAAkACAAJAAoACgABAAgACgAJAAsACQAGAAsADAABAAoACgALAAwACwAGAA0ADAALAA0ADgAGAAMAAgAOAAMADQAGAA8ADwAGAA4ADAANABAAEAANAA8AEAABAAwAEQAOAAIAEQAPAA4AAgABABEAEAAPABEAEQABABAA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 18,
+"vertex_data": PackedByteArray("//8AAAS1AAD/fwAA/38AAJe8AAD//wAA/////wS1AAD/////+koAAP//AAD6SgAA/3////9/AACXvP//AAAAAJe8AAAAAAAAZ0P//wAAAABnQwAAAAAAAAAA///6SgAAAAAAAPpKAAAAAP//BLUAAJe8/////wAAZ0P/////AAAAAAAABLUAAGdDAAD//wAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6hgju"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-0.21875, 0.1875, -0.15625, 0.4375, 0.0625, 0.4375),
+"attribute_data": PackedByteArray("/+d8lf+n/6+Bwv9v/4f/V/+//0f/v/9X/4f/R4HC/+//p/+v/+eByv/ngcr/p/+v/+d8lf9//w//twAA/7f/D/9/AAD/54HK/6f/r//nfJWBwv/v/6f/r//ngcoAAP+v/zf/n/83/68AAP+f/+d8lf+n/6+Bwv9vfI3/7/+n/6+Bwv/v/4f/P/+//y//v/8//4f/L4HC/2//p/+vfI3/b/9ngcr/p/+vfI3/7/+//w//9wAA//f/D/+/AAB8jf9v/6f/r/9nfJX/Z3yV/6f/r/9ngcoAAP+X/zf/h/83/5cAAP+H/2d8lf+n/6//Z4HKfI3/b/+n/6//Z3yVAAD/x/83/7f/N//HAAD/t/9ngcr/p/+vfI3/74HC/2//p/+vfI3/b/+H/yf/v/8X/7//J/+H/xd8jf/v/6f/r4HC/+8="),
+"format": 34896613399,
+"index_count": 96,
+"index_data": PackedByteArray("AAABAAIAAwAEAAUAAwAGAAQABwAIAAkACgALAAwADQAOAA8ADQAQAA4AEQASABMAFAAVABYAFwAYABkAFwAaABgAGwAcAB0AHgAfACAAIQAiACMAIQAkACIAJQAmACcAKAApACoAKwAsAC0AKwAuACwALwAwADEAMgAzADQANQA2ADcANQA4ADYAOQA6ADsAPAA9AD4APwBAAEEAPwBCAEAAQwBEAEUARgBHAEgASQBKAEsASQBMAEoATQBOAE8A"),
+"material": ExtResource("4_mcgj6"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 80,
+"vertex_data": PackedByteArray("//8AAAS1/7//fwAA/3//v5e8AAD///+/l7wAAP//KaL/////BLUpov//AAAEtSmil7z/////KaKXvP//////v/9/////f/+//////wS1/7///wAA+kr/v/9/AAD/f/+///8AAAS1/7///wAABLX/v//////6Sv+///8AAPpK/7//////BLX/v/////8Etf+//3////9//7//////+kr/v5e8AAAAAP+//38AAP9//7///wAA+kr/v///AAD6StTdl7z//wAA1N2XvAAAAADU3f/////6StTd//////pK/7//f////3//v5e8//8AAP+/Z0MAAAAA/7//fwAA/3//v5e8AAAAAP+/l7wAAAAA//9nQ///AAD//2dDAAAAAP//l7z//wAA//+XvP//AAD/v/9/////f/+/Z0P//wAA/78AAAAA+kr/v/9/AAD/f/+/Z0MAAAAA/79nQwAAAADU3QAA///6StTdAAAAAPpK1N1nQ///AADU3WdD//8AAP+//3////9//78AAP//+kr/vwAAAAAEtf+//38AAP9//78AAAAA+kr/vwAAAAD6Sv+/AAD//wS1/78AAAAABLX/vwAA///6Sv+/AAD///pK/7//f////3//vwAA//8Etf+/Z0MAAP///7//fwAA/3//vwAAAAAEtf+/AAAAAAS1KaJnQ/////8pomdDAAD//ymiAAD//wS1KaIAAP//BLX/v/9/////f/+/Z0P//////7+XvAAA////v/9/AAD/f/+/Z0MAAP///79nQwAA//8AgJe8/////wCAl7wAAP//AIBnQ/////8AgGdD//////+//3////9//7+XvP//////vwAA/38AAP9/AAD/f/9/AAD/fwAA/38AAP9/AAD+//9/////f/7//38AAP9/AAD/fwAA/3//fwAA/38AAP9/AAD/fwAA/v//f////3/+//9/AAD/fwAA/38AAP9//38AAP9/AAD/fwAA/38AAP7//3////9//v//fwAA/38AAP9/AAD/f/9/////f////3////9////+//9/////f/7//38AAP9/AAD/fwAA/3//f////3////9/////f////v//f////3/+//9/AAD/fwAA/38AAP9//3////9/////f////3////7//3////9//v//fwAA/38AAP9/AAD/f/9/////f////3////9////+//9/////f/7//38AAP9/AAD/fwAA/3//f////3////9/////f////v//f////3/+//9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_j7mhq")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_8vcoc"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-0.21875, 0.1875, -0.15625, 0.4375, 0.0625, 0.4375),
+"attribute_data": PackedByteArray("/+d8lf+n/6+Bwv9v/4f/V/+//0f/v/9X/4f/R4HC/+//p/+v/+eByv/ngcr/p/+v/+d8lf9//w//twAA/7f/D/9/AAD/54HK/6f/r//nfJWBwv/v/6f/r//ngcoAAP+v/zf/n/83/68AAP+f/+d8lf+n/6+Bwv9vfI3/7/+n/6+Bwv/v/4f/P/+//y//v/8//4f/L4HC/2//p/+vfI3/b/9ngcr/p/+vfI3/7/+//w//9wAA//f/D/+/AAB8jf9v/6f/r/9nfJX/Z3yV/6f/r/9ngcoAAP+X/zf/h/83/5cAAP+H/2d8lf+n/6//Z4HKfI3/b/+n/6//Z3yVAAD/x/83/7f/N//HAAD/t/9ngcr/p/+vfI3/74HC/2//p/+vfI3/b/+H/yf/v/8X/7//J/+H/xd8jf/v/6f/r4HC/+8="),
+"format": 34896613399,
+"index_count": 96,
+"index_data": PackedByteArray("AAABAAIAAwAEAAUAAwAGAAQABwAIAAkACgALAAwADQAOAA8ADQAQAA4AEQASABMAFAAVABYAFwAYABkAFwAaABgAGwAcAB0AHgAfACAAIQAiACMAIQAkACIAJQAmACcAKAApACoAKwAsAC0AKwAuACwALwAwADEAMgAzADQANQA2ADcANQA4ADYAOQA6ADsAPAA9AD4APwBAAEEAPwBCAEAAQwBEAEUARgBHAEgASQBKAEsASQBMAEoATQBOAE8A"),
+"material": SubResource("StandardMaterial3D_j7mhq"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 80,
+"vertex_data": PackedByteArray("//8AAAS1/7//fwAA/3//v5e8AAD///+/l7wAAP//KaL/////BLUpov//AAAEtSmil7z/////KaKXvP//////v/9/////f/+//////wS1/7///wAA+kr/v/9/AAD/f/+///8AAAS1/7///wAABLX/v//////6Sv+///8AAPpK/7//////BLX/v/////8Etf+//3////9//7//////+kr/v5e8AAAAAP+//38AAP9//7///wAA+kr/v///AAD6StTdl7z//wAA1N2XvAAAAADU3f/////6StTd//////pK/7//f////3//v5e8//8AAP+/Z0MAAAAA/7//fwAA/3//v5e8AAAAAP+/l7wAAAAA//9nQ///AAD//2dDAAAAAP//l7z//wAA//+XvP//AAD/v/9/////f/+/Z0P//wAA/78AAAAA+kr/v/9/AAD/f/+/Z0MAAAAA/79nQwAAAADU3QAA///6StTdAAAAAPpK1N1nQ///AADU3WdD//8AAP+//3////9//78AAP//+kr/vwAAAAAEtf+//38AAP9//78AAAAA+kr/vwAAAAD6Sv+/AAD//wS1/78AAAAABLX/vwAA///6Sv+/AAD///pK/7//f////3//vwAA//8Etf+/Z0MAAP///7//fwAA/3//vwAAAAAEtf+/AAAAAAS1KaJnQ/////8pomdDAAD//ymiAAD//wS1KaIAAP//BLX/v/9/////f/+/Z0P//////7+XvAAA////v/9/AAD/f/+/Z0MAAP///79nQwAA//8AgJe8/////wCAl7wAAP//AIBnQ/////8AgGdD//////+//3////9//7+XvP//////vwAA/38AAP9/AAD/f/9/AAD/fwAA/38AAP9/AAD+//9/////f/7//38AAP9/AAD/fwAA/3//fwAA/38AAP9/AAD/fwAA/v//f////3/+//9/AAD/fwAA/38AAP9//38AAP9/AAD/fwAA/38AAP7//3////9//v//fwAA/38AAP9/AAD/f/9/////f////3////9////+//9/////f/7//38AAP9/AAD/fwAA/3//f////3////9/////f////v//f////3/+//9/AAD/fwAA/38AAP9//3////9/////f////3////7//3////9//v//fwAA/38AAP9/AAD/f/9/////f////3////9////+//9/////f/7//38AAP9/AAD/fwAA/3//f////3////9/////f////v//f////3/+//9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_6hgju")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wjfg5"]
 friction = 0.5
@@ -85,8 +147,96 @@ Show cursor - Esc
 
 [node name="BurgerPatties" type="Node" parent="Interactables"]
 
-[node name="BurgerPatty" parent="Interactables/BurgerPatties" instance=ExtResource("17_3pgq7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3, 1)
+[node name="BurgerPatty" type="Node3D" parent="Interactables/BurgerPatties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.05549, 2.55864, 2.53983)
+
+[node name="Node" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty"]
+
+[node name="root" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty/Node"]
+
+[node name="cylinder" type="MeshInstance3D" parent="Interactables/BurgerPatties/BurgerPatty/Node/root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1875, -0.0625)
+material_override = ExtResource("4_mcgj6")
+mesh = SubResource("ArrayMesh_8vcoc")
+skeleton = NodePath("")
+
+[node name="BurgerPatty2" type="Node3D" parent="Interactables/BurgerPatties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.05549, 2.55864, 3.53983)
+
+[node name="Node" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty2"]
+
+[node name="root" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty2/Node"]
+
+[node name="cylinder" type="MeshInstance3D" parent="Interactables/BurgerPatties/BurgerPatty2/Node/root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1875, -0.0625)
+material_override = ExtResource("4_mcgj6")
+mesh = SubResource("ArrayMesh_8vcoc")
+skeleton = NodePath("")
+
+[node name="BurgerPatty3" type="Node3D" parent="Interactables/BurgerPatties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.05549, 2.55864, 4.53983)
+
+[node name="Node" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty3"]
+
+[node name="root" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty3/Node"]
+
+[node name="cylinder" type="MeshInstance3D" parent="Interactables/BurgerPatties/BurgerPatty3/Node/root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1875, -0.0625)
+material_override = ExtResource("4_mcgj6")
+mesh = SubResource("ArrayMesh_8vcoc")
+skeleton = NodePath("")
+
+[node name="BurgerPatty4" type="Node3D" parent="Interactables/BurgerPatties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.05549, 2.55864, 5.53983)
+
+[node name="Node" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty4"]
+
+[node name="root" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty4/Node"]
+
+[node name="cylinder" type="MeshInstance3D" parent="Interactables/BurgerPatties/BurgerPatty4/Node/root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1875, -0.0625)
+material_override = ExtResource("4_mcgj6")
+mesh = SubResource("ArrayMesh_8vcoc")
+skeleton = NodePath("")
+
+[node name="BurgerPatty5" type="Node3D" parent="Interactables/BurgerPatties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.05549, 2.55864, 5.03983)
+
+[node name="Node" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty5"]
+
+[node name="root" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty5/Node"]
+
+[node name="cylinder" type="MeshInstance3D" parent="Interactables/BurgerPatties/BurgerPatty5/Node/root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1875, -0.0625)
+material_override = ExtResource("4_mcgj6")
+mesh = SubResource("ArrayMesh_8vcoc")
+skeleton = NodePath("")
+
+[node name="BurgerPatty6" type="Node3D" parent="Interactables/BurgerPatties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.05549, 2.55864, 4.03983)
+
+[node name="Node" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty6"]
+
+[node name="root" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty6/Node"]
+
+[node name="cylinder" type="MeshInstance3D" parent="Interactables/BurgerPatties/BurgerPatty6/Node/root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1875, -0.0625)
+material_override = ExtResource("4_mcgj6")
+mesh = SubResource("ArrayMesh_8vcoc")
+skeleton = NodePath("")
+
+[node name="BurgerPatty7" type="Node3D" parent="Interactables/BurgerPatties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.05549, 2.55864, 3.03983)
+
+[node name="Node" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty7"]
+
+[node name="root" type="Node3D" parent="Interactables/BurgerPatties/BurgerPatty7/Node"]
+
+[node name="cylinder" type="MeshInstance3D" parent="Interactables/BurgerPatties/BurgerPatty7/Node/root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1875, -0.0625)
+material_override = ExtResource("4_mcgj6")
+mesh = SubResource("ArrayMesh_8vcoc")
+skeleton = NodePath("")
 
 [node name="GodotBoxes" type="Node" parent="Interactables"]
 
