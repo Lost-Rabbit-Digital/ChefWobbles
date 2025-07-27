@@ -19,7 +19,7 @@ A 16-color pastel palette inspired by "A Short Hike" for cartoon-style cooking g
 
 ### Meat
 ### Burger
-- Raw: `#ffb3b3`
+- Raw: `#fb9797`
 - Cooking: `#d9b399`
 - Cooked: `#8c6b4d`
 - Burnt: `#513c27`
