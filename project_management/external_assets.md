@@ -1,6 +1,7 @@
 # In-Use
 - https://pizzadoggy.itch.io/cozy-tunes
 - https://github.com/PiCode9560/Godot-4-Active-ragdoll
+- https://github.com/Maaack/Godot-Music-Controller
 
 # Future Assets
 ## Shaders
