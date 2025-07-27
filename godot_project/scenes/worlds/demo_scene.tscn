@@ -1,7 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=31 format=3 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="1_j51jv"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
+[ext_resource type="PackedScene" uid="uid://wsjrvyhu3q61" path="res://scenes/interactables/food/burger_patty.tscn" id="3_j51jv"]
+[ext_resource type="Script" uid="uid://gyjxlptmowpe" path="res://scripts/interactables/food/burger_patty.gd" id="4_g2hwh"]
 [ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://textures/prototype_textures/PNG/logo_blue_512x512.png" id="5_g2hwh"]
 [ext_resource type="AudioStream" uid="uid://0vhuw27xogj8" path="res://audio/music/Cuddle Clouds.ogg" id="6_7ktdx"]
 [ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="7_8sg6o"]
@@ -27,19 +29,19 @@ sky = SubResource("Sky_67mw3")
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wjfg5"]
 friction = 0.5
 
-[sub_resource type="BoxMesh" id="BoxMesh_2rf26"]
-size = Vector3(10, 1, 10)
+[sub_resource type="BoxMesh" id="BoxMesh_jdejj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dle54"]
 albedo_texture = ExtResource("5_g2hwh")
 uv1_scale = Vector3(3, 2, 2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_kfml7"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_y1cru"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2rf26"]
 size = Vector3(10, 1, 10)
 
-[sub_resource type="BoxMesh" id="BoxMesh_lq0of"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ah2if"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_kfml7"]
+size = Vector3(10, 1, 10)
 
 [sub_resource type="BoxMesh" id="BoxMesh_nkmtj"]
 size = Vector3(2, 2, 2)
@@ -84,6 +86,35 @@ Show cursor - Esc
 
 [node name="BurgerPatties" type="Node" parent="Interactables"]
 
+[node name="BurgerPatty" parent="Interactables/BurgerPatties" instance=ExtResource("3_j51jv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.1008, 3.24245, 0.62858)
+collision_layer = 4
+collision_mask = 3
+contact_monitor = true
+max_contacts_reported = 10
+spoilage_time = 30.0
+
+[node name="BurgerPatty3" parent="Interactables/BurgerPatties" instance=ExtResource("3_j51jv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.1008, 3.24245, -1.37142)
+collision_layer = 4
+collision_mask = 3
+contact_monitor = true
+max_contacts_reported = 10
+spoilage_time = 30.0
+
+[node name="RigidBody3D13" type="RigidBody3D" parent="Interactables/BurgerPatties"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -9.1008, 3.64245, -3.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+script = ExtResource("4_g2hwh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/BurgerPatties/RigidBody3D13"]
+mesh = SubResource("BoxMesh_jdejj")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/BurgerPatties/RigidBody3D13"]
+shape = SubResource("BoxShape3D_y1cru")
+
 [node name="GodotBoxes" type="Node" parent="Interactables"]
 
 [node name="RigidBody3D5" type="RigidBody3D" parent="Interactables/GodotBoxes"]
@@ -104,11 +135,11 @@ mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_wjfg5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D3"]
-mesh = SubResource("BoxMesh_lq0of")
+mesh = SubResource("BoxMesh_jdejj")
 surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D3"]
-shape = SubResource("BoxShape3D_ah2if")
+shape = SubResource("BoxShape3D_y1cru")
 
 [node name="RigidBody3D6" type="RigidBody3D" parent="Interactables/GodotBoxes"]
 transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.8992, 9.64245, -1.37142)
@@ -116,11 +147,47 @@ mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_wjfg5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D6"]
-mesh = SubResource("BoxMesh_lq0of")
+mesh = SubResource("BoxMesh_jdejj")
 surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D6"]
-shape = SubResource("BoxShape3D_ah2if")
+shape = SubResource("BoxShape3D_y1cru")
+
+[node name="RigidBody3D9" type="RigidBody3D" parent="Interactables/GodotBoxes"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 8.8992, 9.64245, -6.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D9"]
+mesh = SubResource("BoxMesh_jdejj")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D9"]
+shape = SubResource("BoxShape3D_y1cru")
+
+[node name="RigidBody3D10" type="RigidBody3D" parent="Interactables/GodotBoxes"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 1.8992, 3.64245, -6.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D10"]
+mesh = SubResource("BoxMesh_jdejj")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D10"]
+shape = SubResource("BoxShape3D_y1cru")
+
+[node name="RigidBody3D11" type="RigidBody3D" parent="Interactables/GodotBoxes"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 3.8992, 4.64245, -3.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D11"]
+mesh = SubResource("BoxMesh_jdejj")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D11"]
+shape = SubResource("BoxShape3D_y1cru")
 
 [node name="RigidBody3D7" type="RigidBody3D" parent="Interactables/GodotBoxes"]
 transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.8992, 6.64245, -1.37142)
@@ -132,6 +199,18 @@ mesh = SubResource("BoxMesh_nkmtj")
 surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D7"]
+shape = SubResource("BoxShape3D_7n8oy")
+
+[node name="RigidBody3D12" type="RigidBody3D" parent="Interactables/GodotBoxes"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 2.8992, 3.64245, -1.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D12"]
+mesh = SubResource("BoxMesh_nkmtj")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D12"]
 shape = SubResource("BoxShape3D_7n8oy")
 
 [node name="RigidBody3D8" type="RigidBody3D" parent="Interactables/GodotBoxes"]
@@ -310,6 +389,8 @@ shape = SubResource("BoxShape3D_kfml7")
 
 [node name="StoveStation" parent="Stations/StoveStations" instance=ExtResource("17_jc6vo")]
 transform = Transform3D(-1.81474e-07, 0, -4.15163, 0, 4.15163, 0, 4.15163, 0, -1.81474e-07, -9, 0.5, 0)
+cooking_to_cooked_time = 3.0
+cooked_to_burnt_time = 2.0
 
 [node name="GenericStations" type="Node" parent="Stations"]
 

@@ -9,8 +9,7 @@ extends FoodItem
 @export_group("Cooking Materials")
 @export var raw_material: Material
 @export var cooking_material: Material
-@export var perfect_material: Material
-@export var overcooked_material: Material
+@export var cooked_material: Material
 @export var burnt_material: Material
 
 func _setup_derived_class() -> void:
@@ -39,14 +38,12 @@ func _update_visual_quality() -> void:
 	match current_quality:
 		FoodQuality.RAW:
 			material_to_use = raw_material
-		FoodQuality.PERFECT:
-			material_to_use = perfect_material
-		FoodQuality.OVERCOOKED:
-			material_to_use = overcooked_material
+		FoodQuality.COOKING:
+			material_to_use = cooking_material
+		FoodQuality.COOKED:
+			material_to_use = cooked_material
 		FoodQuality.BURNT:
 			material_to_use = burnt_material
-		FoodQuality.SPOILED:
-			material_to_use = overcooked_material  # Fallback
 	
 	if material_to_use:
 		mesh_instance.material_override = material_to_use
@@ -56,7 +53,7 @@ func _on_body_entered(body: Node) -> void:
 	super._on_body_entered(body)
 	
 	# Check for stove station
-	if body is StoveStation and can_interact():
+	if body is StoveStation and is_available_for_processing():
 		var stove = body as StoveStation
 		stove.start_cooking_food_item(self)
 
@@ -65,19 +62,15 @@ func _on_body_exited(body: Node) -> void:
 	super._on_body_exited(body)
 	
 	# Check for stove station
-	if body is StoveStation:
+	if body is StoveStation and is_being_processed():
 		var stove = body as StoveStation
 		stove.stop_cooking_food_item(self)
 
 # Public API for cooking system
-func set_cooking_quality(quality: FoodQuality) -> void:
-	"""Set quality from cooking system"""
-	_change_quality(quality)
-
 func is_cooked_perfectly() -> bool:
 	"""Check if patty is cooked perfectly"""
-	return current_quality == FoodQuality.PERFECT
+	return current_quality == FoodQuality.COOKED
 
-func is_overcooked() -> bool:
-	"""Check if patty is overcooked or burnt"""
-	return current_quality in [FoodQuality.OVERCOOKED, FoodQuality.BURNT]
+func is_burnt() -> bool:
+	"""Check if patty is burnt"""
+	return current_quality == FoodQuality.BURNT

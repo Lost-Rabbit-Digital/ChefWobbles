@@ -10,18 +10,19 @@ extends Node3D
 @export_group("Audio")
 @export var cooking_start_audio: AudioStream
 @export var stage_change_audio: AudioStream  # Plop sound for transitions
+@export var sizzling_audio: AudioStream
 
 # Cooking timing configuration
 @export_group("Cooking Settings")
 @export var raw_to_cooking_time: float = 0.5
-@export var cooking_to_perfect_time: float = 3.0
-@export var perfect_to_overcooked_time: float = 2.0
-@export var overcooked_to_burnt_time: float = 1.5
+@export var cooking_to_cooked_time: float = 3.0
+@export var cooked_to_burnt_time: float = 2.0
 
-# Node references - adapted to your scene structure
-@onready var cooking_surface_shape: CollisionShape3D = $Node/root/cuboid/StaticBody3D/CookingSurface
-@onready var audio_player: AudioStreamPlayer3D = $AudioPlayer
-@onready var cooking_timer: Timer = $CookingTimer
+# Node references - manually assigned in inspector
+@export_group("Node References")
+@export var cooking_surface_shape: CollisionShape3D
+@export var audio_player: AudioStreamPlayer3D
+@export var cooking_timer: Timer
 
 # Detection area for food items (created programmatically)
 var detection_area: Area3D
@@ -108,7 +109,7 @@ func start_cooking_food_item(food_item: FoodItem) -> void:
 	if cooking_items.has(food_item):
 		return
 	
-	# Only cook items that aren't spoiled
+	# Only cook items that aren't burnt
 	if food_item.is_spoiled():
 		return
 	
@@ -188,10 +189,10 @@ func _get_next_quality(current: FoodItem.FoodQuality) -> FoodItem.FoodQuality:
 	"""Get the next quality level in cooking progression"""
 	match current:
 		FoodItem.FoodQuality.RAW:
-			return FoodItem.FoodQuality.PERFECT  # Skip intermediate "cooking" stage
-		FoodItem.FoodQuality.PERFECT:
-			return FoodItem.FoodQuality.OVERCOOKED
-		FoodItem.FoodQuality.OVERCOOKED:
+			return FoodItem.FoodQuality.COOKING
+		FoodItem.FoodQuality.COOKING:
+			return FoodItem.FoodQuality.COOKED
+		FoodItem.FoodQuality.COOKED:
 			return FoodItem.FoodQuality.BURNT
 		_:
 			return current  # No further progression
@@ -201,10 +202,10 @@ func _get_time_for_transition(from_quality: FoodItem.FoodQuality) -> float:
 	match from_quality:
 		FoodItem.FoodQuality.RAW:
 			return raw_to_cooking_time
-		FoodItem.FoodQuality.PERFECT:
-			return perfect_to_overcooked_time
-		FoodItem.FoodQuality.OVERCOOKED:
-			return overcooked_to_burnt_time
+		FoodItem.FoodQuality.COOKING:
+			return cooking_to_cooked_time
+		FoodItem.FoodQuality.COOKED:
+			return cooked_to_burnt_time
 		_:
 			return 999.0  # No transition
 

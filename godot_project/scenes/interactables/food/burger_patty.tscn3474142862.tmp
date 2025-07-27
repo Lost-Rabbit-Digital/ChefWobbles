@@ -1,0 +1,35 @@
+[gd_scene load_steps=9 format=3 uid="uid://wsjrvyhu3q61"]
+
+[ext_resource type="Material" uid="uid://dua8da6sm17mk" path="res://models/food/burger_patty/burger_patty_raw_material.tres" id="1_knmp5"]
+[ext_resource type="Script" uid="uid://gyjxlptmowpe" path="res://scripts/interactables/food/burger_patty.gd" id="1_p38wn"]
+[ext_resource type="Material" uid="uid://nc107vh0i4vq" path="res://models/food/burger_patty/burger_patty_cooking_material.tres" id="3_run7i"]
+[ext_resource type="Material" uid="uid://doe7dgsvejepe" path="res://models/food/burger_patty/burger_patty_cooked_material.tres" id="4_xjh10"]
+[ext_resource type="Material" uid="uid://6p0677d3nwdn" path="res://models/food/burger_patty/burger_patty_burnt_material.tres" id="5_r6y8j"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wjfg5"]
+friction = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_lq0of"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ah2if"]
+
+[node name="BurgerPatty" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+script = ExtResource("1_p38wn")
+raw_material = ExtResource("1_knmp5")
+cooking_material = ExtResource("3_run7i")
+perfect_material = ExtResource("4_xjh10")
+overcooked_material = ExtResource("5_r6y8j")
+burnt_material = ExtResource("5_r6y8j")
+food_name = "Burger Patty"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.632679, 0, -2.98023e-08, 0, 0.632679, 0, 2.98023e-08, 0, 0.632679, 0, 0, 0)
+mesh = SubResource("BoxMesh_lq0of")
+surface_material_override/0 = ExtResource("1_knmp5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.632679, 0, -5.96046e-08, 0, 0.632679, 0, 5.96046e-08, 0, 0.632679, 0, 0, 0)
+shape = SubResource("BoxShape3D_ah2if")
