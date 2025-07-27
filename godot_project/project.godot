@@ -16,6 +16,7 @@ config/tags=PackedStringArray("active", "commerical", "steam", "unpublished")
 run/main_scene="uid://c6i2mlgfgnhg7"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="uid://dedv6nw43y5ih"
+config/macos_native_icon="res://icon.icns"
 
 [audio]
 
