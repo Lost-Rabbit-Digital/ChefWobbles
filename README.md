@@ -6,7 +6,7 @@
     <a href="https://store.steampowered.com/search/?developer=Lost%20Rabbit%20Digital" target="_blank"><img src="https://img.shields.io/badge/Steam-Coming_Soon-blue?style=for-the-badge&logo=steam" alt="Steam"></a>
     <a href="https://lost-rabbit-digital.itch.io" target="_blank"><img src="https://img.shields.io/badge/itch.io-Coming_Soon-red?style=for-the-badge&logo=itch.io" alt="itch.io"></a>
     <a href="https://godotengine.org/" target="_blank"><img src="https://img.shields.io/badge/Godot-4.4+-blue?style=for-the-badge&logo=godot-engine" alt="Godot 4.4+"></a>
-    <img src="https://img.shields.io/badge/license-MPL_2.0-yellow?style=for-the-badge" alt="MPL 2.0 License">
+    <a href="https://github.com/Lost-Rabbit-Digital/ChefWobbles/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MPL_2.0-yellow?style=for-the-badge" alt="MPL 2.0 License"></a>
   </p>
 </div>
 
@@ -21,18 +21,16 @@
 **Chef Wobbles** is a cozy physics-based cooking game inspired by "A Short Hike" and "Overcooked". Players control adorable wobbly characters in a calming kitchen environment, creating delicious meals while enjoying satisfying physics interactions and beautiful pastel visuals.
 
 In this relaxing culinary world, your goal is to:
-- 🍳 Cook delicious meals with realistic physics
-- 🥕 Chop, sauté, and prepare ingredients with wobbly precision
-- ⏰ Manage timing without the stress of traditional cooking games
-- 🎨 Enjoy soothing pastel aesthetics and gentle gameplay
-- 🏠 Create a cozy kitchen atmosphere that feels like home
+- Cook delicious meals with realistic physics
+- Chop, sauté, and prepare ingredients with wobbly precision
+- Manage timing without the stress of traditional cooking games
 
 ---
 
 <div align="center">
   <table>
     <tr>
-      <td align="center"><img src="project_management/dist/marketing/discord_card.png" alt="Discord Community" width="500"></td>
+      <td align="center"><img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e278299a53f5bf88615e90_Symbol.svg" width="128"></td>
     </tr>
     <tr>
       <td align="center">
