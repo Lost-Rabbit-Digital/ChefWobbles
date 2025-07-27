@@ -1,12 +1,15 @@
-[gd_scene load_steps=31 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=34 format=3 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="1_j51jv"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
-[ext_resource type="PackedScene" uid="uid://wsjrvyhu3q61" path="res://scenes/interactables/food/burger_patty.tscn" id="3_j51jv"]
 [ext_resource type="Script" uid="uid://gyjxlptmowpe" path="res://scripts/interactables/food/burger_patty.gd" id="4_g2hwh"]
+[ext_resource type="Material" uid="uid://dua8da6sm17mk" path="res://models/food/burger_patty/burger_patty_raw_material.tres" id="4_mcgj6"]
+[ext_resource type="Material" uid="uid://nc107vh0i4vq" path="res://models/food/burger_patty/burger_patty_cooking_material.tres" id="5_7ktdx"]
 [ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://textures/prototype_textures/PNG/logo_blue_512x512.png" id="5_g2hwh"]
 [ext_resource type="AudioStream" uid="uid://0vhuw27xogj8" path="res://audio/music/Cuddle Clouds.ogg" id="6_7ktdx"]
+[ext_resource type="Material" uid="uid://doe7dgsvejepe" path="res://models/food/burger_patty/burger_patty_cooked_material.tres" id="6_8sg6o"]
 [ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="7_8sg6o"]
+[ext_resource type="Material" uid="uid://6p0677d3nwdn" path="res://models/food/burger_patty/burger_patty_burnt_material.tres" id="7_kq5dy"]
 [ext_resource type="AudioStream" uid="uid://dempf1idxhdvw" path="res://audio/music/Evening Harmony.ogg" id="8_kq5dy"]
 [ext_resource type="AudioStream" uid="uid://bp1u1j3y0evjm" path="res://audio/music/Floating Dream.ogg" id="9_202kh"]
 [ext_resource type="AudioStream" uid="uid://c5b8mjpjj7txe" path="res://audio/music/Forgotten Biomes.ogg" id="10_jdejj"]
@@ -29,6 +32,10 @@ sky = SubResource("Sky_67mw3")
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wjfg5"]
 friction = 0.5
 
+[sub_resource type="BoxMesh" id="BoxMesh_jdejj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y1cru"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_2rf26"]
 size = Vector3(10, 1, 10)
 
@@ -38,10 +45,6 @@ uv1_scale = Vector3(3, 2, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kfml7"]
 size = Vector3(10, 1, 10)
-
-[sub_resource type="BoxMesh" id="BoxMesh_jdejj"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_y1cru"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_nkmtj"]
 size = Vector3(2, 2, 2)
@@ -86,19 +89,26 @@ Show cursor - Esc
 
 [node name="BurgerPatties" type="Node" parent="Interactables"]
 
-[node name="BurgerPatty" parent="Interactables/BurgerPatties" instance=ExtResource("3_j51jv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.1008, 3.24245, 0.62858)
-collision_layer = 4
-collision_mask = 3
-contact_monitor = true
-max_contacts_reported = 10
+[node name="BurgerPatty" type="RigidBody3D" parent="Interactables/BurgerPatties" node_paths=PackedStringArray("mesh_instance", "collision_shape")]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -9.1008, 3.64245, -3.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+script = ExtResource("4_g2hwh")
+raw_material = ExtResource("4_mcgj6")
+cooking_material = ExtResource("5_7ktdx")
+cooked_material = ExtResource("6_8sg6o")
+burnt_material = ExtResource("7_kq5dy")
+food_name = "Burger Patty"
+spoilage_time = 30.0
+mesh_instance = NodePath("MeshInstance3D")
+collision_shape = NodePath("CollisionShape3D")
 
-[node name="BurgerPatty3" parent="Interactables/BurgerPatties" instance=ExtResource("3_j51jv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.1008, 3.24245, -1.37142)
-collision_layer = 4
-collision_mask = 3
-contact_monitor = true
-max_contacts_reported = 10
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/BurgerPatties/BurgerPatty"]
+mesh = SubResource("BoxMesh_jdejj")
+surface_material_override/0 = ExtResource("4_mcgj6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/BurgerPatties/BurgerPatty"]
+shape = SubResource("BoxShape3D_y1cru")
 
 [node name="GodotBoxes" type="Node" parent="Interactables"]
 
@@ -209,51 +219,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D8"]
 shape = SubResource("BoxShape3D_1cc2y")
-
-[node name="RigidBody3D13" type="RigidBody3D" parent="Interactables/GodotBoxes"]
-transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -9.1008, 3.64245, -3.37142)
-mass = 2.0
-physics_material_override = SubResource("PhysicsMaterial_wjfg5")
-script = ExtResource("4_g2hwh")
-food_name = "Burger Patty"
-spoilage_time = 30.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D13"]
-mesh = SubResource("BoxMesh_jdejj")
-surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D13"]
-shape = SubResource("BoxShape3D_y1cru")
-
-[node name="RigidBody3D14" type="RigidBody3D" parent="Interactables/GodotBoxes"]
-transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -9.1008, 3.64245, -5.07142)
-mass = 2.0
-physics_material_override = SubResource("PhysicsMaterial_wjfg5")
-script = ExtResource("4_g2hwh")
-food_name = "Burger Patty"
-spoilage_time = 30.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D14"]
-mesh = SubResource("BoxMesh_jdejj")
-surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D14"]
-shape = SubResource("BoxShape3D_y1cru")
-
-[node name="RigidBody3D15" type="RigidBody3D" parent="Interactables/GodotBoxes"]
-transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -9.1008, 4.94245, -4.07142)
-mass = 2.0
-physics_material_override = SubResource("PhysicsMaterial_wjfg5")
-script = ExtResource("4_g2hwh")
-food_name = "Burger Patty"
-spoilage_time = 30.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D15"]
-mesh = SubResource("BoxMesh_jdejj")
-surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D15"]
-shape = SubResource("BoxShape3D_y1cru")
 
 [node name="Music" type="Node" parent="."]
 

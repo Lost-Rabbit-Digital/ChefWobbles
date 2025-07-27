@@ -13,7 +13,7 @@ friction = 0.5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ah2if"]
 
-[node name="BurgerPatty" type="RigidBody3D"]
+[node name="BurgerPatty" type="RigidBody3D" node_paths=PackedStringArray("mesh_instance", "collision_shape")]
 mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_wjfg5")
 script = ExtResource("1_p38wn")
@@ -23,9 +23,12 @@ cooked_material = ExtResource("4_xjh10")
 burnt_material = ExtResource("5_r6y8j")
 food_name = "Burger Patty"
 spoilage_time = 30.0
+mesh_instance = NodePath("MeshInstance3D")
+collision_shape = NodePath("CollisionShape3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.995204, 0, -4.6879e-08, 0, 0.995204, 0, 4.6879e-08, 0, 0.995204, 0, 0, 0)
+material_override = ExtResource("5_r6y8j")
 mesh = SubResource("BoxMesh_lq0of")
 surface_material_override/0 = ExtResource("1_knmp5")
 

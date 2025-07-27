@@ -89,7 +89,7 @@ func _validate_resources() -> void:
 func _on_item_entered_surface(body: Node3D) -> void:
 	"""Handle food item entering cooking surface"""
 	var food_item = body as FoodItem
-	if not food_item or not food_item.can_interact():
+	if not food_item or not food_item.is_available_for_processing():
 		return
 	
 	start_cooking_food_item(food_item)
@@ -120,8 +120,9 @@ func start_cooking_food_item(food_item: FoodItem) -> void:
 	# Start processing on the food item
 	food_item.start_processing(self)
 	
-	# Play cooking start sound
-	_play_audio(cooking_start_audio)
+	# Play cooking start sound with audio manipulation
+	if cooking_start_audio and audio_player:
+		AudioManipulator.play_audio_static(audio_player, cooking_start_audio, AudioManipulator.AudioType.GENERIC)
 	
 	# Set initial target quality
 	progress.target_quality = _get_next_quality(food_item.get_quality())
@@ -177,8 +178,9 @@ func _progress_food_quality(progress: CookingProgress) -> void:
 	progress.time_in_stage = 0.0
 	progress.target_quality = _get_next_quality(next_quality)
 	
-	# Play progression sound
-	_play_audio(stage_change_audio)
+	# Play progression sound with audio manipulation
+	if stage_change_audio and audio_player:
+		AudioManipulator.play_audio_static(audio_player, stage_change_audio, AudioManipulator.AudioType.GENERIC)
 	
 	# Log progression
 	var quality_name = FoodItem.FoodQuality.keys()[next_quality]
@@ -207,14 +209,6 @@ func _get_time_for_transition(from_quality: FoodItem.FoodQuality) -> float:
 			return cooked_to_burnt_time
 		_:
 			return 999.0  # No transition
-
-func _play_audio(audio_stream: AudioStream) -> void:
-	"""Play audio with 3D positioning"""
-	if not audio_stream or not audio_player:
-		return
-	
-	audio_player.stream = audio_stream
-	audio_player.play()
 
 # Public API for external systems
 func is_cooking_item(food_item: FoodItem) -> bool:

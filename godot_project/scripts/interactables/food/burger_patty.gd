@@ -2,6 +2,7 @@ class_name BurgerPatty
 extends FoodItem
 
 ## Burger patty that can be cooked on stoves
+## Simple RigidBody3D cube with visual quality changes
 ## This is a scene-ready class - attach to RigidBody3D nodes in scenes
 
 # Cooking materials for each quality level
@@ -22,6 +23,9 @@ func _setup_derived_class() -> void:
 	
 	# Connect quality changes to visual updates
 	quality_changed.connect(_on_quality_changed)
+	
+	# Set initial visual quality
+	_update_visual_quality()
 
 func _on_quality_changed(new_quality: FoodQuality) -> void:
 	"""Handle quality change visual updates"""
@@ -47,24 +51,6 @@ func _update_visual_quality() -> void:
 	if material_to_use:
 		mesh_instance.material_override = material_to_use
 
-func _on_body_entered(body: Node) -> void:
-	"""Handle entering cooking stations"""
-	super._on_body_entered(body)
-	
-	# Check for stove station
-	if body is StoveStation and is_available_for_processing():
-		var stove = body as StoveStation
-		stove.start_cooking_food_item(self)
-
-func _on_body_exited(body: Node) -> void:
-	"""Handle leaving cooking stations"""
-	super._on_body_exited(body)
-	
-	# Check for stove station
-	if body is StoveStation and is_being_processed():
-		var stove = body as StoveStation
-		stove.stop_cooking_food_item(self)
-
 # Public API for cooking system
 func is_cooked_perfectly() -> bool:
 	"""Check if patty is cooked perfectly"""
@@ -73,3 +59,11 @@ func is_cooked_perfectly() -> bool:
 func is_burnt() -> bool:
 	"""Check if patty is burnt"""
 	return current_quality == FoodQuality.BURNT
+
+func is_raw() -> bool:
+	"""Check if patty is still raw"""
+	return current_quality == FoodQuality.RAW
+
+func is_cooking() -> bool:
+	"""Check if patty is currently cooking"""
+	return current_quality == FoodQuality.COOKING

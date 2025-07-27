@@ -39,8 +39,8 @@ var current_quality: FoodQuality = FoodQuality.RAW
 var processing_station: Node = null
 
 # @onready variables
-@onready var mesh_instance: MeshInstance3D = _find_mesh_instance()
-@onready var collision_shape: CollisionShape3D = _find_collision_shape()
+@export var mesh_instance: MeshInstance3D 
+@export var collision_shape: CollisionShape3D 
 
 func _ready() -> void:
 	_setup_food_item()
@@ -163,38 +163,3 @@ func _change_quality(new_quality: FoodQuality) -> void:
 		current_quality = new_quality
 		quality_changed.emit(new_quality)
 		_update_visual_quality()
-
-func _find_mesh_instance() -> MeshInstance3D:
-	"""Find MeshInstance3D in node tree"""
-	return _find_node_of_type(MeshInstance3D) as MeshInstance3D
-
-func _find_collision_shape() -> CollisionShape3D:
-	"""Find CollisionShape3D in node tree"""
-	return _find_node_of_type(CollisionShape3D) as CollisionShape3D
-
-func _find_node_of_type(type: Variant) -> Node:
-	"""Recursively find node of specific type"""
-	if is_instance_of(self, type):
-		return self
-	
-	for child in get_children():
-		if is_instance_of(child, type):
-			return child
-		
-		var result = _find_node_in_children(child, type)
-		if result:
-			return result
-	
-	return null
-
-func _find_node_in_children(node: Node, type: Variant) -> Node:
-	"""Helper for recursive node finding"""
-	for child in node.get_children():
-		if is_instance_of(child, type):
-			return child
-		
-		var result = _find_node_in_children(child, type)
-		if result:
-			return result
-	
-	return null
