@@ -13,9 +13,9 @@ const AIR_DAMPING = 0.95
 @export var max_angular_force: float = 9999.0
 
 # === AUDIO EXPORTS ===
-@export var grab_audio: AudioStream
-@export var release_audio: AudioStream
-@export var footstep_audio: AudioStream
+@export var grab_audio: Array[AudioStream]
+@export var release_audio: Array[AudioStream]
+@export var footstep_audio: Array[AudioStream]
 
 # === STABILITY CONSTANTS ===
 const UPRIGHT_FORCE_MULTIPLIER = 1.5
@@ -32,7 +32,6 @@ const BALANCE_THRESHOLD = 0.7
 @onready var physical_bone_body: PhysicalBone3D = $"Physical/Armature/Skeleton3D/Physical Bone Body"
 @onready var interaction_audio_player = $InteractionAudioPlayer
 @onready var footstep_audio_player = $FootstepAudioPlayer
-@onready var audio_manipulator = $AudioManipulator
 
 # === GRABBING SYSTEM (KEPT YOUR ORIGINAL SYSTEM) ===
 @onready var grab_joint_right = $Physical/GrabJointRight
@@ -206,16 +205,16 @@ func update_character_rotation():
 
 # === AUDIO FUNCTIONS ===
 func play_grab_audio():
-	if grab_audio and interaction_audio_player and audio_manipulator:
-		audio_manipulator.play_audio(interaction_audio_player, grab_audio, AudioManipulator.AudioType.GRAB_SOUNDS)
+	if grab_audio and interaction_audio_player:
+		AudioManipulator.play_audio_static(interaction_audio_player, grab_audio, AudioManipulator.AudioType.GRAB_SOUNDS)
 
 func play_release_audio():
-	if release_audio and interaction_audio_player and audio_manipulator:
-		audio_manipulator.play_audio(interaction_audio_player, release_audio, AudioManipulator.AudioType.RELEASE_SOUNDS)
+	if release_audio and interaction_audio_player:
+		AudioManipulator.play_audio_static(interaction_audio_player, release_audio, AudioManipulator.AudioType.RELEASE_SOUNDS)
 
 func play_footstep_audio():
-	if footstep_audio and footstep_audio_player and audio_manipulator:
-		audio_manipulator.play_audio(footstep_audio_player, footstep_audio, AudioManipulator.AudioType.FOOTSTEPS)
+	if footstep_audio and footstep_audio_player:
+		AudioManipulator.play_audio_static(footstep_audio_player, footstep_audio, AudioManipulator.AudioType.FOOTSTEPS)
 
 func handle_footstep_audio(delta):
 	# Play footsteps when landing from a jump/fall
