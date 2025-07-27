@@ -22,6 +22,7 @@ cooking_material = ExtResource("3_run7i")
 cooked_material = ExtResource("4_xjh10")
 burnt_material = ExtResource("5_r6y8j")
 food_name = "Burger Patty"
+spoilage_time = 30.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.995204, 0, -4.6879e-08, 0, 0.995204, 0, 4.6879e-08, 0, 0.995204, 0, 0, 0)

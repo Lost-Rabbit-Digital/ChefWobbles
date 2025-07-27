@@ -107,6 +107,8 @@ transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 
 mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_wjfg5")
 script = ExtResource("4_g2hwh")
+food_name = "Burger Patty"
+spoilage_time = 30.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/BurgerPatties/RigidBody3D13"]
 mesh = SubResource("BoxMesh_jdejj")
@@ -257,13 +259,8 @@ stream = ExtResource("11_y1cru")
 autoplay = true
 bus = &"Music"
 
-[node name="GoldenGleam" type="AudioStreamPlayer" parent="Music"]
-stream = ExtResource("12_mttkv")
-autoplay = true
-bus = &"Music"
-
-[node name="PolarLights" type="AudioStreamPlayer" parent="Music"]
-stream = ExtResource("13_05gbj")
+[node name="WanderersTale" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("15_yj3vi")
 autoplay = true
 bus = &"Music"
 
@@ -272,8 +269,13 @@ stream = ExtResource("14_jjerm")
 autoplay = true
 bus = &"Music"
 
-[node name="WanderersTale" type="AudioStreamPlayer" parent="Music"]
-stream = ExtResource("15_yj3vi")
+[node name="PolarLights" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("13_05gbj")
+autoplay = true
+bus = &"Music"
+
+[node name="GoldenGleam" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("12_mttkv")
 autoplay = true
 bus = &"Music"
 
