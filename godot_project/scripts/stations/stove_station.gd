@@ -1,4 +1,3 @@
-@tool
 class_name StoveStation
 extends Node3D
 

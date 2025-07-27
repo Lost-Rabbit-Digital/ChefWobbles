@@ -29,19 +29,19 @@ sky = SubResource("Sky_67mw3")
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wjfg5"]
 friction = 0.5
 
-[sub_resource type="BoxMesh" id="BoxMesh_jdejj"]
+[sub_resource type="BoxMesh" id="BoxMesh_2rf26"]
+size = Vector3(10, 1, 10)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dle54"]
 albedo_texture = ExtResource("5_g2hwh")
 uv1_scale = Vector3(3, 2, 2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_y1cru"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_2rf26"]
-size = Vector3(10, 1, 10)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_kfml7"]
 size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jdejj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y1cru"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_nkmtj"]
 size = Vector3(2, 2, 2)
@@ -92,7 +92,6 @@ collision_layer = 4
 collision_mask = 3
 contact_monitor = true
 max_contacts_reported = 10
-spoilage_time = 30.0
 
 [node name="BurgerPatty3" parent="Interactables/BurgerPatties" instance=ExtResource("3_j51jv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.1008, 3.24245, -1.37142)
@@ -100,22 +99,6 @@ collision_layer = 4
 collision_mask = 3
 contact_monitor = true
 max_contacts_reported = 10
-spoilage_time = 30.0
-
-[node name="RigidBody3D13" type="RigidBody3D" parent="Interactables/BurgerPatties"]
-transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -9.1008, 3.64245, -3.37142)
-mass = 2.0
-physics_material_override = SubResource("PhysicsMaterial_wjfg5")
-script = ExtResource("4_g2hwh")
-food_name = "Burger Patty"
-spoilage_time = 30.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/BurgerPatties/RigidBody3D13"]
-mesh = SubResource("BoxMesh_jdejj")
-surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/BurgerPatties/RigidBody3D13"]
-shape = SubResource("BoxShape3D_y1cru")
 
 [node name="GodotBoxes" type="Node" parent="Interactables"]
 
@@ -226,6 +209,51 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D8"]
 shape = SubResource("BoxShape3D_1cc2y")
+
+[node name="RigidBody3D13" type="RigidBody3D" parent="Interactables/GodotBoxes"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -9.1008, 3.64245, -3.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+script = ExtResource("4_g2hwh")
+food_name = "Burger Patty"
+spoilage_time = 30.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D13"]
+mesh = SubResource("BoxMesh_jdejj")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D13"]
+shape = SubResource("BoxShape3D_y1cru")
+
+[node name="RigidBody3D14" type="RigidBody3D" parent="Interactables/GodotBoxes"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -9.1008, 3.64245, -5.07142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+script = ExtResource("4_g2hwh")
+food_name = "Burger Patty"
+spoilage_time = 30.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D14"]
+mesh = SubResource("BoxMesh_jdejj")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D14"]
+shape = SubResource("BoxShape3D_y1cru")
+
+[node name="RigidBody3D15" type="RigidBody3D" parent="Interactables/GodotBoxes"]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -9.1008, 4.94245, -4.07142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_wjfg5")
+script = ExtResource("4_g2hwh")
+food_name = "Burger Patty"
+spoilage_time = 30.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/RigidBody3D15"]
+mesh = SubResource("BoxMesh_jdejj")
+surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/RigidBody3D15"]
+shape = SubResource("BoxShape3D_y1cru")
 
 [node name="Music" type="Node" parent="."]
 
@@ -391,8 +419,6 @@ shape = SubResource("BoxShape3D_kfml7")
 
 [node name="StoveStation" parent="Stations/StoveStations" instance=ExtResource("17_jc6vo")]
 transform = Transform3D(-1.81474e-07, 0, -4.15163, 0, 4.15163, 0, 4.15163, 0, -1.81474e-07, -9, 0.5, 0)
-cooking_to_cooked_time = 3.0
-cooked_to_burnt_time = 2.0
 
 [node name="GenericStations" type="Node" parent="Stations"]
 
