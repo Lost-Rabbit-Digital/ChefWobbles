@@ -18,7 +18,7 @@
 
 ## 📖 About The Game
 
-**Chef Wobbles** is a cozy physics-based cooking game inspired by "A Short Hike" and "Overcooked". Players control adorable wobbly characters in a calming kitchen environment, creating delicious meals while enjoying satisfying physics interactions and beautiful pastel visuals.
+**Chef Wobbles** is a cozy physics-based cooking game inspired by "Overcooked". Players control adorable wobbly characters in a calming kitchen environment, creating delicious meals while enjoying satisfying physics interactions and beautiful pastel visuals.
 
 In this relaxing culinary world, your goal is to:
 - Cook delicious meals with realistic physics
