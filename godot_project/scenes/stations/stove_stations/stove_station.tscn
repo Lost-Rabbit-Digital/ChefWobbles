@@ -58,7 +58,7 @@ data = PackedVector3Array(0.416664, 0, -0.1875, -1.25e-06, 0, -0.132814, 0.41666
 size = Vector3(0.874878, 0.0258179, 0.3125)
 
 [node name="StoveStation" type="Node3D" node_paths=PackedStringArray("cooking_surface_shape", "audio_player", "cooking_timer")]
-transform = Transform3D(-1.81474e-07, 0, -4.15163, 0, 4.15163, 0, 4.15163, 0, -1.81474e-07, 0, 0, 0)
+transform = Transform3D(-1.74846e-07, 0, -4, 0, 4, 0, 4, 0, -1.74846e-07, 0, 0, 0)
 script = ExtResource("1_5pjtc")
 cooking_start_audio = ExtResource("2_30amm")
 stage_change_audio = ExtResource("3_15vm5")

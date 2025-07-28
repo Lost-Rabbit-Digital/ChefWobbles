@@ -262,7 +262,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
 shape = SubResource("BoxShape3D_1cc2y")
 
 [node name="RetroTerminal" parent="Interactables" instance=ExtResource("9_g2hwh")]
-transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, -9.2, 2.6, 5.2)
+transform = Transform3D(0.939692, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939692, -1.2, 2.5, 7.1)
 
 [node name="TomatoSlices" type="Node" parent="Interactables"]
 
@@ -424,18 +424,18 @@ shape = SubResource("BoxShape3D_kfml7")
 [node name="StoveStations" type="Node" parent="Stations"]
 
 [node name="StoveStation" parent="Stations/StoveStations" groups=["metal_objects"] instance=ExtResource("17_jc6vo")]
-transform = Transform3D(-1.81474e-07, 0, -4.15163, 0, 4.15163, 0, 4.15163, 0, -1.81474e-07, -9, 0.5, 0)
+transform = Transform3D(-1.74846e-07, 0, -4, 0, 4, 0, 4, 0, -1.74846e-07, -9, 0.5, 0)
 
 [node name="GenericStations" type="Node" parent="Stations"]
 
 [node name="GenericStation" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("18_fu8s8")]
-transform = Transform3D(-1.81474e-07, 0, -4.15163, 0, 4.15163, 0, 4.15163, 0, -1.81474e-07, -9, 0.5, -4.1)
+transform = Transform3D(-1.74846e-07, 0, -4, 0, 4, 0, 4, 0, -1.74846e-07, -9, 0.5, -4)
 
 [node name="GenericStation2" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("18_fu8s8")]
-transform = Transform3D(-1.81474e-07, 0, -4.15163, 0, 4.15163, 0, 4.15163, 0, -1.81474e-07, -9, 0.5, 4.1)
+transform = Transform3D(-1.74846e-07, 0, -4, 0, 4, 0, 4, 0, -1.74846e-07, -9, 0.5, 4)
 
 [node name="GenericStation3" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("18_fu8s8")]
-transform = Transform3D(4.15163, 0, 1.42109e-14, 0, 4.15163, 0, -1.42109e-14, 0, 4.15163, -6.2, 0.5, 6.9)
+transform = Transform3D(4, 0, 1.36919e-14, 0, 4, 0, -1.36919e-14, 0, 4, -6.2, 0.5, 6.9)
 
 [node name="GenericStation4" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("18_fu8s8")]
-transform = Transform3D(4.15163, 0, 1.42109e-14, 0, 4.15163, 0, -1.42109e-14, 0, 4.15163, -2.1, 0.5, 6.9)
+transform = Transform3D(4, 0, 1.36919e-14, 0, 4, 0, -1.36919e-14, 0, 4, -2.2, 0.5, 6.9)
