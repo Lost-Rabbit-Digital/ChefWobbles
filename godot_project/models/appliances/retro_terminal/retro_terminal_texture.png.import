@@ -2,11 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ykmkbhd6oa7e"
+uid="uid://dfy3kt7itadui"
 path.s3tc="res://.godot/imported/retro_terminal_texture.png-4c457ee1e39d0a298fa692333f5e9989.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
+}
+generator_parameters={
+"md5": "edf558df26e1c8d1012b3aae329f6161"
 }
 
 [deps]

@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dx1qlyjhj8e3o"]
+
+[ext_resource type="Texture2D" uid="uid://b84n87cvy5t7q" path="res://models/stations/generic_station/generic_station_texture.png" id="1_f55qw"]
+
+[resource]
+diffuse_mode = 3
+albedo_texture = ExtResource("1_f55qw")
+texture_filter = 0

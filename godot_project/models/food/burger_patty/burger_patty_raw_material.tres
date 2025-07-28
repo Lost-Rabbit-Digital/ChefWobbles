@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dttug3x5yxh6k" path="res://models/food/burger_patty/burger_patty_raw_texture.png" id="1_v12ua"]
 
 [resource]
-shading_mode = 0
-diffuse_mode = 1
+diffuse_mode = 3
 albedo_texture = ExtResource("1_v12ua")
+rim = 0.51
 texture_filter = 0

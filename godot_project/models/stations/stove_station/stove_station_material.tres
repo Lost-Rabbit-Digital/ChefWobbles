@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dlcixu8xlx5vd" path="res://models/stations/stove_station/stove_station_texture.png" id="1_0fsoe"]
 
 [resource]
+diffuse_mode = 3
 albedo_texture = ExtResource("1_0fsoe")
 rim_tint = 0.89
 texture_filter = 0

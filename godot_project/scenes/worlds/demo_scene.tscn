@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=32 format=3 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="1_j51jv"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/music/Sunlight Through Leaves.ogg" id="16_jjhks"]
 [ext_resource type="PackedScene" uid="uid://bjk4e8k421f15" path="res://scenes/stations/stove_stations/stove_station.tscn" id="17_jc6vo"]
 [ext_resource type="PackedScene" uid="uid://dsc5wbn13tt8p" path="res://models/stations/generic_station/generic_station.gltf" id="18_fu8s8"]
+[ext_resource type="PackedScene" uid="uid://cbplwoxnlv6i0" path="res://models/food/tomato_slice/tomato_slice.glb" id="19_0cmys"]
 
 [sub_resource type="Sky" id="Sky_67mw3"]
 sky_material = ExtResource("2_0cmys")
@@ -381,3 +382,6 @@ transform = Transform3D(4.15163, 0, 1.42109e-14, 0, 4.15163, 0, -1.42109e-14, 0,
 
 [node name="GenericStation4" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("18_fu8s8")]
 transform = Transform3D(4.15163, 0, 1.42109e-14, 0, 4.15163, 0, -1.42109e-14, 0, 4.15163, -2.1, 0.5, 6.9)
+
+[node name="blockbench_export" parent="." instance=ExtResource("19_0cmys")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3, 3)
