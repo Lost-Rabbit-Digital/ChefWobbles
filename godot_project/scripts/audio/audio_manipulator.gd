@@ -30,9 +30,9 @@ enum AudioType {
 static var audio_presets = {
 	AudioType.FOOTSTEPS: {
 		"pitch_variance": 0.35,
-		"volume_db": 1.0,
-		"min_pitch": 0.85,
-		"max_pitch": 1.15
+		"volume_db": -15.0,
+		"min_pitch": 0.95,
+		"max_pitch": 1.25
 	},
 	AudioType.GRAB_SOUNDS: {
 		"pitch_variance": 0.35,

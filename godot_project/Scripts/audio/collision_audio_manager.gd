@@ -1,6 +1,29 @@
 # CollisionAudioManager.gd
 # Singleton script - Add to AutoLoad as "CollisionAudio"
-extends Node
+## Collision Monitor Helper Class
+class_name CollisionMonitor extends Node
+
+var audio_manager: Node
+var monitored_body: RigidBody3D
+var previous_colliding_bodies: Array = []
+
+func _process(_delta):
+	if not monitored_body or not is_instance_valid(monitored_body):
+		queue_free()
+		return
+		
+	# Get currently colliding bodies
+	var current_colliding = monitored_body.get_colliding_bodies()
+	
+	# Check for NEW collisions (bodies that weren't colliding before)
+	for body in current_colliding:
+		if not body in previous_colliding_bodies:
+			print("CollisionMonitor: NEW collision detected between ", monitored_body.name, " and ", body.name)
+			if audio_manager and audio_manager.has_method("_on_rigidbody_collision"):
+				audio_manager._on_rigidbody_collision(body, monitored_body)
+	
+	# Update the previous list
+	previous_colliding_bodies = current_colliding.duplicate()
 
 ## Audio bank for different material combinations
 @export var audio_banks: Dictionary = {}
@@ -19,20 +42,27 @@ var pool_index: int = 0
 
 ## Material definitions - extend this for your game
 var material_sounds: Dictionary = {
-	"metal": ["res://audio/sound_effects/impacts/impact_1.mp3"],
-	"wood": ["res://audio/sound_effects/impacts/impact_1.mp3"],
-	"stone": ["res://audio/sound_effects/impacts/impact_1.mp3"],
-	"glass": ["res://audio/sound_effects/impacts/impact_1.mp3"],
-	"plastic": ["res://audio/sound_effects/impacts/impact_1.mp3"],
-	"default": ["res://audio/sound_effects/impacts/impact_1.mp3"]
+	"metal": ["res://audio/impacts/metal_clang_01.ogg", "res://audio/impacts/metal_clang_02.ogg"],
+	"wood": ["res://audio/impacts/wood_thunk_01.ogg", "res://audio/impacts/wood_knock_02.ogg"],
+	"stone": ["res://audio/impacts/stone_crack_01.ogg", "res://audio/impacts/rock_hit_02.ogg"],
+	"glass": ["res://audio/impacts/glass_break_01.ogg", "res://audio/impacts/glass_shatter_02.ogg"],
+	"plastic": ["res://audio/impacts/plastic_tap_01.ogg", "res://audio/impacts/plastic_hit_02.ogg"],
+	"default": ["res://audio/impacts/generic_thud_01.ogg", "res://audio/impacts/generic_impact_02.ogg"]
 }
 
 func _ready():
+	set_process(true)
+	print("CollisionAudioManager: AutoLoad working! System initialized.")
+	
 	# Initialize audio pool
 	_create_audio_pool(20)  # Adjust pool size based on your needs
 	
 	# Connect to new RigidBody3D nodes automatically
 	get_tree().node_added.connect(_on_node_added)
+	print("CollisionAudioManager: Connected to node_added signal")
+	
+	# IMPORTANT: Scan for existing RigidBody3D nodes already in the scene
+	_scan_existing_rigidbodies()
 	
 	# Clean up old collision timers periodically
 	var cleanup_timer = Timer.new()
@@ -40,6 +70,25 @@ func _ready():
 	cleanup_timer.timeout.connect(_cleanup_collision_timers)
 	cleanup_timer.autostart = true
 	add_child(cleanup_timer)
+
+func _scan_existing_rigidbodies():
+	"""Scan the entire scene tree for existing RigidBody3D nodes"""
+	print("CollisionAudioManager: Scanning for existing RigidBody3D nodes...")
+	var root = get_tree().current_scene
+	if root:
+		_recursive_scan_for_rigidbodies(root)
+	else:
+		print("CollisionAudioManager: No current scene found during scan")
+
+func _recursive_scan_for_rigidbodies(node: Node):
+	"""Recursively search for RigidBody3D nodes"""
+	if node is RigidBody3D:
+		print("CollisionAudioManager: Found existing RigidBody3D - ", node.name)
+		_setup_rigidbody_collision_detection(node)
+	
+	# Check all children
+	for child in node.get_children():
+		_recursive_scan_for_rigidbodies(child)
 
 func _create_audio_pool(size: int):
 	"""Create a pool of reusable AudioStreamPlayer3D nodes"""
@@ -54,16 +103,55 @@ func _create_audio_pool(size: int):
 func _on_node_added(node: Node):
 	"""Automatically connect to RigidBody3D collision signals"""
 	if node is RigidBody3D:
+		print("CollisionAudioManager: Found NEW RigidBody3D - ", node.name)
 		# Wait one frame to ensure the node is ready
 		await get_tree().process_frame
 		if is_instance_valid(node):
-			node.body_entered.connect(_on_collision.bind(node))
+			_setup_rigidbody_collision_detection(node)
 
-func _on_collision(collider: RigidBody3D, other_body: Node):
-	"""Handle collision between two bodies"""
+func _setup_rigidbody_collision_detection(rigidbody: RigidBody3D):
+	"""Set up collision detection for a RigidBody3D - using the correct method!"""
+	# Enable contact monitoring
+	rigidbody.contact_monitor = true
+	rigidbody.max_contacts_reported = 10
+	
+	# For RigidBody3D, we need to use integration override or connect to the contact signals
+	# Let's use the contact reporting method
+	print("CollisionAudioManager: Setting up collision detection for ", rigidbody.name)
+	
+	# Connect to contact signals if they exist
+	if rigidbody.has_signal("body_entered"):
+		if not rigidbody.body_entered.is_connected(_on_rigidbody_collision.bind(rigidbody)):
+			rigidbody.body_entered.connect(_on_rigidbody_collision.bind(rigidbody))
+			print("CollisionAudioManager: Connected to body_entered for ", rigidbody.name)
+	else:
+		print("CollisionAudioManager: ", rigidbody.name, " does NOT have body_entered signal")
+		print("CollisionAudioManager: Available signals for ", rigidbody.name, ": ", rigidbody.get_signal_list())
+		
+	# Alternative: Use physics process to check colliding bodies
+	_setup_physics_collision_monitoring(rigidbody)
+
+func _setup_physics_collision_monitoring(rigidbody: RigidBody3D):
+	"""Alternative method: Monitor collisions through physics process"""
+	print("CollisionAudioManager: Setting up physics monitoring for ", rigidbody.name)
+	
+	# Add a collision monitor script component to this rigidbody
+	var monitor = CollisionMonitor.new()
+	monitor.audio_manager = self
+	monitor.monitored_body = rigidbody
+	rigidbody.add_child(monitor)
+	print("CollisionAudioManager: Added collision monitor to ", rigidbody.name)
+
+func _on_rigidbody_collision(other_body: Node, collider: RigidBody3D):
+	"""Handle RigidBody3D collision - NOTE: RigidBody3D doesn't actually have body_entered!"""
+	print("CollisionAudioManager: RigidBody collision detected!")
+	print("  Collider: ", collider.name)
+	print("  Other: ", other_body.name)
+	
 	# Get collision info
 	var collision_data = _get_collision_data(collider, other_body)
 	if not collision_data:
+		print("  No collision data - velocity too low or other issue")
 		return
 	
 	# Check cooldown to prevent audio spam
@@ -73,6 +161,7 @@ func _on_collision(collider: RigidBody3D, other_body: Node):
 	
 	if collision_timers.has(collision_key):
 		if time_stamp - collision_timers[collision_key] < collision_cooldown:
+			print("  Collision on cooldown - skipping")
 			return
 	
 	collision_timers[collision_key] = time_stamp
@@ -145,6 +234,15 @@ func _play_collision_sound(collision_data: Dictionary):
 	"""Play appropriate collision sound based on materials and impact"""
 	var material_combo = _get_material_combination(collision_data.material1, collision_data.material2)
 	var sound_files = _get_sounds_for_materials(material_combo)
+	
+	# Debug print for impact information
+	print("COLLISION IMPACT:")
+	print("  Body 1: ", collision_data.body1.name, " (", collision_data.material1, ")")
+	print("  Body 2: ", collision_data.body2.name, " (", collision_data.material2, ")")
+	print("  Velocity: ", "%.2f" % collision_data.velocity)
+	print("  Material Combo: ", material_combo)
+	print("  Position: ", collision_data.position)
+	print("  ---")
 	
 	if sound_files.is_empty():
 		return
