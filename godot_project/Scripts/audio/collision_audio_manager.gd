@@ -19,12 +19,12 @@ var pool_index: int = 0
 
 ## Material definitions - extend this for your game
 var material_sounds: Dictionary = {
-	"metal": ["res://audio/impacts/metal_clang_01.ogg", "res://audio/impacts/metal_clang_02.ogg"],
-	"wood": ["res://audio/impacts/wood_thunk_01.ogg", "res://audio/impacts/wood_knock_02.ogg"],
-	"stone": ["res://audio/impacts/stone_crack_01.ogg", "res://audio/impacts/rock_hit_02.ogg"],
-	"glass": ["res://audio/impacts/glass_break_01.ogg", "res://audio/impacts/glass_shatter_02.ogg"],
-	"plastic": ["res://audio/impacts/plastic_tap_01.ogg", "res://audio/impacts/plastic_hit_02.ogg"],
-	"default": ["res://audio/impacts/generic_thud_01.ogg", "res://audio/impacts/generic_impact_02.ogg"]
+	"metal": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"wood": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"stone": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"glass": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"plastic": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"default": ["res://audio/sound_effects/impacts/impact_1.mp3"]
 }
 
 func _ready():
@@ -117,6 +117,10 @@ func _get_material_type(body: Node) -> String:
 		return "glass"
 	elif body.is_in_group("plastic_objects"):
 		return "plastic"
+	elif body.is_in_group("paper_objects"):
+		return "paper"
+	elif body.is_in_group("flesh_objects"):
+		return "flesh"
 	
 	# Fallback to name pattern matching
 	var name_lower = body.name.to_lower()
@@ -130,6 +134,10 @@ func _get_material_type(body: Node) -> String:
 		return "glass"
 	elif "plastic" in name_lower:
 		return "plastic"
+	elif "paper" in name_lower or "cardboard" in name_lower:
+		return "paper"
+	elif "flesh" in name_lower or "body" in name_lower or "meat" in name_lower:
+		return "flesh"
 	
 	return "default"
 

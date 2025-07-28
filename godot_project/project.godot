@@ -38,6 +38,16 @@ window/stretch/aspect="ignore"
 
 enabled=PackedStringArray("res://addons/maaacks_music_controller/plugin.cfg")
 
+[global_group]
+
+metal_objects=""
+wood_objects=""
+stone_objects=""
+plastic_objects=""
+glass_objects=""
+paper_objects=""
+flesh_objects=""
+
 [input]
 
 move_right={
