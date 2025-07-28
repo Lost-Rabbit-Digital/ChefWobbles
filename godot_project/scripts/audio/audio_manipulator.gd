@@ -23,6 +23,7 @@ enum AudioType {
 	FOOTSTEPS,
 	GRAB_SOUNDS,
 	RELEASE_SOUNDS,
+	IMPACTS,
 	GENERIC
 }
 
@@ -43,6 +44,12 @@ static var audio_presets = {
 	AudioType.RELEASE_SOUNDS: {
 		"pitch_variance": 0.35,
 		"volume_db": 1.0,
+		"min_pitch": 0.85,
+		"max_pitch": 1.15
+	},
+	AudioType.IMPACTS: {
+		"pitch_variance": 0.35,
+		"volume_db": -5.0,
 		"min_pitch": 0.85,
 		"max_pitch": 1.15
 	},

@@ -11,11 +11,10 @@ extends Node
 @export var collision_cooldown: float = 0.1  # Prevent audio spam
 @export var max_volume: float = 0.8
 @export var min_volume: float = 0.1
+@export var debug_prints: bool = false  # Toggle debug output
 
 ## Internal tracking
 var collision_timers: Dictionary = {}  # Object pairs -> last collision time
-var audio_pool: Array[AudioStreamPlayer3D] = []  # Pooled audio players
-var pool_index: int = 0
 
 ## Material definitions - extend this for your game
 var material_sounds: Dictionary = {
@@ -30,14 +29,13 @@ var material_sounds: Dictionary = {
 }
 
 func _ready():
-	print("CollisionAudioManager: AutoLoad working! System initialized.")
-	
-	# Initialize audio pool
-	_create_audio_pool(20)
+	if debug_prints:
+		print("CollisionAudioManager: AutoLoad working! System initialized.")
 	
 	# Connect to new RigidBody3D nodes automatically
 	get_tree().node_added.connect(_on_node_added)
-	print("CollisionAudioManager: Connected to node_added signal")
+	if debug_prints:
+		print("CollisionAudioManager: Connected to node_added signal")
 	
 	# Scan for existing RigidBody3D nodes
 	_scan_existing_rigidbodies()
@@ -49,29 +47,21 @@ func _ready():
 	cleanup_timer.autostart = true
 	add_child(cleanup_timer)
 
-func _create_audio_pool(size: int):
-	"""Create a pool of reusable AudioStreamPlayer3D nodes"""
-	for i in size:
-		var player = AudioStreamPlayer3D.new()
-		player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
-		player.max_distance = 50.0
-		player.unit_size = 10.0
-		add_child(player)
-		audio_pool.append(player)
-
 func _scan_existing_rigidbodies():
 	"""Scan the entire scene tree for existing RigidBody3D nodes"""
-	print("CollisionAudioManager: Scanning for existing RigidBody3D nodes...")
+	if debug_prints:
+		print("CollisionAudioManager: Scanning for existing RigidBody3D nodes...")
 	var root = get_tree().current_scene
 	if root:
 		_recursive_scan_for_rigidbodies(root)
-	else:
+	elif debug_prints:
 		print("CollisionAudioManager: No current scene found during scan")
 
 func _recursive_scan_for_rigidbodies(node: Node):
 	"""Recursively search for RigidBody3D nodes"""
 	if node is RigidBody3D:
-		print("CollisionAudioManager: Found existing RigidBody3D - ", node.name)
+		if debug_prints:
+			print("CollisionAudioManager: Found existing RigidBody3D - ", node.name)
 		_setup_rigidbody_collision_detection(node)
 	
 	# Check all children
@@ -81,7 +71,8 @@ func _recursive_scan_for_rigidbodies(node: Node):
 func _on_node_added(node: Node):
 	"""Automatically connect to RigidBody3D collision signals"""
 	if node is RigidBody3D:
-		print("CollisionAudioManager: Found NEW RigidBody3D - ", node.name)
+		if debug_prints:
+			print("CollisionAudioManager: Found NEW RigidBody3D - ", node.name)
 		# Wait one frame to ensure the node is ready
 		await get_tree().process_frame
 		if is_instance_valid(node):
@@ -89,30 +80,36 @@ func _on_node_added(node: Node):
 
 func _setup_rigidbody_collision_detection(rigidbody: RigidBody3D):
 	"""Set up collision detection for a RigidBody3D using proper signals"""
-	print("CollisionAudioManager: Setting up collision detection for ", rigidbody.name)
+	if debug_prints:
+		print("CollisionAudioManager: Setting up collision detection for ", rigidbody.name)
 	
 	# Enable contact monitoring - REQUIRED for collision signals
 	rigidbody.contact_monitor = true
 	rigidbody.max_contacts_reported = 10
-	print("CollisionAudioManager: Enabled contact monitoring for ", rigidbody.name)
+	if debug_prints:
+		print("CollisionAudioManager: Enabled contact monitoring for ", rigidbody.name)
 	
 	# Connect to the correct collision signals
 	if not rigidbody.body_entered.is_connected(_on_rigidbody_collision):
 		rigidbody.body_entered.connect(_on_rigidbody_collision.bind(rigidbody))
-		print("CollisionAudioManager: Connected body_entered signal for ", rigidbody.name)
+		if debug_prints:
+			print("CollisionAudioManager: Connected body_entered signal for ", rigidbody.name)
 	
-	print("CollisionAudioManager: Setup complete for ", rigidbody.name)
+	if debug_prints:
+		print("CollisionAudioManager: Setup complete for ", rigidbody.name)
 
 func _on_rigidbody_collision(other_body: Node, collider: RigidBody3D):
 	"""Handle RigidBody3D collision using the proper signal"""
-	print("CollisionAudioManager: Collision detected!")
-	print("  Collider: ", collider.name)
-	print("  Other: ", other_body.name)
+	if debug_prints:
+		print("CollisionAudioManager: Collision detected!")
+		print("  Collider: ", collider.name)
+		print("  Other: ", other_body.name)
 	
 	# Get collision info
 	var collision_data = _get_collision_data(collider, other_body)
 	if not collision_data:
-		print("  No collision data - velocity too low or other issue")
+		if debug_prints:
+			print("  No collision data - velocity too low or other issue")
 		return
 	
 	# Check cooldown to prevent audio spam
@@ -122,7 +119,8 @@ func _on_rigidbody_collision(other_body: Node, collider: RigidBody3D):
 	
 	if collision_timers.has(collision_key):
 		if current_time_seconds - collision_timers[collision_key] < collision_cooldown:
-			print("  Collision on cooldown - skipping")
+			if debug_prints:
+				print("  Collision on cooldown - skipping")
 			return
 	
 	collision_timers[collision_key] = current_time_seconds
@@ -192,47 +190,86 @@ func _get_material_type(body: Node) -> String:
 	return "default"
 
 func _play_collision_sound(collision_data: Dictionary):
-	"""Play appropriate collision sound based on materials and impact"""
+	"""Play appropriate collision sound using AudioManipulator with proper stream loading"""
 	var material_combo = _get_material_combination(collision_data.material1, collision_data.material2)
 	var sound_files = _get_sounds_for_materials(material_combo)
 	
 	# Debug print for impact information
-	print("COLLISION IMPACT:")
-	print("  Body 1: ", collision_data.body1.name, " (", collision_data.material1, ")")
-	print("  Body 2: ", collision_data.body2.name, " (", collision_data.material2, ")")
-	print("  Velocity: ", "%.2f" % collision_data.velocity)
-	print("  Material Combo: ", material_combo)
-	print("  Position: ", collision_data.position)
-	print("  ---")
+	if debug_prints:
+		print("COLLISION IMPACT:")
+		print("  Body 1: ", collision_data.body1.name, " (", collision_data.material1, ")")
+		print("  Body 2: ", collision_data.body2.name, " (", collision_data.material2, ")")
+		print("  Velocity: ", "%.2f" % collision_data.velocity)
+		print("  Material Combo: ", material_combo)
+		print("  Position: ", collision_data.position)
+		print("  Sound files: ", sound_files)
+		print("  ---")
 	
 	if sound_files.is_empty():
+		if debug_prints:
+			print("  No sound files found for material combo: ", material_combo)
 		return
 	
-	# Select random sound from appropriate set
-	var sound_file = sound_files[randi() % sound_files.size()]
-	var audio_stream = load(sound_file) as AudioStream
+	# Convert file paths to AudioStream objects (this is what AudioManipulator expects!)
+	var audio_streams = []
+	for sound_file in sound_files:
+		var audio_stream = load(sound_file) as AudioStream
+		if audio_stream:
+			audio_streams.append(audio_stream)
+		elif debug_prints:
+			print("  Failed to load audio file: ", sound_file)
 	
-	if not audio_stream:
-		push_warning("Could not load audio file: " + sound_file)
+	if audio_streams.is_empty():
+		if debug_prints:
+			print("  No valid audio streams could be loaded")
 		return
 	
-	# Get available audio player from pool
-	var player = _get_audio_player()
-	if not player:
-		return
+	# Create a new AudioStreamPlayer3D for this collision
+	var player = AudioStreamPlayer3D.new()
+	player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
+	player.max_distance = 50.0
+	player.unit_size = 10.0
 	
-	# Configure player
+	# Add to scene first, THEN set position
+	add_child(player)
 	player.global_position = collision_data.position
-	player.stream = audio_stream
 	
-	# Scale volume based on impact velocity
+	if debug_prints:
+		print("  Loaded ", audio_streams.size(), " audio streams")
+		print("  Using AudioManipulator with IMPACTS preset")
+	
+	# Now use AudioManipulator with actual AudioStream objects (not file paths!)
+	var success = AudioManipulator.play_audio_static(player, audio_streams, AudioManipulator.AudioType.IMPACTS)
+	
+	if not success and debug_prints:
+		print("  AudioManipulator failed to play audio")
+	
+	# Override volume based on impact velocity (after AudioManipulator sets its preset)
 	var volume_scale = remap(collision_data.velocity, min_impact_velocity, max_impact_velocity, min_volume, max_volume)
-	player.volume_db = linear_to_db(clamp(volume_scale, min_volume, max_volume))
+	var final_volume = clamp(volume_scale, min_volume, max_volume)
+	var volume_db = linear_to_db(final_volume)
 	
-	# Add slight pitch variation for more natural sound
-	player.pitch_scale = randf_range(0.9, 1.1)
+	# Blend our velocity-based volume with AudioManipulator's preset
+	player.volume_db = player.volume_db + volume_db - linear_to_db(1.0)  # Adjust from the preset
 	
-	player.play()
+	if debug_prints:
+		print("  Final volume_db: ", player.volume_db)
+		print("  Pitch scale: ", player.pitch_scale)
+	
+	# Remove the player after the audio finishes
+	var cleanup_timer = Timer.new()
+	cleanup_timer.wait_time = 5.0  # Safe cleanup time
+	cleanup_timer.one_shot = true
+	cleanup_timer.timeout.connect(_cleanup_audio_player.bind(player, cleanup_timer))
+	add_child(cleanup_timer)
+	cleanup_timer.start()
+
+func _cleanup_audio_player(player: AudioStreamPlayer3D, timer: Timer):
+	"""Clean up temporary audio player"""
+	if is_instance_valid(player):
+		player.queue_free()
+	if is_instance_valid(timer):
+		timer.queue_free()
 
 func _get_material_combination(mat1: String, mat2: String) -> String:
 	"""Create a consistent material combination key"""
@@ -254,19 +291,6 @@ func _get_sounds_for_materials(material_combo: String) -> Array:
 	
 	# Default fallback
 	return material_sounds["default"]
-
-func _get_audio_player() -> AudioStreamPlayer3D:
-	"""Get next available audio player from pool"""
-	for i in audio_pool.size():
-		var player = audio_pool[(pool_index + i) % audio_pool.size()]
-		if not player.playing:
-			pool_index = (pool_index + i + 1) % audio_pool.size()
-			return player
-	
-	# All players busy, return the next one anyway (will interrupt)
-	var player = audio_pool[pool_index]
-	pool_index = (pool_index + 1) % audio_pool.size()
-	return player
 
 func _get_collision_key(body1: Node, body2: Node) -> String:
 	"""Create unique key for collision pair"""
