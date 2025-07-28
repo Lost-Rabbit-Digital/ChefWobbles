@@ -57,7 +57,7 @@ transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
 
 [node name="Node" type="Node3D" parent="."]
 
-[node name="cylinder" type="RigidBody3D" parent="Node" node_paths=PackedStringArray("mesh_instance", "collision_shape")]
+[node name="BurgerPatty" type="RigidBody3D" parent="Node" node_paths=PackedStringArray("mesh_instance", "collision_shape")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38889e-07, 0, 0)
 script = ExtResource("1_run7i")
 raw_material = ExtResource("2_xjh10")
@@ -68,9 +68,9 @@ food_name = "Burger Patty"
 mesh_instance = NodePath("cylinder")
 collision_shape = NodePath("CollisionShape3D")
 
-[node name="cylinder" type="MeshInstance3D" parent="Node/cylinder"]
+[node name="cylinder" type="MeshInstance3D" parent="Node/BurgerPatty"]
 mesh = SubResource("ArrayMesh_run7i")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Node/cylinder"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node/BurgerPatty"]
 shape = SubResource("BoxShape3D_run7i")

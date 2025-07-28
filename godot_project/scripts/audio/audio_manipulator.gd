@@ -49,7 +49,7 @@ static var audio_presets = {
 	},
 	AudioType.IMPACTS: {
 		"pitch_variance": 0.35,
-		"volume_db": -5.0,
+		"volume_db": 4.0,
 		"min_pitch": 0.85,
 		"max_pitch": 1.15
 	},

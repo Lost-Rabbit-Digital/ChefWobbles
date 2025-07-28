@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=4 uid="uid://bgr0bio21per0"]
+
+[ext_resource type="Material" uid="uid://bxbunt3yqu3jc" path="res://models/food/tomato_slice/tomato_slice_material.tres" id="1_ra232"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_abqq1"]
+_surfaces = [{
+"aabb": AABB(-0.21875, -0.03125, -0.21875, 0.4375, 0.0625, 0.4375),
+"format": 34896613377,
+"index_count": 96,
+"index_data": PackedByteArray("AAABAAIAAgADAAAAAAADAAQAAAAEAAUABQABAAAAAwAGAAQABQAEAAcABAAGAAcABQAHAAgACAABAAUACAAHAAkABwAGAAkACAAJAAoACgABAAgACgAJAAsACQAGAAsADAABAAoACgALAAwACwAGAA0ADAALAA0ADgAGAAMAAgAOAAMADQAGAA8ADwAGAA4ADAANABAAEAANAA8AEAABAAwAEQAOAAIAEQAPAA4AAgABABEAEAAPABEAEQABABAA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 18,
+"vertex_data": PackedByteArray("//8AAAS1AAD/fwAA/38AAAS1AAD//wAA/////wS1AAD/////+koAAP//AAD6SgAA/3////9/AAAEtf//AAAAAAS1AAAAAAAA+kr//wAAAAD6SgAAAAAAAAAA///6SgAAAAAAAPpKAAAAAP//BLUAAAS1/////wAA+kr/////AAAAAAAABLUAAPpKAAD//wAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_kneon"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-0.21875, -0.03125, -0.21875, 0.4375, 0.0625, 0.4375),
+"attribute_data": PackedByteArray("7u6+0hDR/99v3f+/ZeYkif///3///ySJZeb/f2/d//8Q0f/f7u5A7e7uQO0Q0f/f7u6+0v9/SNKZmSPJmZlI0v9/I8nu7kDtENH/3+7uvtJv3f//ENH/3+7uQO3/f5HkmZls25mZkeT/f2zb7u6+0hDR/99v3f+/scT//xDR/99v3f//Q8Rtm93dSJLd3W2bQ8RIkm/d/78Q0f/fscT/vzKzQO0Q0f/fscT//2XmbZv//0iS//9tm2XmSJKxxP+/ENH/3zKzvtIys77SENH/3zKzQO1DxLat3d2RpN3dtq1DxJGkMrO+0hDR/98ys0DtscT/vxDR/98ys77S/3/a9pmZte2Zmdr2/3+17TKzQO0Q0f/fscT//2/d/78Q0f/fscT/v0PEJInd3f9/3d0kiUPE/3+xxP//ENH/32/d//8="),
+"format": 34896613399,
+"index_count": 96,
+"index_data": PackedByteArray("AAABAAIAAwAEAAUAAwAGAAQABwAIAAkACgALAAwADQAOAA8ADQAQAA4AEQASABMAFAAVABYAFwAYABkAFwAaABgAGwAcAB0AHgAfACAAIQAiACMAIQAkACIAJQAmACcAKAApACoAKwAsAC0AKwAuACwALwAwADEAMgAzADQANQA2ADcANQA4ADYAOQA6ADsAPAA9AD4APwBAAEEAPwBCAEAAQwBEAEUARgBHAEgASQBKAEsASQBMAEoATQBOAE8A"),
+"material": ExtResource("1_ra232"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(30, 28, 0, 0),
+"vertex_count": 80,
+"vertex_data": PackedByteArray("//8AAAS1/7//fwAA/3//vwS1AAD///+/BLUAAP///5//////BLX/n///AAAEtf+fBLX//////58Etf//////v/9/////f/+//////wS1/7///wAA+kr/v/9/AAD/f/+///8AAAS1/7///wAABLX/v//////6Sv+///8AAPpK/7//////BLX/v/////8Etf+//3////9//7//////+kr/vwS1AAAAAP+//38AAP9//7///wAA+kr/v///AAD6Sv/fBLX//wAA/98EtQAAAAD/3//////6Sv/f//////pK/7//f////3//vwS1//8AAP+/+koAAAAA/7//fwAA/3//vwS1AAAAAP+/BLUAAAAA///6Sv//AAD///pKAAAAAP//BLX//wAA//8Etf//AAD/v/9/////f/+/+kr//wAA/78AAAAA+kr/v/9/AAD/f/+/+koAAAAA/7/6SgAAAAD/3wAA///6Sv/fAAAAAPpK/9/6Sv//AAD/3/pK//8AAP+//3////9//78AAP//+kr/vwAAAAAEtf+//38AAP9//78AAAAA+kr/vwAAAAD6Sv+/AAD//wS1/78AAAAABLX/vwAA///6Sv+/AAD///pK/7//f////3//vwAA//8Etf+/+koAAP///7//fwAA/3//vwAAAAAEtf+/AAAAAAS1/5/6Sv//////n/pKAAD///+fAAD//wS1/58AAP//BLX/v/9/////f/+/+kr//////78EtQAA////v/9/AAD/f/+/+koAAP///7/6SgAA//8AgAS1/////wCABLUAAP//AID6Sv////8AgPpK//////+//3////9//78Etf//////vwAA/38AAP9/AAD/f/9/AAD/fwAA/38AAP9/AAD+//9/////f/7//38AAP9/AAD/fwAA/3//fwAA/38AAP9/AAD/fwAA/v//f////3/+//9/AAD/fwAA/38AAP9//38AAP9/AAD/fwAA/38AAP7//3////9//v//fwAA/38AAP9/AAD/f/9/////f////3////9////+//9/////f/7//38AAP9/AAD/fwAA/3//f////3////9/////f////v//f////3/+//9/AAD/fwAA/38AAP9//3////9/////f////3////7//3////9//v//fwAA/38AAP9/AAD/f/9/////f////3////9////+//9/////f/7//38AAP9/AAD/fwAA/3//f////3////9/////f////v//f////3/+//9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_abqq1")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s2xmw"]
+size = Vector3(0.4375, 0.0625, 0.436523)
+
+[node name="TomatoSlice" type="Node3D" groups=["flesh_objects"]]
+
+[node name="Node" type="Node3D" parent="."]
+
+[node name="TomatoSlice" type="RigidBody3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54198e-18, 0, 0)
+
+[node name="cylinder" type="MeshInstance3D" parent="Node/TomatoSlice"]
+mesh = SubResource("ArrayMesh_kneon")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node/TomatoSlice"]
+shape = SubResource("BoxShape3D_s2xmw")

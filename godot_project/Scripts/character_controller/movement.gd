@@ -45,7 +45,7 @@ const BALANCE_THRESHOLD = 0.7
 @onready var l_grab_area = $"Physical/Armature/Skeleton3D/Physical Bone LArm2/LGrabArea"
 @onready var r_grab_area = $"Physical/Armature/Skeleton3D/Physical Bone RArm2/RGrabArea"
 
-# === STATE VARIABLES (KEPT YOUR ORIGINAL VARIABLES) ===
+# === STATE VARIABLES (UPDATED FOR DUAL HAND TRACKING) ===
 var can_jump = true
 var is_on_floor = false
 var walking = false
@@ -53,7 +53,12 @@ var physics_bones = []
 @export var ragdoll_mode := false
 var active_arm_left = false
 var active_arm_right = false
-var grabbed_object = null
+
+# === DUAL HAND GRABBED OBJECTS ===
+var grabbed_object_left = null  # Left hand grabbed object
+var grabbed_object_right = null # Right hand grabbed object
+var grabbed_object = null       # Keep for backward compatibility (points to left hand)
+
 var grabbing_arm_left = false
 var grabbing_arm_right = false
 var current_delta: float
@@ -79,21 +84,26 @@ func _ready():
 	physics_bones = physical_skel.get_children().filter(func(x): return x is PhysicalBone3D)
 
 func _input(event):
-	# Keep your original input handling exactly the same
+	# Keep your original input handling with dual hand object clearing
 	if Input.is_action_just_pressed("ragdoll"):
 		ragdoll_mode = bool(1 - int(ragdoll_mode))
 
 	active_arm_left = Input.is_action_pressed("grab_left")
 	active_arm_right = Input.is_action_pressed("grab_right")
 	
+	# Left hand release
 	if (not active_arm_left and grabbing_arm_left) or ragdoll_mode:
 		grabbing_arm_left = false
+		grabbed_object_left = null
+		grabbed_object = null  # Clear backward compatibility reference
 		grab_joint_left.node_a = NodePath()
 		grab_joint_left.node_b = NodePath()
 		play_release_audio_left()
 		
+	# Right hand release
 	if (not active_arm_right and grabbing_arm_right) or ragdoll_mode:
 		grabbing_arm_right = false
+		grabbed_object_right = null
 		grab_joint_right.node_a = NodePath()
 		grab_joint_right.node_b = NodePath()
 		play_release_audio_right()
@@ -268,11 +278,12 @@ func handle_footstep_audio(delta):
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
 
-# Keep your original grabbing functions with updated audio calls
+# === UPDATED GRABBING FUNCTIONS WITH DUAL HAND TRACKING ===
 func _on_r_grab_area_body_entered(body: Node3D):
 	if body is PhysicsBody3D and body.get_parent() != physical_skel:
 		if active_arm_right and not grabbing_arm_right:
 			grabbing_arm_right = true
+			grabbed_object_right = body  # Store right hand object
 			grab_joint_right.global_position = r_grab_area.global_position
 			grab_joint_right.node_a = physical_bone_r_arm_2.get_path()
 			grab_joint_right.node_b = body.get_path()
@@ -282,7 +293,8 @@ func _on_l_grab_area_body_entered(body: Node3D):
 	if body is PhysicsBody3D and body.get_parent() != physical_skel:
 		if active_arm_left and not grabbing_arm_left:
 			grabbing_arm_left = true
-			grabbed_object = body
+			grabbed_object_left = body   # Store left hand object
+			grabbed_object = body        # Keep backward compatibility
 			grab_joint_left.global_position = l_grab_area.global_position
 			grab_joint_left.node_a = physical_bone_l_arm_2.get_path()
 			grab_joint_left.node_b = body.get_path()
@@ -308,3 +320,20 @@ func _on_skeleton_3d_skeleton_updated() -> void:
 			torque = torque.limit_length(max_angular_force)
 			
 			b.angular_velocity += torque * current_delta
+
+# === NEW HELPER FUNCTIONS FOR ITEM DISPLAY SYSTEM ===
+func get_left_hand_item() -> Node:
+	## Returns the object currently held in the left hand
+	return grabbed_object_left
+
+func get_right_hand_item() -> Node:
+	## Returns the object currently held in the right hand
+	return grabbed_object_right
+
+func is_left_hand_grabbing() -> bool:
+	## Returns true if left hand is actively grabbing
+	return grabbing_arm_left
+
+func is_right_hand_grabbing() -> bool:
+	## Returns true if right hand is actively grabbing
+	return grabbing_arm_right
