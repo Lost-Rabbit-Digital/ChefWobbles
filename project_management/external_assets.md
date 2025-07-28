@@ -2,6 +2,7 @@
 - https://pizzadoggy.itch.io/cozy-tunes
 - https://github.com/PiCode9560/Godot-4-Active-ragdoll
 - https://github.com/Maaack/Godot-Music-Controller
+- https://ggbot.itch.io/kaph-font
 
 # Future Assets
 ## Shaders
@@ -15,9 +16,6 @@
 - https://acornbringer.itch.io/assets-low-poly-nature-objects
 - https://acornbringer.itch.io/assets-low-poly-fantasy-houses
 - https://acornbringer.itch.io/assets-low-poly-structures
-
-## Fonts
-- https://ggbot.itch.io/kaph-font
 
 ## Audio
 - https://shapeforms.itch.io/shapeforms-audio-free-sfx
