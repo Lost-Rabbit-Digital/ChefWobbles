@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=4 uid="uid://bjk4e8k421f15"]
+[gd_scene load_steps=12 format=4 uid="uid://bjk4e8k421f15"]
 
 [ext_resource type="Script" uid="uid://8ke8qu0t6lbl" path="res://scripts/stations/stove_station.gd" id="1_5pjtc"]
-[ext_resource type="Texture2D" uid="uid://dlcixu8xlx5vd" path="res://models/stations/stove_station/stove_station_0.png" id="1_x0nu6"]
+[ext_resource type="Texture2D" uid="uid://dlcixu8xlx5vd" path="res://models/stations/stove_station/stove_station_texture.png" id="1_x0nu6"]
 [ext_resource type="AudioStream" uid="uid://4u1y6tmi4ae6" path="res://audio/sound_effects/dings/ding_1.mp3" id="2_30amm"]
 [ext_resource type="AudioStream" uid="uid://c564xbudf67it" path="res://audio/sound_effects/sizzles/sizzling_1.mp3" id="2_lc4m4"]
 [ext_resource type="AudioStream" uid="uid://dcpfa1w72pdg5" path="res://audio/sound_effects/dings/ding_2.mp3" id="3_15vm5"]
+[ext_resource type="Material" uid="uid://teyv320lwtus" path="res://models/stations/stove_station/stove_station_material.tres" id="5_15vm5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ysapw"]
 resource_name = "material_0"
@@ -71,8 +72,10 @@ cooking_timer = NodePath("CookingTimer")
 [node name="root" type="Node3D" parent="Node"]
 
 [node name="cuboid" type="MeshInstance3D" parent="Node/root"]
+material_override = ExtResource("5_15vm5")
 mesh = SubResource("ArrayMesh_ln68x")
 skeleton = NodePath("")
+surface_material_override/0 = ExtResource("5_15vm5")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Node/root/cuboid"]
 

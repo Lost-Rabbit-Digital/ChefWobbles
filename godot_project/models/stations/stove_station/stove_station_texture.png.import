@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dlcixu8xlx5vd"
-path.s3tc="res://.godot/imported/stove_station_0.png-7d384ec105d9eb1b89f6dbeb4c5a9b37.s3tc.ctex"
+path.s3tc="res://.godot/imported/stove_station_texture.png-af0c40ce46c54bb7327d25e77be7faca.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://models/stations/stove_station/stove_station_0.png"
-dest_files=["res://.godot/imported/stove_station_0.png-7d384ec105d9eb1b89f6dbeb4c5a9b37.s3tc.ctex"]
+source_file="res://models/stations/stove_station/stove_station_texture.png"
+dest_files=["res://.godot/imported/stove_station_texture.png-af0c40ce46c54bb7327d25e77be7faca.s3tc.ctex"]
 
 [params]
 

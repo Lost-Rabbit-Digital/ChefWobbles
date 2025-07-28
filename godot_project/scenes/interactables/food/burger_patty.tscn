@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=4 uid="uid://c03wrgomhlo4s"]
+
+[ext_resource type="Texture2D" uid="uid://cq8v02s4bmuc3" path="res://models/food/burger_patty/burger_patty_0.png" id="1_knmp5"]
+[ext_resource type="Script" uid="uid://gyjxlptmowpe" path="res://scripts/interactables/food/burger_patty.gd" id="1_run7i"]
+[ext_resource type="Material" uid="uid://dua8da6sm17mk" path="res://models/food/burger_patty/burger_patty_raw_material.tres" id="2_xjh10"]
+[ext_resource type="Material" uid="uid://nc107vh0i4vq" path="res://models/food/burger_patty/burger_patty_cooking_material.tres" id="3_r6y8j"]
+[ext_resource type="Material" uid="uid://doe7dgsvejepe" path="res://models/food/burger_patty/burger_patty_cooked_material.tres" id="4_wqfsa"]
+[ext_resource type="Material" uid="uid://6p0677d3nwdn" path="res://models/food/burger_patty/burger_patty_burnt_material.tres" id="5_00nhk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7mhq"]
+resource_name = "material_0"
+transparency = 2
+alpha_scissor_threshold = 0.05
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_knmp5")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6hgju"]
+_surfaces = [{
+"aabb": AABB(-0.21875, -0.03125, -0.21875, 0.4375, 0.0625, 0.4375),
+"format": 34896613377,
+"index_count": 96,
+"index_data": PackedByteArray("AAABAAIAAgADAAAAAAADAAQAAAAEAAUABQABAAAAAwAGAAQABQAEAAcABAAGAAcABQAHAAgACAABAAUACAAHAAkABwAGAAkACAAJAAoACgABAAgACgAJAAsACQAGAAsADAABAAoACgALAAwACwAGAA0ADAALAA0ADgAGAAMAAgAOAAMADQAGAA8ADwAGAA4ADAANABAAEAANAA8AEAABAAwAEQAOAAIAEQAPAA4AAgABABEAEAAPABEAEQABABAA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 18,
+"vertex_data": PackedByteArray("//8AAAS1AAD/fwAA/38AAJe8AAD//wAA/////wS1AAD/////+koAAP//AAD6SgAA/3////9/AACXvP//AAAAAJe8AAAAAAAAZ0P//wAAAABnQwAAAAAAAAAA///6SgAAAAAAAPpKAAAAAP//BLUAAJe8/////wAAZ0P/////AAAAAAAABLUAAGdDAAD//wAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_run7i"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-0.21875, -0.03125, -0.21875, 0.4375, 0.0625, 0.4375),
+"attribute_data": PackedByteArray("/+d8lf+n/6+Bwv9v/4f/V/+//0f/v/9X/4f/R4HC/+//p/+v/+eByv/ngcr/p/+v/+d8lf9//w//twAA/7f/D/9/AAD/54HK/6f/r//nfJWBwv/v/6f/r//ngcoAAP+v/zf/n/83/68AAP+f/+d8lf+n/6+Bwv9vfI3/7/+n/6+Bwv/v/4f/P/+//y//v/8//4f/L4HC/2//p/+vfI3/b/9ngcr/p/+vfI3/7/+//w//9wAA//f/D/+/AAB8jf9v/6f/r/9nfJX/Z3yV/6f/r/9ngcoAAP+X/zf/h/83/5cAAP+H/2d8lf+n/6//Z4HKfI3/b/+n/6//Z3yVAAD/x/83/7f/N//HAAD/t/9ngcr/p/+vfI3/74HC/2//p/+vfI3/b/+H/yf/v/8X/7//J/+H/xd8jf/v/6f/r4HC/+8="),
+"format": 34896613399,
+"index_count": 96,
+"index_data": PackedByteArray("AAABAAIAAwAEAAUAAwAGAAQABwAIAAkACgALAAwADQAOAA8ADQAQAA4AEQASABMAFAAVABYAFwAYABkAFwAaABgAGwAcAB0AHgAfACAAIQAiACMAIQAkACIAJQAmACcAKAApACoAKwAsAC0AKwAuACwALwAwADEAMgAzADQANQA2ADcANQA4ADYAOQA6ADsAPAA9AD4APwBAAEEAPwBCAEAAQwBEAEUARgBHAEgASQBKAEsASQBMAEoATQBOAE8A"),
+"material": SubResource("StandardMaterial3D_j7mhq"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 80,
+"vertex_data": PackedByteArray("//8AAAS1/7//fwAA/3//v5e8AAD///+/l7wAAP//KaL/////BLUpov//AAAEtSmil7z/////KaKXvP//////v/9/////f/+//////wS1/7///wAA+kr/v/9/AAD/f/+///8AAAS1/7///wAABLX/v//////6Sv+///8AAPpK/7//////BLX/v/////8Etf+//3////9//7//////+kr/v5e8AAAAAP+//38AAP9//7///wAA+kr/v///AAD6StTdl7z//wAA1N2XvAAAAADU3f/////6StTd//////pK/7//f////3//v5e8//8AAP+/Z0MAAAAA/7//fwAA/3//v5e8AAAAAP+/l7wAAAAA//9nQ///AAD//2dDAAAAAP//l7z//wAA//+XvP//AAD/v/9/////f/+/Z0P//wAA/78AAAAA+kr/v/9/AAD/f/+/Z0MAAAAA/79nQwAAAADU3QAA///6StTdAAAAAPpK1N1nQ///AADU3WdD//8AAP+//3////9//78AAP//+kr/vwAAAAAEtf+//38AAP9//78AAAAA+kr/vwAAAAD6Sv+/AAD//wS1/78AAAAABLX/vwAA///6Sv+/AAD///pK/7//f////3//vwAA//8Etf+/Z0MAAP///7//fwAA/3//vwAAAAAEtf+/AAAAAAS1KaJnQ/////8pomdDAAD//ymiAAD//wS1KaIAAP//BLX/v/9/////f/+/Z0P//////7+XvAAA////v/9/AAD/f/+/Z0MAAP///79nQwAA//8AgJe8/////wCAl7wAAP//AIBnQ/////8AgGdD//////+//3////9//7+XvP//////vwAA/38AAP9/AAD/f/9/AAD/fwAA/38AAP9/AAD+//9/////f/7//38AAP9/AAD/fwAA/3//fwAA/38AAP9/AAD/fwAA/v//f////3/+//9/AAD/fwAA/38AAP9//38AAP9/AAD/fwAA/38AAP7//3////9//v//fwAA/38AAP9/AAD/f/9/////f////3////9////+//9/////f/7//38AAP9/AAD/fwAA/3//f////3////9/////f////v//f////3/+//9/AAD/fwAA/38AAP9//3////9/////f////3////7//3////9//v//fwAA/38AAP9/AAD/f/9/////f////3////9////+//9/////f/7//38AAP9/AAD/fwAA/3//f////3////9/////f////v//f////3/+//9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_6hgju")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_run7i"]
+size = Vector3(0.445313, 0.0654297, 0.431641)
+
+[node name="BurgerPatty" type="Node3D" groups=["flesh_objects"]]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
+
+[node name="Node" type="Node3D" parent="."]
+
+[node name="cylinder" type="RigidBody3D" parent="Node" node_paths=PackedStringArray("mesh_instance", "collision_shape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38889e-07, 0, 0)
+script = ExtResource("1_run7i")
+raw_material = ExtResource("2_xjh10")
+cooking_material = ExtResource("3_r6y8j")
+cooked_material = ExtResource("4_wqfsa")
+burnt_material = ExtResource("5_00nhk")
+food_name = "Burger Patty"
+mesh_instance = NodePath("cylinder")
+collision_shape = NodePath("CollisionShape3D")
+
+[node name="cylinder" type="MeshInstance3D" parent="Node/cylinder"]
+mesh = SubResource("ArrayMesh_run7i")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node/cylinder"]
+shape = SubResource("BoxShape3D_run7i")

@@ -109,6 +109,7 @@ disable_update_check=false
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+shading/overrides/force_lambert_over_burley=true
 textures/decals/filter=0
 textures/light_projectors/filter=0
 lightmapping/lightmap_gi/use_bicubic_filter=false
