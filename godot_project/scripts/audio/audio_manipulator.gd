@@ -36,7 +36,7 @@ static var audio_presets = {
 	},
 	AudioType.GRAB_SOUNDS: {
 		"pitch_variance": 0.35,
-		"volume_db": 1.0,
+		"volume_db": -15.0,
 		"min_pitch": 0.85,
 		"max_pitch": 1.15
 	},

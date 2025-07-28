@@ -13,8 +13,8 @@ const AIR_DAMPING = 0.95
 @export var max_angular_force: float = 9999.0
 
 # === AUDIO EXPORTS (UPDATED FOR FOUR SOURCES) ===
-@onready var grab_audio = preload("res://audio/sound_effects/plops/plop_2.mp3")
-@onready var release_audio = preload("res://audio/sound_effects/dings/ding_2.mp3")
+@onready var grab_audio = preload("res://audio/sound_effects/plops/plop_1.mp3")
+@onready var release_audio = preload("res://audio/sound_effects/plops/plop_2.mp3")
 @onready var footstep_audio = preload("res://audio/sound_effects/thuds/thud_1.mp3")
 
 # === STABILITY CONSTANTS ===
