@@ -1,29 +1,6 @@
 # CollisionAudioManager.gd
 # Singleton script - Add to AutoLoad as "CollisionAudio"
-## Collision Monitor Helper Class
-class_name CollisionMonitor extends Node
-
-var audio_manager: Node
-var monitored_body: RigidBody3D
-var previous_colliding_bodies: Array = []
-
-func _process(_delta):
-	if not monitored_body or not is_instance_valid(monitored_body):
-		queue_free()
-		return
-		
-	# Get currently colliding bodies
-	var current_colliding = monitored_body.get_colliding_bodies()
-	
-	# Check for NEW collisions (bodies that weren't colliding before)
-	for body in current_colliding:
-		if not body in previous_colliding_bodies:
-			print("CollisionMonitor: NEW collision detected between ", monitored_body.name, " and ", body.name)
-			if audio_manager and audio_manager.has_method("_on_rigidbody_collision"):
-				audio_manager._on_rigidbody_collision(body, monitored_body)
-	
-	# Update the previous list
-	previous_colliding_bodies = current_colliding.duplicate()
+extends Node
 
 ## Audio bank for different material combinations
 @export var audio_banks: Dictionary = {}
@@ -42,26 +19,27 @@ var pool_index: int = 0
 
 ## Material definitions - extend this for your game
 var material_sounds: Dictionary = {
-	"metal": ["res://audio/impacts/metal_clang_01.ogg", "res://audio/impacts/metal_clang_02.ogg"],
-	"wood": ["res://audio/impacts/wood_thunk_01.ogg", "res://audio/impacts/wood_knock_02.ogg"],
-	"stone": ["res://audio/impacts/stone_crack_01.ogg", "res://audio/impacts/rock_hit_02.ogg"],
-	"glass": ["res://audio/impacts/glass_break_01.ogg", "res://audio/impacts/glass_shatter_02.ogg"],
-	"plastic": ["res://audio/impacts/plastic_tap_01.ogg", "res://audio/impacts/plastic_hit_02.ogg"],
-	"default": ["res://audio/impacts/generic_thud_01.ogg", "res://audio/impacts/generic_impact_02.ogg"]
+	"metal": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"wood": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"stone": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"glass": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"plastic": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"paper": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"flesh": ["res://audio/sound_effects/impacts/impact_1.mp3"],
+	"default": ["res://audio/sound_effects/impacts/impact_1.mp3"]
 }
 
 func _ready():
-	set_process(true)
 	print("CollisionAudioManager: AutoLoad working! System initialized.")
 	
 	# Initialize audio pool
-	_create_audio_pool(20)  # Adjust pool size based on your needs
+	_create_audio_pool(20)
 	
 	# Connect to new RigidBody3D nodes automatically
 	get_tree().node_added.connect(_on_node_added)
 	print("CollisionAudioManager: Connected to node_added signal")
 	
-	# IMPORTANT: Scan for existing RigidBody3D nodes already in the scene
+	# Scan for existing RigidBody3D nodes
 	_scan_existing_rigidbodies()
 	
 	# Clean up old collision timers periodically
@@ -70,6 +48,16 @@ func _ready():
 	cleanup_timer.timeout.connect(_cleanup_collision_timers)
 	cleanup_timer.autostart = true
 	add_child(cleanup_timer)
+
+func _create_audio_pool(size: int):
+	"""Create a pool of reusable AudioStreamPlayer3D nodes"""
+	for i in size:
+		var player = AudioStreamPlayer3D.new()
+		player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
+		player.max_distance = 50.0
+		player.unit_size = 10.0
+		add_child(player)
+		audio_pool.append(player)
 
 func _scan_existing_rigidbodies():
 	"""Scan the entire scene tree for existing RigidBody3D nodes"""
@@ -90,16 +78,6 @@ func _recursive_scan_for_rigidbodies(node: Node):
 	for child in node.get_children():
 		_recursive_scan_for_rigidbodies(child)
 
-func _create_audio_pool(size: int):
-	"""Create a pool of reusable AudioStreamPlayer3D nodes"""
-	for i in size:
-		var player = AudioStreamPlayer3D.new()
-		player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
-		player.max_distance = 50.0
-		player.unit_size = 10.0
-		add_child(player)
-		audio_pool.append(player)
-
 func _on_node_added(node: Node):
 	"""Automatically connect to RigidBody3D collision signals"""
 	if node is RigidBody3D:
@@ -110,41 +88,24 @@ func _on_node_added(node: Node):
 			_setup_rigidbody_collision_detection(node)
 
 func _setup_rigidbody_collision_detection(rigidbody: RigidBody3D):
-	"""Set up collision detection for a RigidBody3D - using the correct method!"""
-	# Enable contact monitoring
-	rigidbody.contact_monitor = true
-	rigidbody.max_contacts_reported = 10
-	
-	# For RigidBody3D, we need to use integration override or connect to the contact signals
-	# Let's use the contact reporting method
+	"""Set up collision detection for a RigidBody3D using proper signals"""
 	print("CollisionAudioManager: Setting up collision detection for ", rigidbody.name)
 	
-	# Connect to contact signals if they exist
-	if rigidbody.has_signal("body_entered"):
-		if not rigidbody.body_entered.is_connected(_on_rigidbody_collision.bind(rigidbody)):
-			rigidbody.body_entered.connect(_on_rigidbody_collision.bind(rigidbody))
-			print("CollisionAudioManager: Connected to body_entered for ", rigidbody.name)
-	else:
-		print("CollisionAudioManager: ", rigidbody.name, " does NOT have body_entered signal")
-		print("CollisionAudioManager: Available signals for ", rigidbody.name, ": ", rigidbody.get_signal_list())
-		
-	# Alternative: Use physics process to check colliding bodies
-	_setup_physics_collision_monitoring(rigidbody)
-
-func _setup_physics_collision_monitoring(rigidbody: RigidBody3D):
-	"""Alternative method: Monitor collisions through physics process"""
-	print("CollisionAudioManager: Setting up physics monitoring for ", rigidbody.name)
+	# Enable contact monitoring - REQUIRED for collision signals
+	rigidbody.contact_monitor = true
+	rigidbody.max_contacts_reported = 10
+	print("CollisionAudioManager: Enabled contact monitoring for ", rigidbody.name)
 	
-	# Add a collision monitor script component to this rigidbody
-	var monitor = CollisionMonitor.new()
-	monitor.audio_manager = self
-	monitor.monitored_body = rigidbody
-	rigidbody.add_child(monitor)
-	print("CollisionAudioManager: Added collision monitor to ", rigidbody.name)
+	# Connect to the correct collision signals
+	if not rigidbody.body_entered.is_connected(_on_rigidbody_collision):
+		rigidbody.body_entered.connect(_on_rigidbody_collision.bind(rigidbody))
+		print("CollisionAudioManager: Connected body_entered signal for ", rigidbody.name)
+	
+	print("CollisionAudioManager: Setup complete for ", rigidbody.name)
 
 func _on_rigidbody_collision(other_body: Node, collider: RigidBody3D):
-	"""Handle RigidBody3D collision - NOTE: RigidBody3D doesn't actually have body_entered!"""
-	print("CollisionAudioManager: RigidBody collision detected!")
+	"""Handle RigidBody3D collision using the proper signal"""
+	print("CollisionAudioManager: Collision detected!")
 	print("  Collider: ", collider.name)
 	print("  Other: ", other_body.name)
 	
@@ -156,15 +117,15 @@ func _on_rigidbody_collision(other_body: Node, collider: RigidBody3D):
 	
 	# Check cooldown to prevent audio spam
 	var collision_key = _get_collision_key(collider, other_body)
-	var current_time = Time.get_time_dict_from_system()
-	var time_stamp = current_time.hour * 3600 + current_time.minute * 60 + current_time.second + current_time.millisecond * 0.001
+	var time_stamp = Time.get_time_dict_from_system()
+	var current_time_seconds = time_stamp.hour * 3600 + time_stamp.minute * 60 + time_stamp.second
 	
 	if collision_timers.has(collision_key):
-		if time_stamp - collision_timers[collision_key] < collision_cooldown:
+		if current_time_seconds - collision_timers[collision_key] < collision_cooldown:
 			print("  Collision on cooldown - skipping")
 			return
 	
-	collision_timers[collision_key] = time_stamp
+	collision_timers[collision_key] = current_time_seconds
 	
 	# Play appropriate sound
 	_play_collision_sound(collision_data)
@@ -317,12 +278,12 @@ func _get_collision_key(body1: Node, body2: Node) -> String:
 
 func _cleanup_collision_timers():
 	"""Remove old collision timer entries"""
-	var current_time = Time.get_time_dict_from_system()
-	var time_stamp = current_time.hour * 3600 + current_time.minute * 60 + current_time.second
+	var time_stamp = Time.get_time_dict_from_system()
+	var current_time_seconds = time_stamp.hour * 3600 + time_stamp.minute * 60 + time_stamp.second
 	
 	var keys_to_remove = []
 	for key in collision_timers:
-		if time_stamp - collision_timers[key] > 10.0:  # Remove entries older than 10 seconds
+		if current_time_seconds - collision_timers[key] > 10.0:  # Remove entries older than 10 seconds
 			keys_to_remove.append(key)
 	
 	for key in keys_to_remove:
