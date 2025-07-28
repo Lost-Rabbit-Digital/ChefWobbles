@@ -25,6 +25,7 @@ buses/default_bus_layout="res://audio/default_bus_layout.tres"
 [autoload]
 
 ProjectMusicController="*res://addons/maaacks_music_controller/base/scenes/autoloads/project_music_controller.tscn"
+CollisionAudio="*res://Scripts/audio/collision_audio_manager.gd"
 
 [display]
 
