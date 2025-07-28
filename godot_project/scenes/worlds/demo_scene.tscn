@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=36 format=3 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="1_j51jv"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="7_8sg6o"]
 [ext_resource type="AudioStream" uid="uid://dempf1idxhdvw" path="res://audio/music/Evening Harmony.ogg" id="8_kq5dy"]
 [ext_resource type="Script" path="res://Scripts/audio/music_randomiser.gd" id="9_4qt2k"]
+[ext_resource type="PackedScene" uid="uid://b06jfh1rrvtts" path="res://models/food/plate/plate.gltf" id="9_7ktdx"]
 [ext_resource type="AudioStream" uid="uid://bp1u1j3y0evjm" path="res://audio/music/Floating Dream.ogg" id="9_202kh"]
 [ext_resource type="PackedScene" uid="uid://bfhfov058daap" path="res://models/appliances/retro_terminal/retro_terminal.gltf" id="9_g2hwh"]
 [ext_resource type="AudioStream" uid="uid://c5b8mjpjj7txe" path="res://audio/music/Forgotten Biomes.ogg" id="10_jdejj"]
@@ -274,6 +275,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3, 3.5)
 
 [node name="TomatoSlice3" parent="Interactables/TomatoSlices" instance=ExtResource("6_0cmys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3.1, 3.3)
+
+[node name="LettuceLeaves" type="Node" parent="Interactables"]
+
+[node name="OnionSlices" type="Node" parent="Interactables"]
+
+[node name="BurgerBuns" type="Node" parent="Interactables"]
+
+[node name="Plates" type="Node" parent="Interactables"]
+
+[node name="blockbench_export" parent="Interactables" instance=ExtResource("9_7ktdx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3, 5)
 
 [node name="Music" type="Node" parent="."]
 script = ExtResource("9_4qt2k")
