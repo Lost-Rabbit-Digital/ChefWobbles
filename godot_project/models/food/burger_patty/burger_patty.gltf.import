@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bfhfov058daap"
-path="res://.godot/imported/retro_terminal.gltf-85a6391cce3ca719b0c81262fa2ef5f5.scn"
+uid="uid://boequy6cj1rec"
+path="res://.godot/imported/burger_patty.gltf-cfbcbcbeb046d5d680ef6ba82c92896d.scn"
 
 [deps]
 
-source_file="res://models/appliances/retro_terminal/retro_terminal.gltf"
-dest_files=["res://.godot/imported/retro_terminal.gltf-85a6391cce3ca719b0c81262fa2ef5f5.scn"]
+source_file="res://models/food/burger_patty/burger_patty.gltf"
+dest_files=["res://.godot/imported/burger_patty.gltf-cfbcbcbeb046d5d680ef6ba82c92896d.scn"]
 
 [params]
 
@@ -34,8 +34,10 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Node/cuboid": {
-"generate/physics": true
+"PATH:Node/root/cylinder": {
+"generate/physics": true,
+"physics/body_type": 1,
+"physics/shape_type": 1
 }
 }
 }

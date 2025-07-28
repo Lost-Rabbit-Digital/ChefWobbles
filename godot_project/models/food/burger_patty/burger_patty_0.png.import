@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2cwd51mo53wm"
-path.s3tc="res://.godot/imported/burger_patty_model_0.png-ddac4ea56d554b345fd62239195cd743.s3tc.ctex"
+uid="uid://cq8v02s4bmuc3"
+path.s3tc="res://.godot/imported/burger_patty_0.png-7a7a4e8931148f62bd9b4658ae27a42a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "91f9204fe9628c10faf691cdd0c18f5c"
+"md5": "9caa5b9be654b303ba3b0844cc15c365"
 }
 
 [deps]
 
-source_file="res://models/food/burger_patty/burger_patty_model_0.png"
-dest_files=["res://.godot/imported/burger_patty_model_0.png-ddac4ea56d554b345fd62239195cd743.s3tc.ctex"]
+source_file="res://models/food/burger_patty/burger_patty_0.png"
+dest_files=["res://.godot/imported/burger_patty_0.png-7a7a4e8931148f62bd9b4658ae27a42a.s3tc.ctex"]
 
 [params]
 
