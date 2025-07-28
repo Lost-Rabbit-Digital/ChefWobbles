@@ -117,7 +117,7 @@ vertical_alignment = 1
 
 [node name="Separator" type="Label" parent="GUI/HBoxContainer"]
 layout_mode = 2
-text = "|"
+text = " | "
 label_settings = SubResource("LabelSettings_g2hwh")
 horizontal_alignment = 1
 vertical_alignment = 1
