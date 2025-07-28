@@ -90,7 +90,19 @@ Show cursor - Esc
 transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3, -2.8)
 
 [node name="BurgerPatty2" parent="Interactables/BurgerPatties" instance=ExtResource("3_j51jv")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3, -6.8)
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3, -3.5)
+
+[node name="BurgerPatty3" parent="Interactables/BurgerPatties" instance=ExtResource("3_j51jv")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3, -4.2)
+
+[node name="BurgerPatty4" parent="Interactables/BurgerPatties" instance=ExtResource("3_j51jv")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3.2, -3.8)
+
+[node name="BurgerPatty5" parent="Interactables/BurgerPatties" instance=ExtResource("3_j51jv")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3.2, -3.1)
+
+[node name="BurgerPatty6" parent="Interactables/BurgerPatties" instance=ExtResource("3_j51jv")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3.4, -3.5)
 
 [node name="GodotBoxes" type="Node" parent="Interactables"]
 
