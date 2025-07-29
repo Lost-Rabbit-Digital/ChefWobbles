@@ -3,7 +3,7 @@
 extends Node
 
 signal player_connected(peer_id: int, player_info: Dictionary)
-signal player_disconnected(peer_id: int)
+signal player_disconnected(peer_id: int, player_info: Dictionary)
 signal server_disconnected()
 signal connection_established()
 signal connection_failed()
@@ -87,6 +87,7 @@ func start_multiplayer_game(scene_path: String) -> void:
 		print("WARNING: Only server can start game")
 		return
 	
+	print("Host starting scene transition for all players")
 	# Tell all clients to change scene
 	_change_scene_for_all.rpc(scene_path)
 	
@@ -121,29 +122,22 @@ func spawn_players_in_scene():
 			print("Local peer ", role, " Player_", simple_id)
 
 func add_player_to_scene(simple_id: int):
-	# Check if player already exists
-	var existing_player = get_tree().current_scene.get_node_or_null("Player_" + str(simple_id))
-	if existing_player:
-		print("Player ", simple_id, " already exists, skipping spawn")
+	if not multiplayer.is_server():
+		return  # Only server spawns
+	
+	# Get the spawner
+	var spawner = get_tree().current_scene.get_node_or_null("MultiplayerSpawner")
+	if not spawner:
+		print("No MultiplayerSpawner found!")
 		return
 	
-	var player = player_scene.instantiate()
-	player.name = "Player_" + str(simple_id)
+	# Get actual peer ID
+	var actual_peer_id = _get_actual_peer_id(simple_id)
 	
-	var game_scene = get_tree().current_scene
-	if game_scene:
-		game_scene.add_child(player)
-		
-		# Find the actual peer ID for this simple ID
-		var actual_peer_id = _get_actual_peer_id(simple_id)
-		
-		# CRITICAL: Set authority using the actual peer ID
-		player.set_multiplayer_authority(actual_peer_id)
-		if player.has_method("set_player_id"):
-			player.set_player_id(simple_id)  # Use simple ID for game logic
-		
-		player.global_position = Vector3(randf_range(-3, 3), 2, randf_range(-3, 3))
-		print("Spawned player ", simple_id, " with authority: ", actual_peer_id, " (simple ID: ", simple_id, ")")
+	# Use MultiplayerSpawner.spawn_function 
+	var player = spawner.spawn([actual_peer_id, simple_id])
+	
+	print("Spawned via MultiplayerSpawner: Player_", simple_id)
 
 func remove_player_from_scene(simple_id: int):
 	var player = get_tree().current_scene.get_node_or_null("Player_" + str(simple_id))

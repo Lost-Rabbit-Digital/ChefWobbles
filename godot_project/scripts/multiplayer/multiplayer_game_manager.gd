@@ -3,6 +3,11 @@
 extends Node3D
 
 func _ready() -> void:
+	var spawner = $MultiplayerSpawner
+	if spawner:
+		# Reference the static function from your player script class
+		var player_script = preload("res://scripts/multiplayer/multiplayer_movement.gd")
+		spawner.spawn_function = Callable(player_script, "spawn_custom")
 	_setup_multiplayer()
 
 func _setup_multiplayer() -> void:
@@ -31,6 +36,6 @@ func _setup_single_player() -> void:
 	player.global_position = Vector3(0, 2, 0)
 	print("Single player spawned")
 
-func _on_player_disconnected(peer_id: int) -> void:
+func _on_player_disconnected(peer_id: int, player_info: Dictionary) -> void:
 	"""Handle player disconnection cleanup"""
-	print("Player ", peer_id, " disconnected from game")
+	print("Player ", player_info.get("name", str(peer_id)), " disconnected from game")

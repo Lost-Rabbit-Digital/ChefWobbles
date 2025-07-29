@@ -1,8 +1,27 @@
-# MultiplayerMovement.gd - Clean version that extends your existing movement
-# Replace your existing multiplayer_movement.gd with this
+# MultiplayerMovement.gd - With proper MultiplayerSpawner integration
 extends "res://scripts/character_controller/movement.gd"
 
 @export var player_id: int = 1
+
+# MultiplayerSpawner integration
+static func spawn_custom(data: Variant) -> Node:
+	"""Static spawn function for MultiplayerSpawner"""
+	var player_scene = preload("res://scenes/character.tscn")
+	var player = player_scene.instantiate()
+	
+	if data is Array and data.size() >= 2:
+		var actual_peer_id = data[0]
+		var simple_id = data[1]
+		
+		player.name = "Player_" + str(simple_id)
+		player.set_multiplayer_authority(actual_peer_id)
+		if player.has_method("set_player_id"):
+			player.set_player_id(simple_id)
+		player.global_position = Vector3(randf_range(-3, 3), 2, randf_range(-3, 3))
+		
+		print("Custom spawned Player ", simple_id, " with authority ", actual_peer_id)
+	
+	return player
 
 func _ready() -> void:
 	# Call parent setup first to initialize your movement system
@@ -11,17 +30,17 @@ func _ready() -> void:
 
 func _setup_multiplayer() -> void:
 	"""Setup multiplayer authority and groups"""
-	# Extract simple ID from node name (Player_1, Player_2, etc.)
-	var name_parts = name.split("_")
-	if name_parts.size() >= 2:
-		player_id = name_parts[1].to_int()
 	
-	# Authority is set by NetworkManager, don't override here
-	# Just setup groups and logging
-	add_to_group("players")
-	add_to_group("player_" + str(player_id))
-	
-	print("Player ", player_id, " ready. Authority will be set by NetworkManager.")
+	# If not spawned via custom spawner, use fallback method
+	if player_id == 1:  # Default value means not set by spawner
+		var name_parts = name.split("_")
+		if name_parts.size() >= 2:
+			player_id = name_parts[1].to_int()
+		
+		add_to_group("players")
+		add_to_group("player_" + str(player_id))
+		
+		print("Player ", player_id, " ready. Authority will be set by NetworkManager.")
 
 func set_player_id(new_id: int) -> void:
 	"""Set player ID - called by NetworkManager after authority is set"""
@@ -41,8 +60,6 @@ func _physics_process(delta: float) -> void:
 	# Only run physics on the authority (the player who owns this character)
 	if is_multiplayer_authority():
 		super._physics_process(delta)
-	
-	# Position automatically syncs via Godot's built-in multiplayer
 
 func _input(event: InputEvent) -> void:
 	# Only process input if we have authority

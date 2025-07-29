@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=38 format=3 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="Script" uid="uid://dek6340tnv2ts" path="res://scripts/multiplayer/multiplayer_game_manager.gd" id="1_8sg6o"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
@@ -23,6 +23,8 @@
 [ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/music/Sunlight Through Leaves.ogg" id="16_jjhks"]
 [ext_resource type="PackedScene" uid="uid://bjk4e8k421f15" path="res://scenes/stations/stove_stations/stove_station.tscn" id="17_jc6vo"]
 [ext_resource type="PackedScene" uid="uid://dsc5wbn13tt8p" path="res://models/stations/generic_station/generic_station.gltf" id="18_fu8s8"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8sg6o"]
 
 [sub_resource type="Sky" id="Sky_67mw3"]
 sky_material = ExtResource("2_0cmys")
@@ -67,6 +69,14 @@ size = Vector3(4, 4, 4)
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_8sg6o")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8sg6o")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://cd70x3de3pbl4")
+spawn_path = NodePath("..")
+spawn_limit = 4
 
 [node name="SpawnPoints" type="Node" parent="."]
 
