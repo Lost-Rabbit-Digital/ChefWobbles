@@ -73,12 +73,7 @@ const FOOTSTEP_INTERVAL = 0.35  # Time between footsteps when walking
 var target_velocity: Vector3 = Vector3.ZERO
 var movement_input: Vector3 = Vector3.ZERO
 
-func test_direct_audio():
-	left_hand_audio_player.stream = grab_audio
-	left_hand_audio_player.play()
-		
 func _ready():
-	test_direct_audio()
 	# Keep your original initialization
 	physical_skel.physical_bones_start_simulation()
 	physics_bones = physical_skel.get_children().filter(func(x): return x is PhysicalBone3D)

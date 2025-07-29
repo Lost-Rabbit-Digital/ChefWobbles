@@ -1,5 +1,6 @@
-[gd_scene load_steps=37 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=38 format=3 uid="uid://c6i2mlgfgnhg7"]
 
+[ext_resource type="Script" uid="uid://dek6340tnv2ts" path="res://scripts/multiplayer/multiplayer_game_manager.gd" id="1_8sg6o"]
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="1_j51jv"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
 [ext_resource type="Script" uid="uid://b31777dpj7ckh" path="res://scripts/user_interface/item_display_controller.gd" id="3_hmwhd"]
@@ -66,9 +67,9 @@ size = Vector3(4, 4, 4)
 size = Vector3(4, 4, 4)
 
 [node name="Node3D" type="Node3D"]
-
-[node name="Character" parent="." groups=["flesh_objects"] instance=ExtResource("1_j51jv")]
-transform = Transform3D(1, 0, 7.35137e-08, 0, 1, 0, -7.35137e-08, 0, 1, 0.11497, 1.90377, -0.239787)
+script = ExtResource("1_8sg6o")
+player_scene = ExtResource("1_j51jv")
+spawn_points = Array[Vector3]([Vector3(8, 5, 2), Vector3(3, 5, 3), Vector3(-3, 5, 1), Vector3(2, 5, 5)])
 
 [node name="EnvironmentalEffects" type="Node" parent="."]
 
@@ -94,7 +95,7 @@ Show cursor - Esc
 label_settings = SubResource("LabelSettings_g2hwh")
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI" node_paths=PackedStringArray("left_hand_label", "right_hand_label", "movement_controller")]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI" node_paths=PackedStringArray("left_hand_label", "right_hand_label")]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -108,7 +109,6 @@ grow_vertical = 0
 script = ExtResource("3_hmwhd")
 left_hand_label = NodePath("LeftHandItemLabel")
 right_hand_label = NodePath("RightHandItemLabel")
-movement_controller = NodePath("../../Character")
 
 [node name="LeftHandItemLabel" type="Label" parent="GUI/HBoxContainer"]
 layout_mode = 2
