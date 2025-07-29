@@ -208,10 +208,10 @@ func _on_player_connected(peer_id: int, player_info: Dictionary) -> void:
 	_update_lobby_ui()
 	_update_connection_status("Player joined: " + player_info.get("name", str(peer_id)))
 
-func _on_player_disconnected(peer_id: int) -> void:
+func _on_player_disconnected(peer_id: int, player_info: Dictionary) -> void:
 	"""Handle player disconnection"""
 	_update_lobby_ui()
-	_update_connection_status("Player left: " + str(peer_id))
+	_update_connection_status("Player left: " + player_info.get("name", str(peer_id)))
 
 func _on_connection_established() -> void:
 	"""Handle successful connection"""

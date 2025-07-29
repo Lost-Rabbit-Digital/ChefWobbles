@@ -216,9 +216,10 @@ func _on_peer_disconnected(actual_peer_id: int) -> void:
 	
 	var simple_id = _get_simple_id(actual_peer_id)
 	if players.has(simple_id):
+		var player_info = players[simple_id]  # Get player info before erasing
 		players.erase(simple_id)
 		peer_id_map.erase(actual_peer_id)
-		player_disconnected.emit(simple_id)
+		player_disconnected.emit(simple_id, player_info)
 		remove_player_from_scene(simple_id)
 
 func _on_connected_to_server() -> void:
