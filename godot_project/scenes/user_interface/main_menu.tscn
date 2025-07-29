@@ -88,7 +88,6 @@ theme = ExtResource("2_n0nnf")
 text = "Join lobby"
 
 [node name="Lobby" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -112,9 +111,6 @@ theme = ExtResource("2_n0nnf")
 text = "Lobby Status"
 horizontal_alignment = 1
 
-[node name="PlayerList" type="ItemList" parent="Lobby/VBoxContainer"]
-layout_mode = 2
-
 [node name="HBoxContainer" type="HBoxContainer" parent="Lobby/VBoxContainer"]
 layout_mode = 2
 
@@ -127,6 +123,9 @@ text = "Start Game"
 layout_mode = 2
 theme = ExtResource("2_n0nnf")
 text = "Leave Lobby"
+
+[node name="PlayerList" type="VBoxContainer" parent="Lobby/VBoxContainer"]
+layout_mode = 2
 
 [node name="ConnectionDialog" type="AcceptDialog" parent="."]
 theme = ExtResource("2_n0nnf")

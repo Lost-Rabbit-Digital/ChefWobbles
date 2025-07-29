@@ -16,8 +16,8 @@ extends Control
 @onready var join_dialog: AcceptDialog = $MainMenu/JoinDialog
 @onready var join_confirm_button: Button = $MainMenu/JoinDialog/VBoxContainer/JoinConfirmButton
 
-# Lobby UI
-@onready var player_list: ItemList = $Lobby/VBoxContainer/PlayerList
+# Lobby UI - UPDATED FOR VBOXCONTAINER
+@onready var player_list: VBoxContainer = $Lobby/VBoxContainer/PlayerList
 @onready var start_game_button: Button = $Lobby/VBoxContainer/HBoxContainer/StartGameButton
 @onready var leave_lobby_button: Button = $Lobby/VBoxContainer/HBoxContainer/LeaveLobbyButton
 @onready var lobby_status_label: Label = $Lobby/VBoxContainer/StatusLabel
@@ -99,16 +99,30 @@ func _update_lobby_ui() -> void:
 	if not player_list or not NetworkManager:
 		return
 	
-	# Update player list
-	player_list.clear()
+	# Clear existing player labels - proper VBoxContainer method
+	for child in player_list.get_children():
+		player_list.remove_child(child)
+		child.queue_free()
+	
 	var players = NetworkManager.get_all_players()
 	
 	for peer_id in players:
 		var player_info = players[peer_id]
 		var player_name = player_info.get("name", "Player " + str(peer_id))
 		var is_host = peer_id == 1
-		var display_text = player_name + (" (Host)" if is_host else "")
-		player_list.add_item(display_text)
+		
+		# Create new label node
+		var label = Label.new()
+		
+		# Set the label text
+		if is_host:
+			label.text = player_name + " (Host)"
+		else:
+			label.text = player_name
+		
+		# Add the label to VBoxContainer
+		player_list.add_child(label)
+		print("Added label: ", label.text)
 	
 	# Update start game button (only host can start)
 	if start_game_button:

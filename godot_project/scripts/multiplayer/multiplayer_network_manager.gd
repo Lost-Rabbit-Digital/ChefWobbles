@@ -32,8 +32,18 @@ func _ready() -> void:
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
+# Add this to NetworkManager.gd temporarily
+func debug_players_dict(location: String):
+	print("=== PLAYERS DICT DEBUG: ", location, " ===")
+	print("Local peer: ", multiplayer.get_unique_id())
+	print("Is server: ", multiplayer.is_server())
+	print("Players dict: ", players)
+	print("peer_id_map: ", peer_id_map)
+	print("=====================================")
+
 # === HOST/JOIN FUNCTIONS ===
 func host_game() -> Error:
+	debug_players_dict("host_game_function")
 	var error = peer.create_server(PORT, MAX_PLAYERS)
 	if error != OK:
 		print("Failed to host game: ", error_string(error))
@@ -42,15 +52,17 @@ func host_game() -> Error:
 	multiplayer.multiplayer_peer = peer
 	print("Server started on port ", PORT)
 	
-	# Add host as first player with simple ID
+	# Add host as first player with simple ID 1
 	var host_id = 1
 	peer_id_map[host_id] = host_id  # Host keeps ID 1
+	next_simple_id = 2  # Start clients from ID 2
 	players[host_id] = local_player_info.duplicate()
 	player_connected.emit(host_id, local_player_info)
 	
 	return OK
 
 func join_game(ip_address: String = DEFAULT_SERVER_IP) -> Error:
+	debug_players_dict("host_game_function")
 	var error = peer.create_client(ip_address, PORT)
 	if error != OK:
 		print("Failed to create client: ", error_string(error))
@@ -68,7 +80,7 @@ func disconnect_from_game() -> void:
 	
 	players.clear()
 	peer_id_map.clear()
-	next_simple_id = 1
+	next_simple_id = 2  # Reset to 2 (host is always 1)
 	print("Disconnected from multiplayer session")
 
 func start_multiplayer_game(scene_path: String) -> void:
@@ -76,6 +88,16 @@ func start_multiplayer_game(scene_path: String) -> void:
 		print("WARNING: Only server can start game")
 		return
 	
+	# Tell all clients to change scene
+	_change_scene_for_all.rpc(scene_path)
+	
+	# Change scene on server
+	get_tree().change_scene_to_file(scene_path)
+
+@rpc("call_local", "reliable")
+func _change_scene_for_all(scene_path: String) -> void:
+	"""Change scene on all clients"""
+	print("Changing scene to: ", scene_path)
 	get_tree().change_scene_to_file(scene_path)
 
 # === PLAYER SPAWNING ===
@@ -85,8 +107,19 @@ func spawn_players_in_scene():
 		print("No player scene assigned to NetworkManager!")
 		return
 	
+	print("Spawning players. Current players: ", players.keys())
+	print("Local peer ID: ", multiplayer.get_unique_id())
+	
+	# Everyone spawns all players, but only has authority over their own
 	for simple_id in players:
 		add_player_to_scene(simple_id)
+		
+		# Log which player we have authority over
+		var player_node = get_tree().current_scene.get_node_or_null("Player_" + str(simple_id))
+		if player_node:
+			var has_authority = player_node.is_multiplayer_authority()
+			var role = "controls" if has_authority else "sees"
+			print("Local peer ", role, " Player_", simple_id)
 
 func add_player_to_scene(simple_id: int):
 	# Check if player already exists
@@ -131,9 +164,19 @@ func _get_simple_id(actual_peer_id: int) -> int:
 	if peer_id_map.has(actual_peer_id):
 		return peer_id_map[actual_peer_id]
 	
-	# Assign new simple ID
+	# Special handling for host
+	if actual_peer_id == 1:
+		peer_id_map[actual_peer_id] = 1
+		return 1
+	
+	# Assign new simple ID for clients (start from 2)
 	var simple_id = next_simple_id
-	next_simple_id += 1
+	if simple_id == 1:  # Skip 1, it's reserved for host
+		simple_id = 2
+		next_simple_id = 3
+	else:
+		next_simple_id += 1
+	
 	peer_id_map[actual_peer_id] = simple_id
 	print("Mapped peer ", actual_peer_id, " to simple ID ", simple_id)
 	return simple_id
@@ -195,7 +238,7 @@ func _on_server_disconnected() -> void:
 	multiplayer.multiplayer_peer = null
 	players.clear()
 	peer_id_map.clear()
-	next_simple_id = 1
+	next_simple_id = 2  # Reset to 2 (host is always 1)
 	server_disconnected.emit()
 
 # === PLAYER REGISTRATION ===
@@ -221,4 +264,13 @@ func _register_player(player_info: Dictionary) -> void:
 @rpc("call_local", "reliable")
 func _player_registered(simple_id: int, player_info: Dictionary) -> void:
 	players[simple_id] = player_info
+	
+	# If this is our own registration, remember our simple ID
+	if not multiplayer.is_server():
+		var local_peer = multiplayer.get_unique_id()
+		# This assumes the most recently registered player is us (the client)
+		if simple_id > 1:  # Client IDs start from 2
+			peer_id_map[local_peer] = simple_id
+			print("Client mapped own peer ", local_peer, " to simple ID ", simple_id)
+	
 	player_connected.emit(simple_id, player_info)

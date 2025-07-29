@@ -15,7 +15,9 @@ func _setup_multiplayer() -> void:
 	# Connect network events for cleanup
 	NetworkManager.player_disconnected.connect(_on_player_disconnected)
 	
-	# Spawn all connected players
+	# Wait a frame for network setup, then spawn players
+	await get_tree().process_frame
+	NetworkManager.debug_players_dict("spawn_players_in_scene")
 	NetworkManager.spawn_players_in_scene()
 
 func _setup_single_player() -> void:

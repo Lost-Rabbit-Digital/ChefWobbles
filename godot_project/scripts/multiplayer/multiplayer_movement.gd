@@ -1,4 +1,4 @@
-# MultiplayerMovement.gd - Updated version that extends your existing movement
+# MultiplayerMovement.gd - Clean version that extends your existing movement
 # Replace your existing multiplayer_movement.gd with this
 extends "res://scripts/character_controller/movement.gd"
 
@@ -7,41 +7,7 @@ extends "res://scripts/character_controller/movement.gd"
 func _ready() -> void:
 	# Call parent setup first to initialize your movement system
 	super._ready()
-	_debug_authority()
 	_setup_multiplayer()
-
-# Updated debug - Add this to your player script temporarily
-# Put this in _ready() after super._ready()
-
-func _debug_authority():
-	"""Debug authority setup - call this after multiplayer setup"""
-	await get_tree().create_timer(1.0).timeout  # Wait longer for setup
-	
-	print("=== AUTHORITY DEBUG ===")
-	print("Node name: ", name)
-	print("Player ID: ", player_id)
-	print("Local peer ID: ", multiplayer.get_unique_id())
-	print("Authority ID: ", get_multiplayer_authority())
-	print("Has authority: ", is_multiplayer_authority())
-	
-	# Check if this player should have authority
-	var should_have_authority = false
-	var local_peer = multiplayer.get_unique_id()
-	
-	# For simple IDs: Player_1 = host (peer 1), Player_2 = client (large peer ID)
-	if player_id == 1 and local_peer == 1:
-		should_have_authority = true
-	elif player_id == 2 and local_peer != 1:
-		should_have_authority = true
-	
-	print("Should have authority: ", should_have_authority)
-	print("AUTHORITY CORRECT: ", is_multiplayer_authority() == should_have_authority)
-	print("=====================")
-
-func _debug_authority_check():
-	# Only log when there's actual input
-	if Input.get_vector("move_left", "move_right", "ui_up", "ui_down") != Vector2.ZERO:
-		print("Player ", player_id, " moving. Authority: ", is_multiplayer_authority(), " Local peer: ", multiplayer.get_unique_id())
 
 func _setup_multiplayer() -> void:
 	"""Setup multiplayer authority and groups"""
@@ -103,7 +69,7 @@ func _handle_multiplayer_grab_inputs(event: InputEvent) -> void:
 # === GRAB SYSTEM WITH MULTIPLAYER ===
 func _try_grab_left() -> void:
 	"""Try to grab with left hand"""
-	if grabbing_arm_left or not l_grab_area:
+	if not has_method("l_grab_area") or grabbing_arm_left or not l_grab_area:
 		return
 	
 	var targets = l_grab_area.get_overlapping_bodies()
@@ -114,7 +80,7 @@ func _try_grab_left() -> void:
 
 func _try_grab_right() -> void:
 	"""Try to grab with right hand"""
-	if grabbing_arm_right or not r_grab_area:
+	if not has_method("r_grab_area") or grabbing_arm_right or not r_grab_area:
 		return
 	
 	var targets = r_grab_area.get_overlapping_bodies()
@@ -127,14 +93,14 @@ func _try_grab_right() -> void:
 func _grab_left(target_path: NodePath) -> void:
 	"""Grab with left hand - synced across network"""
 	var target = get_node_or_null(target_path)
-	if not target or grabbing_arm_left:
+	if not target or not has_method("grabbing_arm_left") or grabbing_arm_left:
 		return
 	
 	grabbing_arm_left = true
 	grabbed_object_left = target
 	grabbed_object = target  # Backward compatibility with your system
 	
-	if grab_joint_left and physical_bone_l_arm_2:
+	if has_method("grab_joint_left") and grab_joint_left and has_method("physical_bone_l_arm_2") and physical_bone_l_arm_2:
 		grab_joint_left.global_position = l_grab_area.global_position
 		grab_joint_left.node_a = grab_joint_left.get_path_to(physical_bone_l_arm_2)
 		grab_joint_left.node_b = grab_joint_left.get_path_to(target)
@@ -143,13 +109,13 @@ func _grab_left(target_path: NodePath) -> void:
 func _grab_right(target_path: NodePath) -> void:
 	"""Grab with right hand - synced across network"""
 	var target = get_node_or_null(target_path)
-	if not target or grabbing_arm_right:
+	if not target or not has_method("grabbing_arm_right") or grabbing_arm_right:
 		return
 	
 	grabbing_arm_right = true
 	grabbed_object_right = target
 	
-	if grab_joint_right and physical_bone_r_arm_2:
+	if has_method("grab_joint_right") and grab_joint_right and has_method("physical_bone_r_arm_2") and physical_bone_r_arm_2:
 		grab_joint_right.global_position = r_grab_area.global_position
 		grab_joint_right.node_a = grab_joint_right.get_path_to(physical_bone_r_arm_2)
 		grab_joint_right.node_b = grab_joint_right.get_path_to(target)
@@ -157,27 +123,27 @@ func _grab_right(target_path: NodePath) -> void:
 @rpc("call_local", "reliable")
 func _release_left() -> void:
 	"""Release left hand - synced across network"""
-	if not grabbing_arm_left:
+	if not has_method("grabbing_arm_left") or not grabbing_arm_left:
 		return
 	
 	grabbing_arm_left = false
 	grabbed_object_left = null
 	grabbed_object = null
 	
-	if grab_joint_left:
+	if has_method("grab_joint_left") and grab_joint_left:
 		grab_joint_left.node_a = NodePath()
 		grab_joint_left.node_b = NodePath()
 
 @rpc("call_local", "reliable")
 func _release_right() -> void:
 	"""Release right hand - synced across network"""
-	if not grabbing_arm_right:
+	if not has_method("grabbing_arm_right") or not grabbing_arm_right:
 		return
 	
 	grabbing_arm_right = false
 	grabbed_object_right = null
 	
-	if grab_joint_right:
+	if has_method("grab_joint_right") and grab_joint_right:
 		grab_joint_right.node_a = NodePath()
 		grab_joint_right.node_b = NodePath()
 
