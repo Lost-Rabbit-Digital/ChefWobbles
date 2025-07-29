@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cm50mt2m1y28f"]
+
+[ext_resource type="Texture2D" uid="uid://cpgcyhp5qhnem" path="res://models/interactables/plate/plate_texture.png" id="1_wmfaj"]
+
+[resource]
+specular_mode = 1
+albedo_texture = ExtResource("1_wmfaj")
+texture_filter = 0

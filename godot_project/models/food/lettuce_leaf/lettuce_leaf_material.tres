@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cwmujaruwc27h"]
+
+[ext_resource type="Texture2D" uid="uid://dvcjtjyt51t1g" path="res://models/food/lettuce_leaf/lettuce_leaf.png" id="1_c1wtr"]
+
+[resource]
+specular_mode = 1
+albedo_texture = ExtResource("1_c1wtr")
+texture_filter = 0

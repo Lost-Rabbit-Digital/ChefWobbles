@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://b06jfh1rrvtts"
-path="res://.godot/imported/plate.gltf-3cba45d67df1bbe60e901c56ac8cbc11.scn"
+path="res://.godot/imported/plate.gltf-b45e2ede96d4f607aa055afbd92a4caf.scn"
 
 [deps]
 
-source_file="res://models/food/plate/plate.gltf"
-dest_files=["res://.godot/imported/plate.gltf-3cba45d67df1bbe60e901c56ac8cbc11.scn"]
+source_file="res://models/interactables/plate/plate.gltf"
+dest_files=["res://.godot/imported/plate.gltf-b45e2ede96d4f607aa055afbd92a4caf.scn"]
 
 [params]
 
@@ -32,6 +32,20 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={}
+_subresources={
+"materials": {
+"material_0": {
+"use_external/enabled": true,
+"use_external/path": "uid://cm50mt2m1y28f"
+}
+},
+"nodes": {
+"PATH:Node/cylinder": {
+"generate/physics": true,
+"physics/body_type": 1,
+"physics/shape_type": 3
+}
+}
+}
 gltf/naming_version=1
 gltf/embedded_image_handling=1

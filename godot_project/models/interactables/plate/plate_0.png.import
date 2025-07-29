@@ -2,11 +2,10 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfyx8vclt6byn"
-path.s3tc="res://.godot/imported/plate_0.png-4020106602490f6afe94c020d8363a48.s3tc.ctex"
+uid="uid://dgqjxmib05tvj"
+path="res://.godot/imported/plate_0.png-1a9824c23ac24be16b67e9e9055f0018.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
 "md5": "7635ff3579eb2361b8cf80097948f8ac"
@@ -14,12 +13,12 @@ generator_parameters={
 
 [deps]
 
-source_file="res://models/food/plate/plate_0.png"
-dest_files=["res://.godot/imported/plate_0.png-4020106602490f6afe94c020d8363a48.s3tc.ctex"]
+source_file="res://models/interactables/plate/plate_0.png"
+dest_files=["res://.godot/imported/plate_0.png-1a9824c23ac24be16b67e9e9055f0018.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -35,4 +34,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
