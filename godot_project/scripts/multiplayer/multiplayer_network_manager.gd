@@ -43,7 +43,6 @@ func debug_players_dict(location: String):
 
 # === HOST/JOIN FUNCTIONS ===
 func host_game() -> Error:
-	debug_players_dict("host_game_function")
 	var error = peer.create_server(PORT, MAX_PLAYERS)
 	if error != OK:
 		print("Failed to host game: ", error_string(error))
@@ -58,11 +57,10 @@ func host_game() -> Error:
 	next_simple_id = 2  # Start clients from ID 2
 	players[host_id] = local_player_info.duplicate()
 	player_connected.emit(host_id, local_player_info)
-	
+	debug_players_dict("host_game_function")
 	return OK
 
 func join_game(ip_address: String = DEFAULT_SERVER_IP) -> Error:
-	debug_players_dict("host_game_function")
 	var error = peer.create_client(ip_address, PORT)
 	if error != OK:
 		print("Failed to create client: ", error_string(error))
@@ -71,6 +69,7 @@ func join_game(ip_address: String = DEFAULT_SERVER_IP) -> Error:
 	multiplayer.multiplayer_peer = peer
 	print("Attempting to connect to ", ip_address, ":", PORT)
 	
+	debug_players_dict("join_game_function")
 	return OK
 
 func disconnect_from_game() -> void:
