@@ -260,6 +260,10 @@ func _register_player(player_info: Dictionary) -> void:
 	var current_scene = get_tree().current_scene
 	if current_scene and current_scene.scene_file_path.contains("demo_scene"):
 		add_player_to_scene(simple_id)
+		
+	# Send host info to the new client so they can see the host
+	_player_registered.rpc_id(actual_peer_id, 1, players[1])
+	print("Sent host info to new client ", actual_peer_id)
 
 @rpc("call_local", "reliable")
 func _player_registered(simple_id: int, player_info: Dictionary) -> void:
@@ -268,9 +272,15 @@ func _player_registered(simple_id: int, player_info: Dictionary) -> void:
 	# If this is our own registration, remember our simple ID
 	if not multiplayer.is_server():
 		var local_peer = multiplayer.get_unique_id()
-		# This assumes the most recently registered player is us (the client)
+		
+		# Map ourselves if this is our registration
 		if simple_id > 1:  # Client IDs start from 2
 			peer_id_map[local_peer] = simple_id
 			print("Client mapped own peer ", local_peer, " to simple ID ", simple_id)
-	
+		
+		# Also map the host so we can see them
+		if simple_id == 1:  # Host registration
+			peer_id_map[1] = 1
+			print("Client mapped host peer 1 to simple ID 1")
+			
 	player_connected.emit(simple_id, player_info)
