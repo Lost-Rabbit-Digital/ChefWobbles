@@ -1,30 +1,28 @@
-# MultiplayerMovement.gd - Using Godot's Built-in MultiplayerSynchronizer
-# Attach this to your burger_patty scene root (replacing movement.gd)
-extends "res://Scripts/character_controller/movement.gd"
+# MultiplayerMovement.gd - Updated version that extends your existing movement
+# Replace your existing multiplayer_movement.gd with this
+extends "res://scripts/character_controller/movement.gd"
 
 @export var player_id: int = 1
 
-# Built-in Godot multiplayer node - add as child of player root
-@onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
-
 func _ready() -> void:
-	# Call parent setup first
+	# Call parent setup first to initialize your movement system
 	super._ready()
+	_setup_multiplayer()
+
+func _setup_multiplayer() -> void:
+	"""Setup multiplayer authority and groups"""
+	# Set authority based on peer ID from node name
+	var peer_id = name.get_slice("_", 1).to_int()
+	if peer_id > 0:
+		player_id = peer_id
 	
-	# Setup multiplayer authority
 	set_multiplayer_authority(player_id)
-	
-	# Configure the MultiplayerSynchronizer
-	if sync:
-		sync.set_multiplayer_authority(player_id)
-		# Root path should point to this node (the player root)
-		sync.root_path = NodePath(".")
 	
 	# Add to groups for easy finding
 	add_to_group("players")
 	add_to_group("player_" + str(player_id))
 	
-	print("Player ", player_id, " ready. Authority: ", is_multiplayer_authority())
+	print("Player ", player_id, " ready with authority: ", is_multiplayer_authority())
 
 func set_player_id(new_id: int) -> void:
 	"""Set player ID and update authority"""
@@ -33,8 +31,6 @@ func set_player_id(new_id: int) -> void:
 	
 	# Update multiplayer authority
 	set_multiplayer_authority(player_id)
-	if sync:
-		sync.set_multiplayer_authority(player_id)
 	
 	# Update groups
 	remove_from_group("player_" + str(player_id))
@@ -45,19 +41,21 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		super._physics_process(delta)
 	
-	# MultiplayerSynchronizer handles position sync automatically!
-	# No manual RPC needed for position/rotation
+	# Position automatically syncs via Godot's built-in multiplayer
 
-# === INPUT HANDLING ===
 func _input(event: InputEvent) -> void:
 	# Only process input if we have authority
 	if not is_multiplayer_authority():
 		return
 	
-	# Call parent input handling
+	# Call parent input handling for your movement system
 	super._input(event)
 	
-	# Handle grab inputs with RPCs for instant response
+	# Handle grab inputs with RPCs for multiplayer sync
+	_handle_multiplayer_grab_inputs(event)
+
+func _handle_multiplayer_grab_inputs(event: InputEvent) -> void:
+	"""Handle grab inputs with multiplayer synchronization"""
 	if event.is_action_pressed("grab_left"):
 		_try_grab_left()
 	elif event.is_action_released("grab_left"):
@@ -67,7 +65,7 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_released("grab_right"):
 		_release_right.rpc()
 
-# === GRAB SYSTEM ===
+# === GRAB SYSTEM WITH MULTIPLAYER ===
 func _try_grab_left() -> void:
 	"""Try to grab with left hand"""
 	if grabbing_arm_left or not l_grab_area:
@@ -99,7 +97,7 @@ func _grab_left(target_path: NodePath) -> void:
 	
 	grabbing_arm_left = true
 	grabbed_object_left = target
-	grabbed_object = target  # Backward compatibility
+	grabbed_object = target  # Backward compatibility with your system
 	
 	if grab_joint_left and physical_bone_l_arm_2:
 		grab_joint_left.global_position = l_grab_area.global_position
@@ -151,3 +149,6 @@ func _release_right() -> void:
 # === UTILITY ===
 func get_player_id() -> int:
 	return player_id
+
+func is_local_player() -> bool:
+	return is_multiplayer_authority()

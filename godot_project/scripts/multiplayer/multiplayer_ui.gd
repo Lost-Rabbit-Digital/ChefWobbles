@@ -1,5 +1,4 @@
-# MultiplayerUI.gd
-# UI system for multiplayer lobby and connection management
+# MultiplayerUI.gd - Complete UI system for multiplayer lobby and connection management
 extends Control
 
 # UI Components
@@ -59,7 +58,7 @@ func _connect_signals() -> void:
 	# Join dialog
 	if join_confirm_button:
 		join_confirm_button.pressed.connect(_on_join_confirm_pressed)
-	if join_dialog.canceled:
+	if join_dialog and join_dialog.has_signal("canceled"):
 		join_dialog.canceled.connect(_on_join_cancel_pressed)
 	
 	# Lobby buttons
@@ -118,7 +117,7 @@ func _update_lobby_ui() -> void:
 	# Update status
 	if lobby_status_label:
 		var player_count = NetworkManager.get_player_count()
-		lobby_status_label.text = "Players: " + str(player_count) + "/" + str(NetworkManager.MAX_PLAYERS)
+		lobby_status_label.text = "Players: " + str(player_count) + "/4"
 
 # === BUTTON HANDLERS ===
 func _on_host_button_pressed() -> void:
@@ -272,7 +271,6 @@ func _on_debug_button_pressed() -> void:
 # === SCENE TRANSITIONS ===
 func transition_to_game() -> void:
 	"""Transition from lobby to game scene"""
-	# This is called by NetworkManager when game starts
 	_update_connection_status("Loading game...")
 
 func return_to_lobby() -> void:

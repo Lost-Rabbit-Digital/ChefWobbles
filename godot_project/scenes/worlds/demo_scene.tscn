@@ -1,7 +1,6 @@
-[gd_scene load_steps=39 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=38 format=3 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="Script" uid="uid://dek6340tnv2ts" path="res://scripts/multiplayer/multiplayer_game_manager.gd" id="1_8sg6o"]
-[ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="1_j51jv"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
 [ext_resource type="Script" uid="uid://b31777dpj7ckh" path="res://scripts/user_interface/item_display_controller.gd" id="3_hmwhd"]
 [ext_resource type="PackedScene" uid="uid://c03wrgomhlo4s" path="res://scenes/interactables/food/burger_patty.tscn" id="3_j51jv"]
@@ -70,7 +69,6 @@ size = Vector3(4, 4, 4)
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_8sg6o")
-player_scene = ExtResource("1_j51jv")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8sg6o")
