@@ -7,34 +7,69 @@ extends "res://scripts/character_controller/movement.gd"
 func _ready() -> void:
 	# Call parent setup first to initialize your movement system
 	super._ready()
+	_debug_authority()
 	_setup_multiplayer()
+
+# Updated debug - Add this to your player script temporarily
+# Put this in _ready() after super._ready()
+
+func _debug_authority():
+	"""Debug authority setup - call this after multiplayer setup"""
+	await get_tree().create_timer(1.0).timeout  # Wait longer for setup
+	
+	print("=== AUTHORITY DEBUG ===")
+	print("Node name: ", name)
+	print("Player ID: ", player_id)
+	print("Local peer ID: ", multiplayer.get_unique_id())
+	print("Authority ID: ", get_multiplayer_authority())
+	print("Has authority: ", is_multiplayer_authority())
+	
+	# Check if this player should have authority
+	var should_have_authority = false
+	var local_peer = multiplayer.get_unique_id()
+	
+	# For simple IDs: Player_1 = host (peer 1), Player_2 = client (large peer ID)
+	if player_id == 1 and local_peer == 1:
+		should_have_authority = true
+	elif player_id == 2 and local_peer != 1:
+		should_have_authority = true
+	
+	print("Should have authority: ", should_have_authority)
+	print("AUTHORITY CORRECT: ", is_multiplayer_authority() == should_have_authority)
+	print("=====================")
+
+func _debug_authority_check():
+	# Only log when there's actual input
+	if Input.get_vector("move_left", "move_right", "ui_up", "ui_down") != Vector2.ZERO:
+		print("Player ", player_id, " moving. Authority: ", is_multiplayer_authority(), " Local peer: ", multiplayer.get_unique_id())
 
 func _setup_multiplayer() -> void:
 	"""Setup multiplayer authority and groups"""
-	# Set authority based on peer ID from node name
-	var peer_id = name.get_slice("_", 1).to_int()
-	if peer_id > 0:
-		player_id = peer_id
+	# Extract simple ID from node name (Player_1, Player_2, etc.)
+	var name_parts = name.split("_")
+	if name_parts.size() >= 2:
+		player_id = name_parts[1].to_int()
 	
-	set_multiplayer_authority(player_id)
-	
-	# Add to groups for easy finding
+	# Authority is set by NetworkManager, don't override here
+	# Just setup groups and logging
 	add_to_group("players")
 	add_to_group("player_" + str(player_id))
 	
-	print("Player ", player_id, " ready with authority: ", is_multiplayer_authority())
+	print("Player ", player_id, " ready. Authority will be set by NetworkManager.")
 
 func set_player_id(new_id: int) -> void:
-	"""Set player ID and update authority"""
+	"""Set player ID - called by NetworkManager after authority is set"""
+	var old_id = player_id
 	player_id = new_id
-	name = "Player_" + str(player_id)
-	
-	# Update multiplayer authority
-	set_multiplayer_authority(player_id)
 	
 	# Update groups
-	remove_from_group("player_" + str(player_id))
+	if old_id > 0:
+		remove_from_group("player_" + str(old_id))
 	add_to_group("player_" + str(new_id))
+	
+	# Log after authority is set
+	await get_tree().process_frame
+	print("Player ID set: ", new_id, " Authority: ", get_multiplayer_authority(), " Has authority: ", is_multiplayer_authority(), " (Local peer: ", multiplayer.get_unique_id(), ")")
 
 func _physics_process(delta: float) -> void:
 	# Only run physics on the authority (the player who owns this character)

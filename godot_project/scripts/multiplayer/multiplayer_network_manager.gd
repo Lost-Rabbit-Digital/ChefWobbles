@@ -21,6 +21,10 @@ var local_player_info: Dictionary = {
 	"color": Color.WHITE
 }
 
+# Map large peer IDs to simple sequential IDs
+var peer_id_map: Dictionary = {}  # large_id -> simple_id
+var next_simple_id: int = 1
+
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
@@ -38,8 +42,9 @@ func host_game() -> Error:
 	multiplayer.multiplayer_peer = peer
 	print("Server started on port ", PORT)
 	
-	# Add host as first player
+	# Add host as first player with simple ID
 	var host_id = 1
+	peer_id_map[host_id] = host_id  # Host keeps ID 1
 	players[host_id] = local_player_info.duplicate()
 	player_connected.emit(host_id, local_player_info)
 	
@@ -62,6 +67,8 @@ func disconnect_from_game() -> void:
 		multiplayer.multiplayer_peer = null
 	
 	players.clear()
+	peer_id_map.clear()
+	next_simple_id = 1
 	print("Disconnected from multiplayer session")
 
 func start_multiplayer_game(scene_path: String) -> void:
@@ -78,31 +85,65 @@ func spawn_players_in_scene():
 		print("No player scene assigned to NetworkManager!")
 		return
 	
-	for peer_id in players:
-		add_player_to_scene(peer_id)
+	for simple_id in players:
+		add_player_to_scene(simple_id)
 
-func add_player_to_scene(peer_id: int):
+func add_player_to_scene(simple_id: int):
+	# Check if player already exists
+	var existing_player = get_tree().current_scene.get_node_or_null("Player_" + str(simple_id))
+	if existing_player:
+		print("Player ", simple_id, " already exists, skipping spawn")
+		return
+	
 	var player = player_scene.instantiate()
-	player.name = "Player_" + str(peer_id)
+	player.name = "Player_" + str(simple_id)
 	
 	var game_scene = get_tree().current_scene
 	if game_scene:
 		game_scene.add_child(player)
+		
+		# Find the actual peer ID for this simple ID
+		var actual_peer_id = _get_actual_peer_id(simple_id)
+		
+		# CRITICAL: Set authority using the actual peer ID
+		player.set_multiplayer_authority(actual_peer_id)
+		if player.has_method("set_player_id"):
+			player.set_player_id(simple_id)  # Use simple ID for game logic
+		
 		player.global_position = Vector3(randf_range(-3, 3), 2, randf_range(-3, 3))
-		print("Spawned player ", peer_id)
+		print("Spawned player ", simple_id, " with authority: ", actual_peer_id, " (simple ID: ", simple_id, ")")
 
-func remove_player_from_scene(peer_id: int):
-	var player = get_tree().current_scene.get_node_or_null("Player_" + str(peer_id))
+func remove_player_from_scene(simple_id: int):
+	var player = get_tree().current_scene.get_node_or_null("Player_" + str(simple_id))
 	if player:
 		player.queue_free()
-		print("Removed player ", peer_id)
+		print("Removed player ", simple_id)
+
+func _get_actual_peer_id(simple_id: int) -> int:
+	"""Get the actual large peer ID from simple ID"""
+	for actual_id in peer_id_map:
+		if peer_id_map[actual_id] == simple_id:
+			return actual_id
+	return simple_id  # Fallback
+
+func _get_simple_id(actual_peer_id: int) -> int:
+	"""Get simple ID from actual peer ID"""
+	if peer_id_map.has(actual_peer_id):
+		return peer_id_map[actual_peer_id]
+	
+	# Assign new simple ID
+	var simple_id = next_simple_id
+	next_simple_id += 1
+	peer_id_map[actual_peer_id] = simple_id
+	print("Mapped peer ", actual_peer_id, " to simple ID ", simple_id)
+	return simple_id
 
 # === PLAYER MANAGEMENT ===
 func set_local_player_info(info: Dictionary) -> void:
 	local_player_info.merge(info, true)
 
-func get_player_info(peer_id: int) -> Dictionary:
-	return players.get(peer_id, {})
+func get_player_info(simple_id: int) -> Dictionary:
+	return players.get(simple_id, {})
 
 func is_host() -> bool:
 	return multiplayer.is_server()
@@ -120,20 +161,22 @@ func is_multiplayer_active() -> bool:
 	return multiplayer.multiplayer_peer != null
 
 # === SIGNAL HANDLERS ===
-func _on_peer_connected(peer_id: int) -> void:
-	print("Peer connected: ", peer_id)
+func _on_peer_connected(actual_peer_id: int) -> void:
+	print("Peer connected: ", actual_peer_id)
 	
 	if multiplayer.is_server():
 		# Server automatically adds new players when they register
 		pass
 
-func _on_peer_disconnected(peer_id: int) -> void:
-	print("Peer disconnected: ", peer_id)
+func _on_peer_disconnected(actual_peer_id: int) -> void:
+	print("Peer disconnected: ", actual_peer_id)
 	
-	if players.has(peer_id):
-		players.erase(peer_id)
-		player_disconnected.emit(peer_id)
-		remove_player_from_scene(peer_id)
+	var simple_id = _get_simple_id(actual_peer_id)
+	if players.has(simple_id):
+		players.erase(simple_id)
+		peer_id_map.erase(actual_peer_id)
+		player_disconnected.emit(simple_id)
+		remove_player_from_scene(simple_id)
 
 func _on_connected_to_server() -> void:
 	print("Connected to server!")
@@ -151,6 +194,8 @@ func _on_server_disconnected() -> void:
 	print("Server disconnected")
 	multiplayer.multiplayer_peer = null
 	players.clear()
+	peer_id_map.clear()
+	next_simple_id = 1
 	server_disconnected.emit()
 
 # === PLAYER REGISTRATION ===
@@ -159,19 +204,21 @@ func _register_player(player_info: Dictionary) -> void:
 	if not multiplayer.is_server():
 		return
 	
-	var sender_id = multiplayer.get_remote_sender_id()
-	players[sender_id] = player_info
-	print("Registered player: ", sender_id, " - ", player_info)
+	var actual_peer_id = multiplayer.get_remote_sender_id()
+	var simple_id = _get_simple_id(actual_peer_id)
 	
-	# Broadcast to all clients
-	_player_registered.rpc(sender_id, player_info)
+	players[simple_id] = player_info
+	print("Registered player: ", actual_peer_id, " as simple ID ", simple_id, " - ", player_info)
+	
+	# Broadcast to all clients using simple ID
+	_player_registered.rpc(simple_id, player_info)
 	
 	# Add to scene if in game
 	var current_scene = get_tree().current_scene
 	if current_scene and current_scene.scene_file_path.contains("demo_scene"):
-		add_player_to_scene(sender_id)
+		add_player_to_scene(simple_id)
 
 @rpc("call_local", "reliable")
-func _player_registered(peer_id: int, player_info: Dictionary) -> void:
-	players[peer_id] = player_info
-	player_connected.emit(peer_id, player_info)
+func _player_registered(simple_id: int, player_info: Dictionary) -> void:
+	players[simple_id] = player_info
+	player_connected.emit(simple_id, player_info)
