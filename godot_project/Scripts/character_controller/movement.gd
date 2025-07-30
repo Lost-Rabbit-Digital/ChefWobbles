@@ -145,13 +145,11 @@ func _input(event):
 		_release_right_hand.rpc()
 	
 	# Camera controls
-	if Input.is_action_just_pressed("exit_camera"):
+	if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 		mouse_lock = false
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		mouse_lock = true
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	# Camera rotation
 	if event is InputEventMouseMotion and mouse_lock:

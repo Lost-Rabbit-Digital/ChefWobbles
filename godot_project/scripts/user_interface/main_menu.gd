@@ -7,7 +7,7 @@ var game_manager: Node3D = null
 # === UI REFERENCES ===
 @onready var main_menu = $MainMenu
 @onready var lobby = $Lobby
-@onready var join_dialog = $MainMenu/JoinDialog
+@onready var join_dialog = $JoinDialog
 
 # Main Menu UI
 @onready var player_name_input = $MainMenu/VBoxContainer/PlayerNameInput
@@ -16,8 +16,8 @@ var game_manager: Node3D = null
 @onready var singleplayer_button = $MainMenu/VBoxContainer/SinglePlayerButton
 
 # Join Dialog UI
-@onready var ip_input = $MainMenu/JoinDialog/VBoxContainer/IPInput
-@onready var join_confirm_button = $MainMenu/JoinDialog/VBoxContainer/JoinConfirmButton
+@onready var ip_input = $JoinDialog/VBoxContainer/IPInput
+@onready var join_confirmation_button = $JoinDialog/VBoxContainer/JoinConfirmationButton
 
 # Lobby UI
 @onready var status_label = $Lobby/VBoxContainer/StatusLabel
@@ -28,6 +28,9 @@ var game_manager: Node3D = null
 # Connection UI
 @onready var connection_dialog = $ConnectionDialog
 @onready var connection_status = $ConnectionStatus
+
+# Quit UI
+@onready var quit_game_dialog = $QuitDialog
 
 # === PLAYER TRACKING ===
 var connected_players: Dictionary = {}
@@ -50,7 +53,7 @@ func _setup_ui_connections():
 	singleplayer_button.pressed.connect(_on_singleplayer_button_pressed)
 	
 	# Join dialog
-	join_confirm_button.pressed.connect(_on_join_confirm_pressed)
+	join_confirmation_button.pressed.connect(_on_join_confirmation_pressed)
 	
 	# Lobby buttons
 	start_game_button.pressed.connect(_on_start_game_pressed)
@@ -71,8 +74,9 @@ func _on_host_button_pressed():
 
 func _on_join_button_pressed():
 	join_dialog.popup_centered()
+	main_menu.hide()
 
-func _on_join_confirm_pressed():
+func _on_join_confirmation_pressed():
 	player_name = player_name_input.text.strip_edges()
 	if player_name.is_empty():
 		player_name = "Player"
@@ -149,3 +153,26 @@ func _process(delta):
 	var character_preview_texture = $Preview.get_texture()
 	$CharacterCustomiser/CharacterPreview.texture = character_preview_texture
 	$CharacterCustomiser/CharacterPreview2.texture = character_preview_texture
+
+
+func _on_quit_game_button_pressed() -> void:
+	quit_game_dialog
+	main_menu.hide()
+	quit_game_dialog.popup_centered()
+
+func _on_quit_confirmation_button_pressed() -> void:
+	quit_game_dialog.hide()
+	main_menu.show()
+
+func _on_quit_dialog_confirmed() -> void:
+	get_tree().quit(0)
+
+
+# Show the main menu if the user closes the JoinDialog
+func _on_join_dialog_canceled() -> void:
+	main_menu.show()
+
+# Show the main menu if the user closes the JoinDialog
+# Actual confirmation is through the join_confirmation_button
+func _on_join_dialog_confirmed() -> void:
+	main_menu.show()

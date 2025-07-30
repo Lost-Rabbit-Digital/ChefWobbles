@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=41 format=3 uid="uid://c6i2mlgfgnhg7"]
 
 [ext_resource type="Script" uid="uid://bc0sl1rkq0hul" path="res://scripts/multiplayer/multiplayer_game_manager.gd" id="1_8sg6o"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://textures/prototype_textures/PNG/logo_blue_512x512.png" id="5_g2hwh"]
 [ext_resource type="PackedScene" uid="uid://bgr0bio21per0" path="res://scenes/interactables/food/tomato_slice.tscn" id="6_0cmys"]
 [ext_resource type="AudioStream" uid="uid://0vhuw27xogj8" path="res://audio/music/Cuddle Clouds.ogg" id="6_7ktdx"]
+[ext_resource type="PackedScene" uid="uid://b1li80ofvmj04" path="res://scenes/user_interface/pause_menu.tscn" id="6_202kh"]
 [ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="7_8sg6o"]
 [ext_resource type="PackedScene" uid="uid://b8b5pdgrarsm" path="res://scenes/interactables/godot_box.tscn" id="7_kq5dy"]
 [ext_resource type="AudioStream" uid="uid://dempf1idxhdvw" path="res://audio/music/Evening Harmony.ogg" id="8_kq5dy"]
@@ -140,6 +141,8 @@ text = "No Item"
 label_settings = SubResource("LabelSettings_g2hwh")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PauseMenu" parent="GUI" instance=ExtResource("6_202kh")]
 
 [node name="Interactables" type="Node" parent="."]
 

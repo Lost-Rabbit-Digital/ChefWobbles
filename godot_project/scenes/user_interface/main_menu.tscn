@@ -81,37 +81,22 @@ theme = ExtResource("2_n0nnf")
 text = "Join lobby"
 
 [node name="HSeparator2" type="HSeparator" parent="MainMenu/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="SinglePlayerButton" type="Button" parent="MainMenu/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme = ExtResource("2_n0nnf")
 text = "Singleplayer"
 
-[node name="JoinDialog" type="AcceptDialog" parent="MainMenu"]
-title = "Join a game"
-size = Vector2i(239, 115)
-theme = ExtResource("2_n0nnf")
-ok_button_text = "Cancel"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/JoinDialog"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 231.0
-offset_bottom = 70.0
-
-[node name="IPInput" type="LineEdit" parent="MainMenu/JoinDialog/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_n0nnf")
-placeholder_text = "ip address"
-
-[node name="HSeparator" type="HSeparator" parent="MainMenu/JoinDialog/VBoxContainer"]
+[node name="HSeparator3" type="HSeparator" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 
-[node name="JoinConfirmButton" type="Button" parent="MainMenu/JoinDialog/VBoxContainer"]
+[node name="QuitGameButton" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_n0nnf")
-text = "Join lobby"
+text = "Quit game"
 
 [node name="Label" type="Label" parent="MainMenu"]
 layout_mode = 1
@@ -192,3 +177,50 @@ horizontal_alignment = 1
 [node name="Preview" type="SubViewport" parent="."]
 
 [node name="CharacterPreview" parent="Preview" instance=ExtResource("3_n0nnf")]
+
+[node name="JoinDialog" type="AcceptDialog" parent="."]
+title = "Join a game"
+size = Vector2i(239, 115)
+theme = ExtResource("2_n0nnf")
+ok_button_text = "Cancel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="JoinDialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 231.0
+offset_bottom = 70.0
+
+[node name="IPInput" type="LineEdit" parent="JoinDialog/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+placeholder_text = "ip address"
+
+[node name="HSeparator" type="HSeparator" parent="JoinDialog/VBoxContainer"]
+layout_mode = 2
+
+[node name="JoinConfirmationButton" type="Button" parent="JoinDialog/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Join lobby"
+
+[node name="QuitDialog" type="AcceptDialog" parent="."]
+auto_translate_mode = 1
+mode = 3
+title = "Quit the Game?"
+size = Vector2i(239, 115)
+theme = ExtResource("2_n0nnf")
+ok_button_text = "Yes, please!"
+
+[node name="QuitConfirmationButton" type="Button" parent="QuitDialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 151.0
+offset_bottom = 35.0
+theme = ExtResource("2_n0nnf")
+text = "No, thank you."
+
+[connection signal="pressed" from="MainMenu/VBoxContainer/QuitGameButton" to="." method="_on_quit_game_button_pressed"]
+[connection signal="canceled" from="JoinDialog" to="." method="_on_join_dialog_canceled"]
+[connection signal="confirmed" from="JoinDialog" to="." method="_on_join_dialog_confirmed"]
+[connection signal="confirmed" from="QuitDialog" to="." method="_on_quit_dialog_confirmed"]
+[connection signal="pressed" from="QuitDialog/QuitConfirmationButton" to="." method="_on_quit_confirmation_button_pressed"]
