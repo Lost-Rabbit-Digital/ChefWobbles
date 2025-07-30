@@ -46,6 +46,7 @@ plastic_objects=""
 glass_objects=""
 paper_objects=""
 flesh_objects=""
+remote_players=""
 
 [input]
 

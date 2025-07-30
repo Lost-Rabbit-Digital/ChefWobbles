@@ -462,18 +462,3 @@ transform = Transform3D(4, 0, 1.36919e-14, 0, 4, 0, -1.36919e-14, 0, 4, -6.2, 0.
 
 [node name="GenericStation4" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("18_fu8s8")]
 transform = Transform3D(4, 0, 1.36919e-14, 0, 4, 0, -1.36919e-14, 0, 4, -2.2, 0.5, 6.9)
-
-[node name="Control" type="VBoxContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="HostButton" type="Button" parent="Control"]
-layout_mode = 2
-text = "Host"
-
-[node name="JoinButton" type="Button" parent="Control"]
-layout_mode = 2
-text = "Join"
-
-[connection signal="pressed" from="Control/HostButton" to="." method="_on_host_button_pressed"]
-[connection signal="pressed" from="Control/JoinButton" to="." method="_on_join_button_pressed"]
