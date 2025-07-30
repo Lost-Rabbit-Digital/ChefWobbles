@@ -7,37 +7,39 @@ const JUMP_STRENGTH = 55.0
 const DAMPING = 0.85
 const AIR_DAMPING = 0.95
 
-# === ORIGINAL SPRING CONSTANTS (KEPT YOUR VALUES) ===
+# === SPRING CONSTANTS ===
 @export var angular_spring_stiffness: float = 4000.0
 @export var angular_spring_damping: float = 80.0
 @export var max_angular_force: float = 9999.0
 
-# === AUDIO EXPORTS (UPDATED FOR FOUR SOURCES) ===
+# === CAMERA CONSTANTS ===
+@export var mouse_sensitivity = 0.1
+@export var camera_change_rate: float = 1.0
+@export var camera_angle_lock: float = 65
+
+# === AUDIO EXPORTS ===
 @onready var grab_audio = preload("res://audio/sound_effects/plops/plop_1.mp3")
 @onready var release_audio = preload("res://audio/sound_effects/plops/plop_2.mp3")
 @onready var footstep_audio = preload("res://audio/sound_effects/thuds/thud_1.mp3")
 
-# === STABILITY CONSTANTS ===
-const UPRIGHT_FORCE_MULTIPLIER = 1.5
-const BALANCE_THRESHOLD = 0.7
-
-# === NODE REFERENCES (KEPT YOUR ORIGINAL PATHS) ===
+# === NODE REFERENCES ===
 @onready var on_floor_left = $"Physical/Armature/Skeleton3D/Physical Bone LLeg2/OnFloorLeft"
 @onready var on_floor_right = $"Physical/Armature/Skeleton3D/Physical Bone RLeg2/OnFloorRight"
 @onready var jump_timer = $Physical/JumpTimer
 @onready var physical_skel: Skeleton3D = $Physical/Armature/Skeleton3D
 @onready var animated_skel: Skeleton3D = $Animated/Armature/Skeleton3D
 @onready var camera_pivot = $CameraPivot
+@onready var spring_arm = $CameraPivot/SpringArm3D
 @onready var animation_tree = $Animated/AnimationTree
 @onready var physical_bone_body: PhysicalBone3D = $"Physical/Armature/Skeleton3D/Physical Bone Body"
 
-# === AUDIO PLAYERS (UPDATED FOR FOUR SOURCES) ===
+# === AUDIO PLAYERS ===
 @onready var left_hand_audio_player = $"Physical/Armature/Skeleton3D/Physical Bone LArm2/LeftHandAudioPlayer"
 @onready var right_hand_audio_player = $"Physical/Armature/Skeleton3D/Physical Bone RArm2/RightHandAudioPlayer"
 @onready var left_foot_audio_player = $"Physical/Armature/Skeleton3D/Physical Bone LLeg2/LeftFootAudioPlayer"
 @onready var right_foot_audio_player = $"Physical/Armature/Skeleton3D/Physical Bone RLeg2/RightFootAudioPlayer"
 
-# === GRABBING SYSTEM (KEPT YOUR ORIGINAL SYSTEM) ===
+# === GRABBING SYSTEM ===
 @onready var grab_joint_right = $Physical/GrabJointRight
 @onready var grab_joint_left = $Physical/GrabJointLeft
 @onready var physical_bone_l_arm_2 = $"Physical/Armature/Skeleton3D/Physical Bone LArm2"
@@ -48,7 +50,7 @@ const BALANCE_THRESHOLD = 0.7
 # === MULTIPLAYER COMPONENTS ===
 @onready var displayed_player_name: Label3D = $CameraPivot/PlayerName
 
-# === STATE VARIABLES (UPDATED FOR DUAL HAND TRACKING) ===
+# === STATE VARIABLES ===
 var can_jump = true
 var is_on_floor = false
 var walking = false
@@ -57,60 +59,105 @@ var physics_bones = []
 var active_arm_left = false
 var active_arm_right = false
 
-# === DUAL HAND GRABBED OBJECTS ===
-var grabbed_object_left = null  # Left hand grabbed object
-var grabbed_object_right = null # Right hand grabbed object
-var grabbed_object = null       # Keep for backward compatibility (points to left hand)
+# === GRABBED OBJECTS ===
+var grabbed_object_left = null
+var grabbed_object_right = null
+var grabbed_object = null
 
 var grabbing_arm_left = false
 var grabbing_arm_right = false
 var current_delta: float
 
-# === FOOTSTEP AUDIO VARIABLES (UPDATED FOR LEFT/RIGHT TRACKING) ===
+# === FOOTSTEP VARIABLES ===
 var was_on_floor = false
 var footstep_timer = 0.0
-var last_footstep_was_left = false  # Track which foot stepped last
-const FOOTSTEP_INTERVAL = 0.35  # Time between footsteps when walking
+var last_footstep_was_left = false
+const FOOTSTEP_INTERVAL = 0.35
 
-# === NEW SMOOTHING VARIABLES ===
+# === MOVEMENT VARIABLES ===
 var target_velocity: Vector3 = Vector3.ZERO
 var movement_input: Vector3 = Vector3.ZERO
 
+# === CAMERA VARIABLES ===
+@onready var camera_target_node = $CameraPivot/SpringArm3D/PlayerControl
+var mouse_lock = false
+var player_id: int
+
 # === MULTIPLAYER SETUP ===
 func _enter_tree() -> void:
-	# Set authority based on node name (peer ID)
-	set_multiplayer_authority(name.to_int())
+	player_id = name.to_int()
+	set_multiplayer_authority(player_id)
 
 func _ready():
 	print("Player ready: ", name, " Authority: ", get_multiplayer_authority())
 	
-	# Set player name for the authority owner
+	# Set player name only for authority
 	if is_multiplayer_authority() and displayed_player_name:
 		displayed_player_name.text = str(get_multiplayer_authority())
 	
-	# Initialize physics for ALL players (needed for visual sync)
+	camera_target_node.current = is_multiplayer_authority()
+	
+	# Start physics simulation
 	physical_skel.physical_bones_start_simulation()
 	physics_bones = physical_skel.get_children().filter(func(x): return x is PhysicalBone3D)
+	
+	# Setup camera for authority only
+	if is_multiplayer_authority():
+		call_deferred("_setup_camera_target")
+		# Make camera visible only for authority
+		camera_pivot.visible = false
+		spring_arm.visible = false
+	else:
+		# Hide camera components for non-authority players
+		camera_pivot.visible = true
+		spring_arm.visible = true
+
+func _setup_camera_target():
+	# IMPORTANT: Use absolute path from THIS player instance
+	# The $ operator gets children relative to THIS node
+	camera_target_node = $"Physical/Armature/Skeleton3D/Physical Bone Head"
+	
+	if camera_target_node:
+		# Setup spring arm exclusions
+		for child in physical_skel.get_children():
+			if child is PhysicalBone3D:
+				spring_arm.add_excluded_object(child.get_rid())
+	else:
+		push_error("Player ", player_id, " could not find head bone")
+		camera_target_node = self
 
 func _input(event):
-	# Only process input if we have authority
 	if not is_multiplayer_authority():
 		return
 	
-	# Keep your original input handling with dual hand object clearing
+	# Movement input
 	if Input.is_action_just_pressed("ragdoll"):
 		ragdoll_mode = bool(1 - int(ragdoll_mode))
 
 	active_arm_left = Input.is_action_pressed("grab_left")
 	active_arm_right = Input.is_action_pressed("grab_right")
 	
-	# Left hand release
+	# Handle releases
 	if (not active_arm_left and grabbing_arm_left) or ragdoll_mode:
 		_release_left_hand.rpc()
 		
-	# Right hand release
 	if (not active_arm_right and grabbing_arm_right) or ragdoll_mode:
 		_release_right_hand.rpc()
+	
+	# Camera controls
+	if Input.is_action_just_pressed("exit_camera"):
+		mouse_lock = false
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+		mouse_lock = true
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	# Camera rotation
+	if event is InputEventMouseMotion and mouse_lock:
+		camera_pivot.rotation_degrees.y -= mouse_sensitivity * event.relative.x
+		camera_pivot.rotation_degrees.x -= mouse_sensitivity * event.relative.y
+		camera_pivot.rotation_degrees.x = clamp(camera_pivot.rotation_degrees.x, -camera_angle_lock, camera_angle_lock)
 
 @rpc("call_local", "reliable")
 func _release_left_hand():
@@ -130,11 +177,10 @@ func _release_right_hand():
 	play_release_audio_right()
 
 func _process(delta):
-	# Process animations for ALL players (needed for visual sync)
 	if not is_multiplayer_authority():
 		return
 	
-	# Keep your original arm animation system
+	# Arm animations
 	var r = clamp((camera_pivot.rotation.x * 2) / (PI) * 2.1, -1, 1)
 	if active_arm_left or active_arm_right:
 		animation_tree.set("parameters/grab_dir/blend_position", r)
@@ -144,19 +190,33 @@ func _process(delta):
 func _physics_process(delta):
 	current_delta = delta
 	
-	# Physics runs for ALL players to sync movement
+	# Camera tracking only for authority
+	if is_multiplayer_authority() and camera_target_node:
+		_update_camera_position()
+	
+	# Physics for movement
 	if not ragdoll_mode:
 		if is_multiplayer_authority():
-			# Only authority processes input and applies forces
 			update_movement_input()
 			apply_improved_movement(delta)
 			handle_jumping()
 		
-		# All players update these for visual sync
+		# Visual sync for all
 		update_floor_detection()
 		update_walking_animation()
 		update_character_rotation()
 		handle_footstep_audio(delta)
+
+func _update_camera_position():
+	if not camera_target_node:
+		return
+		
+	# Smooth camera follow
+	camera_pivot.global_position = lerp(
+		camera_pivot.global_position, 
+		camera_target_node.global_position, 
+		0.5
+	)
 
 func update_movement_input():
 	# Get movement input (keep your original direction system)
@@ -250,7 +310,7 @@ func update_walking_animation():
 		animation_tree.set("parameters/walking/blend_amount", 0)
 
 func update_character_rotation():
-	# Keep your original rotation system
+	# Keep your original rotation system (only for MY character)
 	if is_multiplayer_authority():
 		animated_skel.rotation.y = camera_pivot.rotation.y
 

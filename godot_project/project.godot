@@ -46,10 +46,6 @@ plastic_objects=""
 glass_objects=""
 paper_objects=""
 flesh_objects=""
-players=""
-local_players=""
-remote_players=""
-grabbable=""
 
 [input]
 

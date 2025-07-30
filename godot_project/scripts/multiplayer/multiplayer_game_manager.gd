@@ -5,26 +5,23 @@ var peer = ENetMultiplayerPeer.new()
 
 func _ready() -> void:
 	print("=== GAME MANAGER READY ===")
-	# Connect signals for multiplayer events - ONLY ONCE
 	multiplayer.peer_connected.connect(_add_player)
 	multiplayer.peer_disconnected.connect(_remove_player)
 
 func _add_player(id: int):
 	print("_add_player called with ID: ", id, " (Is server: ", multiplayer.is_server(), ")")
 	
-	# Only the SERVER should spawn players to avoid duplicates
 	if not multiplayer.is_server():
 		print("Client tried to spawn player - ignoring")
 		return
 	
-	# Don't add duplicate players
 	if get_node_or_null(str(id)):
 		print("Player ", id, " already exists, skipping")
 		return
 	
-	# Create a player node from our scene
 	var player = player_scene.instantiate()
 	player.name = str(id)
+	player.set_multiplayer_authority(id)  # Ensure authority is set
 	call_deferred("add_child", player)
 	print("Server spawned player: ", id)
 
