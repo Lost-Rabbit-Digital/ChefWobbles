@@ -1,7 +1,8 @@
-[gd_scene load_steps=38 format=3 uid="uid://c6i2mlgfgnhg7"]
+[gd_scene load_steps=40 format=3 uid="uid://c6i2mlgfgnhg7"]
 
-[ext_resource type="Script" uid="uid://dek6340tnv2ts" path="res://scripts/multiplayer/multiplayer_game_manager.gd" id="1_8sg6o"]
+[ext_resource type="Script" uid="uid://bc0sl1rkq0hul" path="res://scripts/multiplayer/multiplayer_game_manager.gd" id="1_8sg6o"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
+[ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="2_8sg6o"]
 [ext_resource type="Script" uid="uid://b31777dpj7ckh" path="res://scripts/user_interface/item_display_controller.gd" id="3_hmwhd"]
 [ext_resource type="PackedScene" uid="uid://c03wrgomhlo4s" path="res://scenes/interactables/food/burger_patty.tscn" id="3_j51jv"]
 [ext_resource type="FontFile" uid="uid://b0wjuv1dm2kwv" path="res://fonts/kaph_truetype/Kaph-Regular.ttf" id="3_mcgj6"]
@@ -9,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bgr0bio21per0" path="res://scenes/interactables/food/tomato_slice.tscn" id="6_0cmys"]
 [ext_resource type="AudioStream" uid="uid://0vhuw27xogj8" path="res://audio/music/Cuddle Clouds.ogg" id="6_7ktdx"]
 [ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="7_8sg6o"]
+[ext_resource type="PackedScene" uid="uid://b8b5pdgrarsm" path="res://scenes/interactables/godot_box.tscn" id="7_kq5dy"]
 [ext_resource type="AudioStream" uid="uid://dempf1idxhdvw" path="res://audio/music/Evening Harmony.ogg" id="8_kq5dy"]
 [ext_resource type="Script" path="res://Scripts/audio/music_randomiser.gd" id="9_4qt2k"]
 [ext_resource type="PackedScene" uid="uid://npla6nc7hapy" path="res://scenes/interactables/plate/plate.tscn" id="9_7ktdx"]
@@ -41,17 +43,11 @@ outline_color = Color(0.154983, 0.0570343, 0.146703, 1)
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wjfg5"]
 friction = 0.5
 
-[sub_resource type="BoxMesh" id="BoxMesh_2rf26"]
-size = Vector3(10, 1, 10)
+[sub_resource type="BoxMesh" id="BoxMesh_jdejj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dle54"]
 albedo_texture = ExtResource("5_g2hwh")
 uv1_scale = Vector3(3, 2, 2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_kfml7"]
-size = Vector3(10, 1, 10)
-
-[sub_resource type="BoxMesh" id="BoxMesh_jdejj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y1cru"]
 
@@ -67,8 +63,15 @@ size = Vector3(4, 4, 4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_1cc2y"]
 size = Vector3(4, 4, 4)
 
+[sub_resource type="BoxMesh" id="BoxMesh_2rf26"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kfml7"]
+size = Vector3(10, 1, 10)
+
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_8sg6o")
+player_scene = ExtResource("2_8sg6o")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8sg6o")
@@ -77,10 +80,6 @@ replication_config = SubResource("SceneReplicationConfig_8sg6o")
 _spawnable_scenes = PackedStringArray("uid://cd70x3de3pbl4")
 spawn_path = NodePath("..")
 spawn_limit = 4
-
-[node name="SpawnPoints" type="Node" parent="."]
-
-[node name="SpawnPoint1" type="Node3D" parent="SpawnPoints"]
 
 [node name="EnvironmentalEffects" type="Node" parent="."]
 
@@ -166,17 +165,8 @@ transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3.4, -3.5)
 
 [node name="GodotBoxes" type="Node" parent="Interactables"]
 
-[node name="GodotBox" type="RigidBody3D" parent="Interactables/GodotBoxes" groups=["paper_objects"]]
+[node name="GodotBox" parent="Interactables/GodotBoxes" instance=ExtResource("7_kq5dy")]
 transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 6.03294, 1.38336, -3.37082)
-mass = 5.0
-physics_material_override = SubResource("PhysicsMaterial_wjfg5")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/GodotBoxes/GodotBox"]
-mesh = SubResource("BoxMesh_2rf26")
-surface_material_override/0 = SubResource("StandardMaterial3D_dle54")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/GodotBoxes/GodotBox"]
-shape = SubResource("BoxShape3D_kfml7")
 
 [node name="GodotBox2" type="RigidBody3D" parent="Interactables/GodotBoxes" groups=["paper_objects"]]
 transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.89373, 3.27871, -1.38654)
@@ -472,3 +462,18 @@ transform = Transform3D(4, 0, 1.36919e-14, 0, 4, 0, -1.36919e-14, 0, 4, -6.2, 0.
 
 [node name="GenericStation4" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("18_fu8s8")]
 transform = Transform3D(4, 0, 1.36919e-14, 0, 4, 0, -1.36919e-14, 0, 4, -2.2, 0.5, 6.9)
+
+[node name="Control" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HostButton" type="Button" parent="Control"]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="Control"]
+layout_mode = 2
+text = "Join"
+
+[connection signal="pressed" from="Control/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="Control/JoinButton" to="." method="_on_join_button_pressed"]

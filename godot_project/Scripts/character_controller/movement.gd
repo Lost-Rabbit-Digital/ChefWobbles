@@ -45,6 +45,9 @@ const BALANCE_THRESHOLD = 0.7
 @onready var l_grab_area = $"Physical/Armature/Skeleton3D/Physical Bone LArm2/LGrabArea"
 @onready var r_grab_area = $"Physical/Armature/Skeleton3D/Physical Bone RArm2/RGrabArea"
 
+# === MULTIPLAYER COMPONENTS ===
+@onready var displayed_player_name: Label3D = $CameraPivot/PlayerName
+
 # === STATE VARIABLES (UPDATED FOR DUAL HAND TRACKING) ===
 var can_jump = true
 var is_on_floor = false
@@ -73,12 +76,27 @@ const FOOTSTEP_INTERVAL = 0.35  # Time between footsteps when walking
 var target_velocity: Vector3 = Vector3.ZERO
 var movement_input: Vector3 = Vector3.ZERO
 
+# === MULTIPLAYER SETUP ===
+func _enter_tree() -> void:
+	# Set authority based on node name (peer ID)
+	set_multiplayer_authority(name.to_int())
+
 func _ready():
-	# Keep your original initialization
+	print("Player ready: ", name, " Authority: ", get_multiplayer_authority())
+	
+	# Set player name for the authority owner
+	if is_multiplayer_authority() and displayed_player_name:
+		displayed_player_name.text = str(get_multiplayer_authority())
+	
+	# Initialize physics for ALL players (needed for visual sync)
 	physical_skel.physical_bones_start_simulation()
 	physics_bones = physical_skel.get_children().filter(func(x): return x is PhysicalBone3D)
 
 func _input(event):
+	# Only process input if we have authority
+	if not is_multiplayer_authority():
+		return
+	
 	# Keep your original input handling with dual hand object clearing
 	if Input.is_action_just_pressed("ragdoll"):
 		ragdoll_mode = bool(1 - int(ragdoll_mode))
@@ -88,22 +106,34 @@ func _input(event):
 	
 	# Left hand release
 	if (not active_arm_left and grabbing_arm_left) or ragdoll_mode:
-		grabbing_arm_left = false
-		grabbed_object_left = null
-		grabbed_object = null  # Clear backward compatibility reference
-		grab_joint_left.node_a = NodePath()
-		grab_joint_left.node_b = NodePath()
-		play_release_audio_left()
+		_release_left_hand.rpc()
 		
 	# Right hand release
 	if (not active_arm_right and grabbing_arm_right) or ragdoll_mode:
-		grabbing_arm_right = false
-		grabbed_object_right = null
-		grab_joint_right.node_a = NodePath()
-		grab_joint_right.node_b = NodePath()
-		play_release_audio_right()
+		_release_right_hand.rpc()
+
+@rpc("call_local", "reliable")
+func _release_left_hand():
+	grabbing_arm_left = false
+	grabbed_object_left = null
+	grabbed_object = null  # Clear backward compatibility reference
+	grab_joint_left.node_a = NodePath()
+	grab_joint_left.node_b = NodePath()
+	play_release_audio_left()
+
+@rpc("call_local", "reliable")
+func _release_right_hand():
+	grabbing_arm_right = false
+	grabbed_object_right = null
+	grab_joint_right.node_a = NodePath()
+	grab_joint_right.node_b = NodePath()
+	play_release_audio_right()
 
 func _process(delta):
+	# Process animations for ALL players (needed for visual sync)
+	if not is_multiplayer_authority():
+		return
+	
 	# Keep your original arm animation system
 	var r = clamp((camera_pivot.rotation.x * 2) / (PI) * 2.1, -1, 1)
 	if active_arm_left or active_arm_right:
@@ -114,11 +144,16 @@ func _process(delta):
 func _physics_process(delta):
 	current_delta = delta
 	
+	# Physics runs for ALL players to sync movement
 	if not ragdoll_mode:
-		update_movement_input()
+		if is_multiplayer_authority():
+			# Only authority processes input and applies forces
+			update_movement_input()
+			apply_improved_movement(delta)
+			handle_jumping()
+		
+		# All players update these for visual sync
 		update_floor_detection()
-		apply_improved_movement(delta)
-		handle_jumping()
 		update_walking_animation()
 		update_character_rotation()
 		handle_footstep_audio(delta)
@@ -216,7 +251,8 @@ func update_walking_animation():
 
 func update_character_rotation():
 	# Keep your original rotation system
-	animated_skel.rotation.y = camera_pivot.rotation.y
+	if is_multiplayer_authority():
+		animated_skel.rotation.y = camera_pivot.rotation.y
 
 # === AUDIO FUNCTIONS (USING AUDIOMANIPULATOR WITH SINGLE STREAMS) ===
 func play_grab_audio_left():
@@ -275,25 +311,47 @@ func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: flo
 
 # === UPDATED GRABBING FUNCTIONS WITH DUAL HAND TRACKING ===
 func _on_r_grab_area_body_entered(body: Node3D):
+	if not is_multiplayer_authority():
+		return
+	
 	if body is PhysicsBody3D and body.get_parent() != physical_skel:
 		if active_arm_right and not grabbing_arm_right:
-			grabbing_arm_right = true
-			grabbed_object_right = body  # Store right hand object
-			grab_joint_right.global_position = r_grab_area.global_position
-			grab_joint_right.node_a = physical_bone_r_arm_2.get_path()
-			grab_joint_right.node_b = body.get_path()
-			play_grab_audio_right()
+			_grab_right_hand.rpc(body.get_path())
 
 func _on_l_grab_area_body_entered(body: Node3D):
+	if not is_multiplayer_authority():
+		return
+	
 	if body is PhysicsBody3D and body.get_parent() != physical_skel:
 		if active_arm_left and not grabbing_arm_left:
-			grabbing_arm_left = true
-			grabbed_object_left = body   # Store left hand object
-			grabbed_object = body        # Keep backward compatibility
-			grab_joint_left.global_position = l_grab_area.global_position
-			grab_joint_left.node_a = physical_bone_l_arm_2.get_path()
-			grab_joint_left.node_b = body.get_path()
-			play_grab_audio_left()
+			_grab_left_hand.rpc(body.get_path())
+
+@rpc("call_local", "reliable")
+func _grab_right_hand(body_path: NodePath):
+	var body = get_node_or_null(body_path)
+	if not body:
+		return
+	
+	grabbing_arm_right = true
+	grabbed_object_right = body  # Store right hand object
+	grab_joint_right.global_position = r_grab_area.global_position
+	grab_joint_right.node_a = physical_bone_r_arm_2.get_path()
+	grab_joint_right.node_b = body.get_path()
+	play_grab_audio_right()
+
+@rpc("call_local", "reliable")
+func _grab_left_hand(body_path: NodePath):
+	var body = get_node_or_null(body_path)
+	if not body:
+		return
+	
+	grabbing_arm_left = true
+	grabbed_object_left = body   # Store left hand object
+	grabbed_object = body        # Keep backward compatibility
+	grab_joint_left.global_position = l_grab_area.global_position
+	grab_joint_left.node_a = physical_bone_l_arm_2.get_path()
+	grab_joint_left.node_b = body.get_path()
+	play_grab_audio_left()
 
 func _on_jump_timer_timeout():
 	# Keep your original jump timer

@@ -1,41 +1,58 @@
-# Add this to your demo_scene.gd or create a new script for demo_scene
-# This replaces your complex MultiplayerGameManager
 extends Node3D
 
+var peer = ENetMultiplayerPeer.new()
+@export var player_scene: PackedScene
+
 func _ready() -> void:
-	var spawner = $MultiplayerSpawner
-	if spawner:
-		# Reference the static function from your player script class
-		var player_script = preload("res://scripts/multiplayer/multiplayer_movement.gd")
-		spawner.spawn_function = Callable(player_script, "spawn_custom")
-	_setup_multiplayer()
+	print("=== GAME MANAGER READY ===")
+	# Connect signals for multiplayer events - ONLY ONCE
+	multiplayer.peer_connected.connect(_add_player)
+	multiplayer.peer_disconnected.connect(_remove_player)
 
-func _setup_multiplayer() -> void:
-	"""Setup multiplayer or single player"""
+func _add_player(id: int):
+	print("_add_player called with ID: ", id, " (Is server: ", multiplayer.is_server(), ")")
 	
-	if not NetworkManager or not NetworkManager.is_multiplayer_active():
-		_setup_single_player()
+	# Only the SERVER should spawn players to avoid duplicates
+	if not multiplayer.is_server():
+		print("Client tried to spawn player - ignoring")
 		return
 	
-	# Connect network events for cleanup
-	NetworkManager.player_disconnected.connect(_on_player_disconnected)
-	
-	# Wait a frame for network setup, then spawn players
-	await get_tree().process_frame
-	NetworkManager.debug_players_dict("spawn_players_in_scene")
-	NetworkManager.spawn_players_in_scene()
-
-func _setup_single_player() -> void:
-	"""Setup single player without multiplayer"""
-	if not NetworkManager.player_scene:
+	# Don't add duplicate players
+	if get_node_or_null(str(id)):
+		print("Player ", id, " already exists, skipping")
 		return
 	
-	var player = NetworkManager.player_scene.instantiate()
-	player.name = "Player_Local"
-	add_child(player)
-	player.global_position = Vector3(0, 2, 0)
-	print("Single player spawned")
+	# Create a player node from our scene
+	var player = player_scene.instantiate()
+	player.name = str(id)
+	call_deferred("add_child", player)
+	print("Server spawned player: ", id)
 
-func _on_player_disconnected(peer_id: int, player_info: Dictionary) -> void:
-	"""Handle player disconnection cleanup"""
-	print("Player ", player_info.get("name", str(peer_id)), " disconnected from game")
+func _remove_player(id: int):
+	var player = get_node_or_null(str(id))
+	if player:
+		player.queue_free()
+		print("Removed player: ", id)
+
+func _on_join_button_pressed() -> void:
+	if peer.get_connection_status() != 0:
+		print("Already connected - skipping join process")
+		return
+	
+	print("Creating client...")
+	peer.create_client("localhost", 3824)
+	multiplayer.multiplayer_peer = peer
+	print("Client connecting to server...")
+
+func _on_host_button_pressed() -> void:
+	if peer.get_connection_status() != 0:
+		print("Already hosting - skipping host setup")
+		return
+	
+	print("Creating server...")
+	peer.create_server(3824)
+	multiplayer.multiplayer_peer = peer
+	
+	print("Server created - spawning host player with ID 1")
+	# Host spawns themselves immediately with ID 1
+	_add_player(1)

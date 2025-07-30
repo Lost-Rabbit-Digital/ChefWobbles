@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://ddlj3gyuqhkn5"]
+[gd_scene load_steps=2 format=3 uid="uid://ddlj3gyuqhkn5"]
 
-[ext_resource type="Script" uid="uid://dutq8fvef5y4o" path="res://scripts/multiplayer/multiplayer_ui.gd" id="1_xsm3n"]
 [ext_resource type="Theme" uid="uid://dq1tetwaiurgt" path="res://resources/themes/general_theme.tres" id="2_n0nnf"]
 
 [node name="MainMenu" type="Control"]
@@ -10,7 +9,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_xsm3n")
 
 [node name="MainMenu" type="Control" parent="."]
 layout_mode = 1
@@ -88,6 +86,7 @@ theme = ExtResource("2_n0nnf")
 text = "Join lobby"
 
 [node name="Lobby" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
