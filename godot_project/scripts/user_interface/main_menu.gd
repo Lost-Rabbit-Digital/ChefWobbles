@@ -144,3 +144,8 @@ func _show_error(message: String):
 	connection_dialog.dialog_text = message
 	connection_dialog.popup_centered()
 	_update_connection_status("Error: " + message)
+
+func _process(delta):
+	var character_preview_texture = $Preview.get_texture()
+	$CharacterCustomiser/CharacterPreview.texture = character_preview_texture
+	$CharacterCustomiser/CharacterPreview2.texture = character_preview_texture
