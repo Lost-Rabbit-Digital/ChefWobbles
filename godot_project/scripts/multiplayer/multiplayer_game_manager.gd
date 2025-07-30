@@ -38,6 +38,7 @@ func _spawn_singleplayer():
 	var player = player_scene.instantiate()
 	player.name = "1"
 	player.set_multiplayer_authority(1)
+	call_deferred("_set_player_spawn_position", player)
 	call_deferred("add_child", player)
 	print("Spawned single player: ", player_name)
 
@@ -55,6 +56,7 @@ func _add_player(id: int):
 	var player = player_scene.instantiate()
 	player.name = str(id)
 	player.set_multiplayer_authority(id)
+	call_deferred("_set_player_spawn_position", player)
 	call_deferred("add_child", player)
 	print("Server spawned player: ", id)
 
@@ -63,6 +65,10 @@ func _remove_player(id: int):
 	if player:
 		player.queue_free()
 		print("Removed player: ", id)
+		
+func _set_player_spawn_position(player: Node3D):
+	player.global_position = Vector3(randf_range(-2, 2), 2, randf_range(-2, 2))
+	print("Set spawn position for player: ", player.name, " at: ", player.global_position)
 
 # === YOUR LEGACY FUNCTIONS (UNCHANGED) ===
 func _on_join_button_pressed() -> void:
