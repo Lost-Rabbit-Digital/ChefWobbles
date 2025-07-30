@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=4 uid="uid://cd70x3de3pbl4"]
+[gd_scene load_steps=27 format=4 uid="uid://cd70x3de3pbl4"]
 
 [ext_resource type="Script" uid="uid://ccmd0n1s3gvm5" path="res://scripts/character_controller/movement.gd" id="1_my7n2"]
 [ext_resource type="PackedScene" uid="uid://byhwdai31bud7" path="res://models/character/Character.glb" id="1_nfcse"]
 [ext_resource type="Material" uid="uid://b277dmlnwx24i" path="res://models/character/character_material.tres" id="3_ejsiy"]
 [ext_resource type="PackedScene" uid="uid://cnqaurynxh7pj" path="res://scenes/camera.tscn" id="4_my7n2"]
+[ext_resource type="FontFile" uid="uid://b0wjuv1dm2kwv" path="res://fonts/kaph_truetype/Kaph-Regular.ttf" id="5_dp8ca"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_my7n2"]
 properties/0/path = NodePath("Physical/Armature/Skeleton3D:animate_physical_bones")
@@ -18,6 +19,141 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath(".:position")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone Body:linear_velocity")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone Body:angular_velocity")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone Body:position")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone Body:rotation")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("Animated/Armature/Skeleton3D:position")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Animated/Armature/Skeleton3D:rotation")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("CameraPivot/PlayerName:text")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("CameraPivot:position")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("CameraPivot:rotation")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LArm1:linear_velocity")
+properties/13/spawn = true
+properties/13/replication_mode = 1
+properties/14/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LArm1:angular_velocity")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+properties/15/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LArm1:position")
+properties/15/spawn = true
+properties/15/replication_mode = 1
+properties/16/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LArm1:rotation")
+properties/16/spawn = true
+properties/16/replication_mode = 1
+properties/17/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LArm2:position")
+properties/17/spawn = true
+properties/17/replication_mode = 1
+properties/18/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LArm2:rotation")
+properties/18/spawn = true
+properties/18/replication_mode = 1
+properties/19/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LArm2:linear_velocity")
+properties/19/spawn = true
+properties/19/replication_mode = 1
+properties/20/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LArm2:angular_velocity")
+properties/20/spawn = true
+properties/20/replication_mode = 1
+properties/21/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RArm1:linear_velocity")
+properties/21/spawn = true
+properties/21/replication_mode = 1
+properties/22/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RArm1:angular_velocity")
+properties/22/spawn = true
+properties/22/replication_mode = 1
+properties/23/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RArm1:position")
+properties/23/spawn = true
+properties/23/replication_mode = 1
+properties/24/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RArm1:rotation")
+properties/24/spawn = true
+properties/24/replication_mode = 1
+properties/25/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RArm2:linear_velocity")
+properties/25/spawn = true
+properties/25/replication_mode = 1
+properties/26/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RArm2:angular_velocity")
+properties/26/spawn = true
+properties/26/replication_mode = 1
+properties/27/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RArm2:position")
+properties/27/spawn = true
+properties/27/replication_mode = 1
+properties/28/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RArm2:rotation")
+properties/28/spawn = true
+properties/28/replication_mode = 1
+properties/29/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LLeg1:position")
+properties/29/spawn = true
+properties/29/replication_mode = 1
+properties/30/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LLeg1:rotation")
+properties/30/spawn = true
+properties/30/replication_mode = 1
+properties/31/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LLeg1:linear_velocity")
+properties/31/spawn = true
+properties/31/replication_mode = 1
+properties/32/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LLeg1:angular_velocity")
+properties/32/spawn = true
+properties/32/replication_mode = 1
+properties/33/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LLeg2:linear_velocity")
+properties/33/spawn = true
+properties/33/replication_mode = 1
+properties/34/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LLeg2:angular_velocity")
+properties/34/spawn = true
+properties/34/replication_mode = 1
+properties/35/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LLeg2:position")
+properties/35/spawn = true
+properties/35/replication_mode = 1
+properties/36/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone LLeg2:rotation")
+properties/36/spawn = true
+properties/36/replication_mode = 1
+properties/37/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RLeg1:position")
+properties/37/spawn = true
+properties/37/replication_mode = 1
+properties/38/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RLeg1:rotation")
+properties/38/spawn = true
+properties/38/replication_mode = 1
+properties/39/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RLeg1:linear_velocity")
+properties/39/spawn = true
+properties/39/replication_mode = 1
+properties/40/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RLeg1:angular_velocity")
+properties/40/spawn = true
+properties/40/replication_mode = 1
+properties/41/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RLeg2:linear_velocity")
+properties/41/spawn = true
+properties/41/replication_mode = 1
+properties/42/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RLeg2:angular_velocity")
+properties/42/spawn = true
+properties/42/replication_mode = 1
+properties/43/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RLeg2:position")
+properties/43/spawn = true
+properties/43/replication_mode = 1
+properties/44/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone RLeg2:rotation")
+properties/44/spawn = true
+properties/44/replication_mode = 1
+properties/45/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone Head:position")
+properties/45/spawn = true
+properties/45/replication_mode = 1
+properties/46/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone Head:rotation")
+properties/46/spawn = true
+properties/46/replication_mode = 1
+properties/47/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone Head:linear_velocity")
+properties/47/spawn = true
+properties/47/replication_mode = 1
+properties/48/path = NodePath("Physical/Armature/Skeleton3D/Physical Bone Head:angular_velocity")
+properties/48/spawn = true
+properties/48/replication_mode = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0mvc"]
 resource_name = "Character"
@@ -168,10 +304,10 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -0.14)
 shape = SubResource("BoxShape3D_fo83p")
 
 [node name="Physical Bone LArm1" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="2"]
-transform = Transform3D(-3.09167e-20, 0, -1, -1, 7.54975e-08, 3.09167e-20, 7.54975e-08, 1, 0, 0.91576, 1, 0)
+transform = Transform3D(-3.51519e-20, 0, -1, -1, 7.54975e-08, 3.51519e-20, 7.54975e-08, 1, 0, 0.91576, 1, 0)
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.72184e-21, 2.76311e-33, 0.31882)
-body_offset = Transform3D(1, 2.84217e-13, -3.04932e-20, -3.04932e-20, 0, -1, -2.84217e-13, 1, 0, 0, 0.31882, 0)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10721e-20, 3.14688e-33, 0.31882)
+body_offset = Transform3D(1, 2.84217e-13, -3.47284e-20, -3.47284e-20, 0, -1, -2.84217e-13, 1, 0, 0, 0.31882, 0)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -187,10 +323,10 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -0.095)
 shape = SubResource("CapsuleShape3D_qknsb")
 
 [node name="Physical Bone LArm2" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="3"]
-transform = Transform3D(-3.09167e-20, 0, -1, -1, 7.54975e-08, 3.09167e-20, 7.54975e-08, 1, 0, 1.61445, 1, -1.42109e-14)
+transform = Transform3D(-3.51519e-20, 0, -1, -1, 7.54975e-08, 3.51519e-20, 7.54975e-08, 1, 0, 1.61445, 1, -1.42109e-14)
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.15835e-20, 7.10543e-15, 0.379871)
-body_offset = Transform3D(1, 2.84217e-13, -3.04932e-20, -3.04932e-20, 0, -1, -2.84217e-13, 1, 0, 0, 0.379871, -7.10543e-15)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.31923e-20, 7.10543e-15, 0.379871)
+body_offset = Transform3D(1, 2.84217e-13, -3.47284e-20, -3.47284e-20, 0, -1, -2.84217e-13, 1, 0, 0, 0.379871, -7.10543e-15)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -214,10 +350,10 @@ shape = SubResource("CapsuleShape3D_kselr")
 [node name="LeftHandAudioPlayer" type="AudioStreamPlayer3D" parent="Physical/Armature/Skeleton3D/Physical Bone LArm2"]
 
 [node name="Physical Bone RArm1" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="4"]
-transform = Transform3D(2.13163e-14, -3.57628e-07, 1, 1.31134e-07, -1, -3.57628e-07, 1, 1.31134e-07, 2.84217e-14, -0.91576, 1, -1.09167e-07)
+transform = Transform3D(2.13163e-14, -3.57629e-07, 1, 1.31134e-07, -1, -3.57629e-07, 1, 1.31134e-07, 2.84217e-14, -0.91576, 1, -1.09167e-07)
 joint_type = 2
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09167e-07, 3.62818e-07, 0.31882)
-body_offset = Transform3D(1, 1.19209e-07, 2.13163e-14, -2.13163e-14, 3.57628e-07, -1, -1.19209e-07, 1, 3.57628e-07, -1.09167e-07, 0.31882, -4.76837e-07)
+body_offset = Transform3D(1, 1.19209e-07, 2.13163e-14, -2.13163e-14, 3.57629e-07, -1, -1.19209e-07, 1, 3.57629e-07, -1.09167e-07, 0.31882, -4.76837e-07)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -233,10 +369,10 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -0.095)
 shape = SubResource("CapsuleShape3D_qknsb")
 
 [node name="Physical Bone RArm2" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="5"]
-transform = Transform3D(2.13163e-14, -3.57628e-07, 1, 1.31134e-07, -1, -3.57628e-07, 1, 1.31134e-07, 2.84217e-14, -1.61446, 1, -1.92458e-07)
+transform = Transform3D(2.13163e-14, -3.57629e-07, 1, 1.31134e-07, -1, -3.57629e-07, 1, 1.31134e-07, 2.84217e-14, -1.61446, 1, -1.92458e-07)
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.92458e-07, 5.79401e-07, 0.379876)
-body_offset = Transform3D(1, 1.19209e-07, 2.13163e-14, -2.13163e-14, 3.57628e-07, -1, -1.19209e-07, 1, 3.57628e-07, -1.92458e-07, 0.379876, -7.15256e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.92458e-07, 5.79401e-07, 0.379878)
+body_offset = Transform3D(1, 1.19209e-07, 2.13163e-14, -2.13163e-14, 3.57629e-07, -1, -1.19209e-07, 1, 3.57629e-07, -1.92458e-07, 0.379878, -7.15256e-07)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -306,10 +442,10 @@ max_results = 10
 [node name="LeftFootAudioPlayer" type="AudioStreamPlayer3D" parent="Physical/Armature/Skeleton3D/Physical Bone LLeg2"]
 
 [node name="Physical Bone RLeg1" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="8"]
-transform = Transform3D(6.31968e-08, 0.999677, 0.0254165, 0.544879, -0.0213121, 0.838244, 0.838515, 0.0138488, -0.544703, -0.386654, -0.241816, 0.145382)
+transform = Transform3D(5.38866e-08, 0.999677, 0.0254165, 0.544879, -0.0213121, 0.838244, 0.838515, 0.0138488, -0.544703, -0.386654, -0.241816, 0.145382)
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.14135e-06, -5.6294e-07, 0.2669)
-body_offset = Transform3D(1, -2.90573e-07, -3.57628e-07, -3.27826e-07, 2.63564e-07, -1, 2.57976e-07, 1, 2.10945e-07, 1.2368e-06, 0.2669, 5.06639e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1488e-06, -8.59472e-07, 0.2669)
+body_offset = Transform3D(1, -2.80328e-07, -3.57628e-07, -3.27826e-07, 2.58908e-07, -1, 2.48663e-07, 1, 2.05357e-07, 1.24425e-06, 0.2669, 8.04663e-07)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -325,10 +461,10 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_b1rjh")
 
 [node name="Physical Bone RLeg2" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="9"]
-transform = Transform3D(1.64828e-07, 1, 9.75556e-07, 0.544879, -9.0783e-07, 0.838515, 0.838515, 3.93349e-07, -0.544879, -0.393436, -0.689271, 0.436144)
+transform = Transform3D(1.64828e-07, 1, 9.75557e-07, 0.544879, -9.0783e-07, 0.838515, 0.838515, 3.93349e-07, -0.544879, -0.393436, -0.689271, 0.436144)
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.43664e-07, -1.92465e-06, 0.266814)
-body_offset = Transform3D(1, -3.91908e-07, -3.8743e-07, -3.57628e-07, 3.37075e-07, -1, 3.57628e-07, 1, 2.8824e-07, 4.47035e-07, 0.266814, 1.84774e-06)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.43664e-07, -2.22267e-06, 0.266814)
+body_offset = Transform3D(1, -3.91908e-07, -3.8743e-07, -3.57628e-07, 3.37076e-07, -1, 3.57627e-07, 1, 2.8824e-07, 4.47035e-07, 0.266814, 2.14577e-06)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -355,8 +491,8 @@ area_mask = 32769
 [node name="Physical Bone Head" type="PhysicalBone3D" parent="Physical/Armature/Skeleton3D" index="10"]
 transform = Transform3D(1, 2.38419e-07, 0, 0, 0, -1, -2.38419e-07, 1, 0, 0, 1.78387, 0)
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.444696)
-body_offset = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.444696, 0)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.444698)
+body_offset = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.444698, 0)
 friction = 0.2
 linear_damp_mode = 1
 angular_damp = 1.0
@@ -410,6 +546,14 @@ parameters/walking/blend_amount = 0.0
 
 [node name="CameraPivot" parent="." node_paths=PackedStringArray("physical_skel") instance=ExtResource("4_my7n2")]
 physical_skel = NodePath("../Physical/Armature/Skeleton3D")
+
+[node name="PlayerName" type="Label3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.93909, 0)
+text = "Player Name"
+font = ExtResource("5_dp8ca")
+font_size = 64
+outline_size = 24
+uppercase = true
 
 [connection signal="skeleton_updated" from="Physical/Armature/Skeleton3D" to="." method="_on_skeleton_3d_skeleton_updated"]
 [connection signal="body_entered" from="Physical/Armature/Skeleton3D/Physical Bone LArm2/LGrabArea" to="." method="_on_l_grab_area_body_entered"]
