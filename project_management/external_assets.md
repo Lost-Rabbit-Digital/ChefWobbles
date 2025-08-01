@@ -8,10 +8,12 @@
 ## Shaders
 - https://godotshaders.com/shader/toon-water-shader/
 - https://godotshaders.com/shader/stylized-water-with-depthfade/
+- https://godotshaders.com/shader/stylized-3d-fire-and-smoke/
 
 ## Models
 - https://toonlab.itch.io/toonlab-fruit-vegetable-toon-pack
 - https://3mrys.itch.io/low-poly-stylized-mushrooms
+
 ### This stuff has a nice theme
 - https://acornbringer.itch.io/assets-low-poly-nature-objects
 - https://acornbringer.itch.io/assets-low-poly-fantasy-houses
