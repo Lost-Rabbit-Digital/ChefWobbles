@@ -1,11 +1,9 @@
-[gd_scene load_steps=11 format=4 uid="uid://c03wrgomhlo4s"]
+[gd_scene load_steps=8 format=4 uid="uid://c03wrgomhlo4s"]
 
-[ext_resource type="Texture2D" uid="uid://cq8v02s4bmuc3" path="res://models/food/burger_patty/burger_patty_0.png" id="1_knmp5"]
-[ext_resource type="Script" uid="uid://gyjxlptmowpe" path="res://scripts/interactables/food/burger_patty.gd" id="1_run7i"]
-[ext_resource type="Material" uid="uid://dua8da6sm17mk" path="res://models/food/burger_patty/burger_patty_raw_material.tres" id="2_xjh10"]
-[ext_resource type="Material" uid="uid://nc107vh0i4vq" path="res://models/food/burger_patty/burger_patty_cooking_material.tres" id="3_r6y8j"]
-[ext_resource type="Material" uid="uid://doe7dgsvejepe" path="res://models/food/burger_patty/burger_patty_cooked_material.tres" id="4_wqfsa"]
-[ext_resource type="Material" uid="uid://6p0677d3nwdn" path="res://models/food/burger_patty/burger_patty_burnt_material.tres" id="5_00nhk"]
+[ext_resource type="Script" uid="uid://ck51hpdqtw476" path="res://scripts/interactables/food/custom_food_colors.gd" id="1_knmp5"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dpl3v"]
+load_path = "res://.godot/imported/burger_patty_0.png-7a7a4e8931148f62bd9b4658ae27a42a.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7mhq"]
 resource_name = "material_0"
@@ -13,7 +11,7 @@ transparency = 2
 alpha_scissor_threshold = 0.05
 alpha_antialiasing_mode = 0
 cull_mode = 2
-albedo_texture = ExtResource("1_knmp5")
+albedo_texture = SubResource("CompressedTexture2D_dpl3v")
 texture_filter = 0
 texture_repeat = false
 
@@ -49,6 +47,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_6hgju")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_knmp5"]
+diffuse_mode = 3
+vertex_color_use_as_albedo = true
+albedo_color = Color(8.85606e-06, 0.74877, 0.985811, 1)
+rim = 0.51
+texture_filter = 0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_run7i"]
 size = Vector3(0.445313, 0.0654297, 0.431641)
 
@@ -59,11 +64,7 @@ transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
 
 [node name="BurgerPatty" type="RigidBody3D" parent="Node" node_paths=PackedStringArray("mesh_instance", "collision_shape") groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38889e-07, 0, 0)
-script = ExtResource("1_run7i")
-raw_material = ExtResource("2_xjh10")
-cooking_material = ExtResource("3_r6y8j")
-cooked_material = ExtResource("4_wqfsa")
-burnt_material = ExtResource("5_00nhk")
+script = ExtResource("1_knmp5")
 food_name = "Burger Patty"
 mesh_instance = NodePath("cylinder")
 collision_shape = NodePath("CollisionShape3D")
@@ -71,6 +72,7 @@ collision_shape = NodePath("CollisionShape3D")
 [node name="cylinder" type="MeshInstance3D" parent="Node/BurgerPatty"]
 mesh = SubResource("ArrayMesh_run7i")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_knmp5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node/BurgerPatty"]
 shape = SubResource("BoxShape3D_run7i")

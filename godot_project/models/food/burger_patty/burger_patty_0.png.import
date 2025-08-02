@@ -2,11 +2,10 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cq8v02s4bmuc3"
-path.s3tc="res://.godot/imported/burger_patty_0.png-7a7a4e8931148f62bd9b4658ae27a42a.s3tc.ctex"
+uid="uid://cej2444jabwd5"
+path="res://.godot/imported/burger_patty_0.png-7a7a4e8931148f62bd9b4658ae27a42a.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
 "md5": "9caa5b9be654b303ba3b0844cc15c365"
@@ -15,11 +14,11 @@ generator_parameters={
 [deps]
 
 source_file="res://models/food/burger_patty/burger_patty_0.png"
-dest_files=["res://.godot/imported/burger_patty_0.png-7a7a4e8931148f62bd9b4658ae27a42a.s3tc.ctex"]
+dest_files=["res://.godot/imported/burger_patty_0.png-7a7a4e8931148f62bd9b4658ae27a42a.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -35,4 +34,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
