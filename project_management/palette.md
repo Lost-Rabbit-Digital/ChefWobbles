@@ -2,16 +2,8 @@
 
 A 16-color pastel palette inspired by "A Short Hike" for cartoon-style cooking games with cooking states.
 
-## 📋 Quick Reference
+## Reference
 
-### Food Categories
-- Orange Foods: `#ffc999` - Carrots, oranges, pumpkin
-- Yellow Foods: `#fff799` - Cheese, butter, corn
-- Green Foods: `#b3ffb3` - Fresh lettuce, herbs, peas
-- Blue Foods: `#b3d9ff` - Blueberries, rare ingredients
-- Purple Foods: `#d9b3ff` - Eggplant, grapes, cabbage
-- Brown Foods: `#e6ccb3` - Fresh bread, chocolate, coffee beans
-- Dairy: `#fff9f2` - Milk, cream, vanilla
 ### Fruits
 #### Tomato
 - Body: `#ff4d4d`
@@ -23,6 +15,11 @@ A 16-color pastel palette inspired by "A Short Hike" for cartoon-style cooking g
 - Cooking: `#d9b399`
 - Cooked: `#8c6b4d`
 - Burnt: `#513c27`
+
+### Breads
+#### Burger Buns
+- Top: `#E1C492`
+- Bottom: `#E1C492`
 
 ### Environment
 - Metal Base: `#a9a9a9` - Metal utensils, appliances
