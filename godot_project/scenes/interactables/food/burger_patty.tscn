@@ -50,7 +50,6 @@ shadow_mesh = SubResource("ArrayMesh_6hgju")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_knmp5"]
 diffuse_mode = 3
 vertex_color_use_as_albedo = true
-albedo_color = Color(8.85606e-06, 0.74877, 0.985811, 1)
 rim = 0.51
 texture_filter = 0
 
@@ -65,6 +64,11 @@ transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
 [node name="BurgerPatty" type="RigidBody3D" parent="Node" node_paths=PackedStringArray("mesh_instance", "collision_shape") groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38889e-07, 0, 0)
 script = ExtResource("1_knmp5")
+raw_color = Color(0.411121, 0.6391, 0.966362, 1)
+cooking_color = Color(0.831373, 0.537255, 0.419608, 1)
+cooked_color = Color(0.545098, 0.352941, 0.235294, 1)
+burnt_color = Color(0.239216, 0.156863, 0.0901961, 1)
+spoiled_color = Color(0.513859, 0.606387, 0.337792, 1)
 food_name = "Burger Patty"
 mesh_instance = NodePath("cylinder")
 collision_shape = NodePath("CollisionShape3D")

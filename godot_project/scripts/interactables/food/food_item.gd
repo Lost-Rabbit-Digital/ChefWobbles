@@ -15,7 +15,8 @@ enum FoodQuality {
 	RAW,
 	COOKING,
 	COOKED,
-	BURNT
+	BURNT,
+	SPOILED
 }
 
 enum FoodType {
@@ -109,9 +110,9 @@ func _start_quality_monitoring() -> void:
 		spoilage_timer.start()
 
 func _on_spoilage_timer_timeout() -> void:
-	"""Handle food spoilage - set to burnt when spoiled"""
-	if current_quality != FoodQuality.BURNT:
-		_change_quality(FoodQuality.BURNT)
+	"""Handle food spoilage - set to spoiled when time expires"""
+	if current_quality != FoodQuality.SPOILED and current_quality != FoodQuality.BURNT:
+		_change_quality(FoodQuality.SPOILED)
 
 # Virtual methods for derived classes (keeping for backward compatibility)
 func _setup_derived_class() -> void:
@@ -147,6 +148,8 @@ func _get_dynamic_quality_color() -> Color:
 			return _apply_cooked_transformation(base_color)
 		FoodQuality.BURNT:
 			return _apply_burnt_transformation(base_color)
+		FoodQuality.SPOILED:
+			return _apply_spoiled_transformation(base_color)
 		_:
 			return base_color
 
@@ -180,6 +183,17 @@ func _apply_burnt_transformation(base_color: Color) -> Color:
 	hsv.x = 0.02 + (hsv.x * 0.05)    # Very dark brown
 	hsv.y = hsv.y * 0.3               # Desaturated
 	hsv.z = hsv.z * 0.3               # Very dark
+	
+	return _hsv_to_rgb(hsv)
+
+func _apply_spoiled_transformation(base_color: Color) -> Color:
+	"""Transform color for spoiled stage - sickly green-gray"""
+	var hsv = _rgb_to_hsv(base_color)
+	
+	# Shift towards sickly green-gray
+	hsv.x = 0.25 + (hsv.x * 0.1)     # Green-gray range
+	hsv.y = hsv.y * 0.4               # Low saturation
+	hsv.z = hsv.z * 0.5               # Medium-dark
 	
 	return _hsv_to_rgb(hsv)
 
@@ -280,8 +294,28 @@ func is_edible() -> bool:
 	return current_quality in [FoodQuality.RAW, FoodQuality.COOKING, FoodQuality.COOKED]
 
 func is_spoiled() -> bool:
-	"""Check if food has spoiled or burnt"""
+	"""Check if food has spoiled"""
+	return current_quality == FoodQuality.SPOILED
+
+func is_burnt() -> bool:
+	"""Check if food is burnt"""
 	return current_quality == FoodQuality.BURNT
+
+func is_ruined() -> bool:
+	"""Check if food is spoiled or burnt (unusable)"""
+	return current_quality in [FoodQuality.SPOILED, FoodQuality.BURNT]
+
+func is_raw() -> bool:
+	"""Check if food is still raw"""
+	return current_quality == FoodQuality.RAW
+
+func is_cooking() -> bool:
+	"""Check if food is currently cooking"""
+	return current_quality == FoodQuality.COOKING
+
+func is_cooked_perfectly() -> bool:
+	"""Check if food is cooked perfectly"""
+	return current_quality == FoodQuality.COOKED
 
 # Visual methods for color system
 func set_visual_color(color: Color) -> void:
@@ -339,23 +373,6 @@ func get_spoilage_time() -> float:
 	"""Get spoilage time for this food"""
 	return spoilage_time
 
-# Convenience methods (replaces need for BurgerPatty class)
-func is_cooked_perfectly() -> bool:
-	"""Check if food is cooked perfectly"""
-	return current_quality == FoodQuality.COOKED
-
-func is_burnt() -> bool:
-	"""Check if food is burnt"""
-	return current_quality == FoodQuality.BURNT
-
-func is_raw() -> bool:
-	"""Check if food is still raw"""
-	return current_quality == FoodQuality.RAW
-
-func is_cooking() -> bool:
-	"""Check if food is currently cooking"""
-	return current_quality == FoodQuality.COOKING
-
 func get_cooking_description() -> String:
 	"""Get human-readable cooking state"""
 	match current_quality:
@@ -367,6 +384,8 @@ func get_cooking_description() -> String:
 			return "Perfectly cooked"
 		FoodQuality.BURNT:
 			return "Burnt and ruined"
+		FoodQuality.SPOILED:
+			return "Spoiled and moldy"
 		_:
 			return "Unknown state"
 
