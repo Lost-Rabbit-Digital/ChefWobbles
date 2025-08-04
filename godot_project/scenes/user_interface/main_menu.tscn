@@ -67,6 +67,14 @@ theme = ExtResource("2_n0nnf")
 placeholder_text = "Chef Name"
 alignment = 1
 
+[node name="HSeparator2" type="HSeparator" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="SinglePlayerButton" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Singleplayer"
+
 [node name="HSeparator" type="HSeparator" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 
@@ -79,16 +87,6 @@ text = "Host Game"
 layout_mode = 2
 theme = ExtResource("2_n0nnf")
 text = "Join lobby"
-
-[node name="HSeparator2" type="HSeparator" parent="MainMenu/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="SinglePlayerButton" type="Button" parent="MainMenu/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme = ExtResource("2_n0nnf")
-text = "Singleplayer"
 
 [node name="HSeparator3" type="HSeparator" parent="MainMenu/VBoxContainer"]
 layout_mode = 2

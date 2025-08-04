@@ -29,12 +29,12 @@
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8sg6o"]
 
-[sub_resource type="Sky" id="Sky_67mw3"]
+[sub_resource type="Sky" id="Sky_202kh"]
 sky_material = ExtResource("2_0cmys")
 
 [sub_resource type="Environment" id="Environment_217oh"]
 background_mode = 2
-sky = SubResource("Sky_67mw3")
+sky = SubResource("Sky_202kh")
 
 [sub_resource type="LabelSettings" id="LabelSettings_g2hwh"]
 font = ExtResource("3_mcgj6")

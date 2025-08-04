@@ -1,0 +1,437 @@
+[gd_scene load_steps=35 format=3 uid="uid://f13l6bwvuyvw"]
+
+[ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="1_hv4yo"]
+[ext_resource type="FontFile" uid="uid://b0wjuv1dm2kwv" path="res://fonts/kaph_truetype/Kaph-Regular.ttf" id="2_c64ng"]
+[ext_resource type="Script" uid="uid://b31777dpj7ckh" path="res://scripts/user_interface/item_display_controller.gd" id="3_6735l"]
+[ext_resource type="PackedScene" uid="uid://b1li80ofvmj04" path="res://scenes/user_interface/pause_menu.tscn" id="4_mton0"]
+[ext_resource type="PackedScene" uid="uid://c03wrgomhlo4s" path="res://scenes/interactables/food/burger_patty.tscn" id="5_oa4ri"]
+[ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://textures/prototype_textures/PNG/logo_blue_512x512.png" id="7_5vn2u"]
+[ext_resource type="PackedScene" uid="uid://cvvn4h5cvlhqv" path="res://models/floors/floor_1.gltf" id="7_hv4yo"]
+[ext_resource type="PackedScene" uid="uid://bfhfov058daap" path="res://models/appliances/retro_terminal/retro_terminal.gltf" id="8_0rh2s"]
+[ext_resource type="PackedScene" uid="uid://bgr0bio21per0" path="res://scenes/interactables/food/tomato_slice.tscn" id="9_dygic"]
+[ext_resource type="PackedScene" uid="uid://bqifd1bjh8cic" path="res://scenes/interactables/food/lettuce_leaf.tscn" id="10_tqr6a"]
+[ext_resource type="PackedScene" uid="uid://npla6nc7hapy" path="res://scenes/interactables/plate/plate.tscn" id="11_kpw02"]
+[ext_resource type="Script" path="res://Scripts/audio/music_randomiser.gd" id="12_iv3v3"]
+[ext_resource type="AudioStream" uid="uid://0vhuw27xogj8" path="res://audio/music/Cuddle Clouds.ogg" id="13_rvb5o"]
+[ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="14_0080n"]
+[ext_resource type="AudioStream" uid="uid://dempf1idxhdvw" path="res://audio/music/Evening Harmony.ogg" id="15_1sxvr"]
+[ext_resource type="AudioStream" uid="uid://bp1u1j3y0evjm" path="res://audio/music/Floating Dream.ogg" id="16_tn3jn"]
+[ext_resource type="AudioStream" uid="uid://c5b8mjpjj7txe" path="res://audio/music/Forgotten Biomes.ogg" id="17_ddfi7"]
+[ext_resource type="AudioStream" uid="uid://d1n0obngvv6k4" path="res://audio/music/Gentle Breeze.ogg" id="18_8nh2q"]
+[ext_resource type="AudioStream" uid="uid://bmq805hd2t7ae" path="res://audio/music/Wanderers Tale.ogg" id="19_0k8k7"]
+[ext_resource type="AudioStream" uid="uid://dppngpsx8ctmp" path="res://audio/music/Polar Lights.ogg" id="20_7guq5"]
+[ext_resource type="AudioStream" uid="uid://d0bbu53enpg0v" path="res://audio/music/Golden Gleam.ogg" id="21_kd0sh"]
+[ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/music/Sunlight Through Leaves.ogg" id="22_grdpq"]
+[ext_resource type="PackedScene" uid="uid://bjk4e8k421f15" path="res://scenes/stations/stove_stations/stove_station.tscn" id="23_dbthe"]
+[ext_resource type="PackedScene" uid="uid://dsc5wbn13tt8p" path="res://models/stations/generic_station/generic_station.gltf" id="24_vamcf"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8dkcp"]
+
+[sub_resource type="Sky" id="Sky_67mw3"]
+sky_material = ExtResource("1_hv4yo")
+
+[sub_resource type="Environment" id="Environment_hyl37"]
+background_mode = 2
+sky = SubResource("Sky_67mw3")
+
+[sub_resource type="LabelSettings" id="LabelSettings_v4gd4"]
+font = ExtResource("2_c64ng")
+outline_size = 8
+outline_color = Color(0.154983, 0.0570343, 0.146703, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mepk6"]
+friction = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_c7q25"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbq8p"]
+albedo_texture = ExtResource("7_5vn2u")
+uv1_scale = Vector3(3, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_doxh6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ecq88"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_angc8"]
+size = Vector3(10, 1, 10)
+
+[node name="Restaurant1" type="Node3D"]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8dkcp")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://cd70x3de3pbl4")
+spawn_path = NodePath("..")
+spawn_limit = 4
+
+[node name="EnvironmentalEffects" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentalEffects"]
+transform = Transform3D(1, 0, 0, 0, -0.216372, 0.976311, 0, -0.976311, -0.216372, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="EnvironmentalEffects"]
+environment = SubResource("Environment_hyl37")
+
+[node name="GUI" type="Node" parent="."]
+
+[node name="Controls" type="Label" parent="GUI"]
+visible = false
+offset_right = 284.0
+offset_bottom = 151.0
+text = "Walk - WASD
+Jump - Space
+Grab left - Left mouse
+Grab right - Right mouse
+Toggle ragdoll - R
+Show cursor - Esc
+"
+label_settings = SubResource("LabelSettings_v4gd4")
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI" node_paths=PackedStringArray("left_hand_label", "right_hand_label")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -88.0
+offset_top = -40.0
+offset_right = 88.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("3_6735l")
+left_hand_label = NodePath("LeftHandItemLabel")
+right_hand_label = NodePath("RightHandItemLabel")
+
+[node name="LeftHandItemLabel" type="Label" parent="GUI/HBoxContainer"]
+layout_mode = 2
+text = "No Item"
+label_settings = SubResource("LabelSettings_v4gd4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Separator" type="Label" parent="GUI/HBoxContainer"]
+layout_mode = 2
+text = " | "
+label_settings = SubResource("LabelSettings_v4gd4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightHandItemLabel" type="Label" parent="GUI/HBoxContainer"]
+layout_mode = 2
+text = "No Item"
+label_settings = SubResource("LabelSettings_v4gd4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseMenu" parent="GUI" instance=ExtResource("4_mton0")]
+
+[node name="Interactables" type="Node" parent="."]
+
+[node name="BurgerPatties" type="Node" parent="Interactables"]
+
+[node name="BurgerPatty" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3, -2.8)
+
+[node name="BurgerPatty2" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3, -3.5)
+
+[node name="BurgerPatty3" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3, -4.2)
+
+[node name="BurgerPatty4" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3.2, -3.8)
+
+[node name="BurgerPatty5" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3.2, -3.1)
+
+[node name="BurgerPatty6" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3.4, -3.5)
+
+[node name="CardboardBoxes" type="Node" parent="Interactables"]
+
+[node name="CardboardBox" type="RigidBody3D" parent="Interactables/CardboardBoxes" groups=["paper_objects"]]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.89373, 3.27871, -1.38654)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/CardboardBoxes/CardboardBox"]
+mesh = SubResource("BoxMesh_c7q25")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/CardboardBoxes/CardboardBox"]
+shape = SubResource("BoxShape3D_doxh6")
+
+[node name="CardboardBox2" type="RigidBody3D" parent="Interactables/CardboardBoxes" groups=["paper_objects"]]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 5.8992, 9.64245, -1.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/CardboardBoxes/CardboardBox2"]
+mesh = SubResource("BoxMesh_c7q25")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/CardboardBoxes/CardboardBox2"]
+shape = SubResource("BoxShape3D_doxh6")
+
+[node name="CardboardBox3" type="RigidBody3D" parent="Interactables/CardboardBoxes" groups=["paper_objects"]]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 8.8992, 9.64245, -6.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/CardboardBoxes/CardboardBox3"]
+mesh = SubResource("BoxMesh_c7q25")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/CardboardBoxes/CardboardBox3"]
+shape = SubResource("BoxShape3D_doxh6")
+
+[node name="CardboardBox4" type="RigidBody3D" parent="Interactables/CardboardBoxes" groups=["paper_objects"]]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 1.8992, 3.64245, -6.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/CardboardBoxes/CardboardBox4"]
+mesh = SubResource("BoxMesh_c7q25")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/CardboardBoxes/CardboardBox4"]
+shape = SubResource("BoxShape3D_doxh6")
+
+[node name="CardboardBox5" type="RigidBody3D" parent="Interactables/CardboardBoxes" groups=["paper_objects"]]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, 3.8992, 4.64245, -3.37142)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/CardboardBoxes/CardboardBox5"]
+mesh = SubResource("BoxMesh_c7q25")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/CardboardBoxes/CardboardBox5"]
+shape = SubResource("BoxShape3D_doxh6")
+
+[node name="RetroTerminal" parent="Interactables" instance=ExtResource("8_0rh2s")]
+transform = Transform3D(0.939692, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939692, -1.2, 2.5, 7.1)
+
+[node name="TomatoSlices" type="Node" parent="Interactables"]
+
+[node name="TomatoSlice" parent="Interactables/TomatoSlices" instance=ExtResource("9_dygic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3, 3)
+
+[node name="TomatoSlice2" parent="Interactables/TomatoSlices" instance=ExtResource("9_dygic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3, 3.5)
+
+[node name="TomatoSlice3" parent="Interactables/TomatoSlices" instance=ExtResource("9_dygic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3.1, 3.3)
+
+[node name="LettuceLeaves" type="Node" parent="Interactables"]
+
+[node name="LettuceLeaf" parent="Interactables/LettuceLeaves" instance=ExtResource("10_tqr6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2.7, 5)
+
+[node name="LettuceLeaf2" parent="Interactables/LettuceLeaves" instance=ExtResource("10_tqr6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2.7, 4.5)
+
+[node name="LettuceLeaf3" parent="Interactables/LettuceLeaves" instance=ExtResource("10_tqr6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2.9, 4.8)
+
+[node name="OnionSlices" type="Node" parent="Interactables"]
+
+[node name="BurgerBuns" type="Node" parent="Interactables"]
+
+[node name="Plates" type="Node" parent="Interactables"]
+
+[node name="Plate" parent="Interactables/Plates" instance=ExtResource("11_kpw02")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.7, 7)
+
+[node name="Music" type="Node" parent="."]
+script = ExtResource("12_iv3v3")
+
+[node name="CuddleClouds" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("13_rvb5o")
+bus = &"Music"
+
+[node name="DriftingMemories" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("14_0080n")
+bus = &"Music"
+
+[node name="EveningHarmony" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("15_1sxvr")
+bus = &"Music"
+
+[node name="FloatingDream" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("16_tn3jn")
+bus = &"Music"
+
+[node name="ForgottonBiomes" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("17_ddfi7")
+bus = &"Music"
+
+[node name="GentleBreeze" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("18_8nh2q")
+bus = &"Music"
+
+[node name="WanderersTale" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("19_0k8k7")
+bus = &"Music"
+
+[node name="PolarLights" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("20_7guq5")
+bus = &"Music"
+
+[node name="GoldenGleam" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("21_kd0sh")
+bus = &"Music"
+
+[node name="SunlightThroughLeaves" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("22_grdpq")
+bus = &"Music"
+
+[node name="Ground" type="Node" parent="."]
+
+[node name="Ground2" type="StaticBody3D" parent="Ground" groups=["wood_objects"]]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, -10.0916, -0.0286075, -0.200609)
+visible = false
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Ground2"]
+mesh = SubResource("BoxMesh_ecq88")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Ground2"]
+shape = SubResource("BoxShape3D_angc8")
+
+[node name="Ground3" type="StaticBody3D" parent="Ground" groups=["wood_objects"]]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 10.2807, -0.0286075, -0.200609)
+visible = false
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Ground3"]
+mesh = SubResource("BoxMesh_ecq88")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Ground3"]
+shape = SubResource("BoxShape3D_angc8")
+
+[node name="Ground4" type="StaticBody3D" parent="Ground" groups=["wood_objects"]]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 0.102698, -0.0286075, -10.4244)
+visible = false
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Ground4"]
+mesh = SubResource("BoxMesh_ecq88")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Ground4"]
+shape = SubResource("BoxShape3D_angc8")
+
+[node name="Ground5" type="StaticBody3D" parent="Ground" groups=["wood_objects"]]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, -10.0916, -0.0286075, -10.4244)
+visible = false
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Ground5"]
+mesh = SubResource("BoxMesh_ecq88")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Ground5"]
+shape = SubResource("BoxShape3D_angc8")
+
+[node name="Ground6" type="StaticBody3D" parent="Ground" groups=["wood_objects"]]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 10.2807, -0.0286075, -10.4244)
+visible = false
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Ground6"]
+mesh = SubResource("BoxMesh_ecq88")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Ground6"]
+shape = SubResource("BoxShape3D_angc8")
+
+[node name="Ground7" type="StaticBody3D" parent="Ground" groups=["wood_objects"]]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 0.102698, -0.0286075, 9.90382)
+visible = false
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Ground7"]
+mesh = SubResource("BoxMesh_ecq88")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Ground7"]
+shape = SubResource("BoxShape3D_angc8")
+
+[node name="Ground8" type="StaticBody3D" parent="Ground" groups=["wood_objects"]]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, -10.0916, -0.0286075, 9.90382)
+visible = false
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Ground8"]
+mesh = SubResource("BoxMesh_ecq88")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Ground8"]
+shape = SubResource("BoxShape3D_angc8")
+
+[node name="Ground9" type="StaticBody3D" parent="Ground" groups=["wood_objects"]]
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 10.2807, -0.0286075, 9.90382)
+visible = false
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Ground9"]
+mesh = SubResource("BoxMesh_ecq88")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Ground9"]
+shape = SubResource("BoxShape3D_angc8")
+
+[node name="Floors" type="Node" parent="."]
+
+[node name="Floor" parent="Floors" instance=ExtResource("7_hv4yo")]
+
+[node name="Floor2" parent="Floors" instance=ExtResource("7_hv4yo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="Floor3" parent="Floors" instance=ExtResource("7_hv4yo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+
+[node name="Floor4" parent="Floors" instance=ExtResource("7_hv4yo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8)
+
+[node name="Floor5" parent="Floors" instance=ExtResource("7_hv4yo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="Floor7" parent="Floors" instance=ExtResource("7_hv4yo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+
+[node name="Floor8" parent="Floors" instance=ExtResource("7_hv4yo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8)
+
+[node name="Floor9" parent="Floors" instance=ExtResource("7_hv4yo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8)
+
+[node name="Floor6" parent="Floors" instance=ExtResource("7_hv4yo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8)
+
+[node name="Stations" type="Node" parent="."]
+
+[node name="StoveStations" type="Node" parent="Stations"]
+
+[node name="StoveStation" parent="Stations/StoveStations" groups=["metal_objects"] instance=ExtResource("23_dbthe")]
+transform = Transform3D(-1.74846e-07, 0, -4, 0, 4, 0, 4, 0, -1.74846e-07, -9, 0.5, 0)
+
+[node name="GenericStations" type="Node" parent="Stations"]
+
+[node name="GenericStation" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("24_vamcf")]
+transform = Transform3D(-1.74846e-07, 0, -4, 0, 4, 0, 4, 0, -1.74846e-07, -9, 0.5, -4)
+
+[node name="GenericStation2" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("24_vamcf")]
+transform = Transform3D(-1.74846e-07, 0, -4, 0, 4, 0, 4, 0, -1.74846e-07, -9, 0.5, 4)
+
+[node name="GenericStation3" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("24_vamcf")]
+transform = Transform3D(4, 0, 1.36919e-14, 0, 4, 0, -1.36919e-14, 0, 4, -6.2, 0.5, 6.9)
+
+[node name="GenericStation4" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("24_vamcf")]
+transform = Transform3D(4, 0, 1.36919e-14, 0, 4, 0, -1.36919e-14, 0, 4, -2.2, 0.5, 6.9)

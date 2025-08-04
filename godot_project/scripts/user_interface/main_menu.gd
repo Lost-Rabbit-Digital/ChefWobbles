@@ -1,7 +1,8 @@
 extends Control
 
 # === SCENE REFERENCES ===
-@export var demo_scene_path: String = "res://scenes/worlds/demo_scene.tscn"
+#@export var scene_path: String = "res://scenes/worlds/demo_scene.tscn"
+@export var scene_path: String = "res://scenes/worlds/restaurant_1.tscn"
 var game_manager: Node3D = null
 
 # === UI REFERENCES ===
@@ -114,7 +115,7 @@ func _load_demo_scene_and_host():
 	get_tree().set_meta("should_host", true)
 	get_tree().set_meta("player_name", player_name)
 	
-	var error = get_tree().change_scene_to_file(demo_scene_path)
+	var error = get_tree().change_scene_to_file(scene_path)
 	if error != OK:
 		print("Failed to load demo scene: ", error)
 		_show_error("Failed to load game scene")
@@ -125,7 +126,7 @@ func _load_demo_scene_and_join(ip: String):
 	get_tree().set_meta("join_ip", ip)
 	get_tree().set_meta("player_name", player_name)
 	
-	var error = get_tree().change_scene_to_file(demo_scene_path)
+	var error = get_tree().change_scene_to_file(scene_path)
 	if error != OK:
 		print("Failed to load demo scene: ", error)
 		_show_error("Failed to load game scene")
@@ -135,7 +136,7 @@ func _load_demo_scene_singleplayer():
 	get_tree().set_meta("singleplayer", true)
 	get_tree().set_meta("player_name", player_name)
 	
-	var error = get_tree().change_scene_to_file(demo_scene_path)
+	var error = get_tree().change_scene_to_file(scene_path)
 	if error != OK:
 		print("Failed to load demo scene: ", error)
 		_show_error("Failed to load game scene")
