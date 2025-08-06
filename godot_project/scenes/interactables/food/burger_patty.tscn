@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://ck51hpdqtw476" path="res://scripts/interactables/food/custom_food_colors.gd" id="1_knmp5"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dpl3v"]
-load_path = "res://.godot/imported/burger_patty_0.png-7a7a4e8931148f62bd9b4658ae27a42a.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7mhq"]
 resource_name = "material_0"
@@ -70,6 +69,7 @@ cooked_color = Color(0.545098, 0.352941, 0.235294, 1)
 burnt_color = Color(0.239216, 0.156863, 0.0901961, 1)
 spoiled_color = Color(0.513859, 0.606387, 0.337792, 1)
 food_name = "Burger Patty"
+base_cooking_time = 5.0
 mesh_instance = NodePath("cylinder")
 collision_shape = NodePath("CollisionShape3D")
 

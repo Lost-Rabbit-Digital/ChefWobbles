@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=4 uid="uid://bgr0bio21per0"]
+[gd_scene load_steps=6 format=4 uid="uid://bgr0bio21per0"]
 
+[ext_resource type="Script" uid="uid://ck51hpdqtw476" path="res://scripts/interactables/food/custom_food_colors.gd" id="1_0ketk"]
 [ext_resource type="Material" uid="uid://bxbunt3yqu3jc" path="res://models/food/tomato_slice/tomato_slice_material.tres" id="1_ra232"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_abqq1"]
@@ -41,8 +42,18 @@ size = Vector3(0.4375, 0.0625, 0.436523)
 
 [node name="Node" type="Node3D" parent="."]
 
-[node name="TomatoSlice" type="RigidBody3D" parent="Node"]
+[node name="TomatoSlice" type="RigidBody3D" parent="Node" node_paths=PackedStringArray("mesh_instance", "collision_shape")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54198e-18, 0, 0)
+script = ExtResource("1_0ketk")
+raw_color = Color(1, 0.301961, 0.301961, 1)
+cooking_color = Color(1, 0.301961, 0.301961, 1)
+cooked_color = Color(1, 0.301961, 0.301961, 1)
+burnt_color = Color(1, 0.301961, 0.301961, 1)
+spoiled_color = Color(0.513726, 0.607843, 0.337255, 1)
+food_type = 1
+food_name = "Tomato Slice"
+mesh_instance = NodePath("cylinder")
+collision_shape = NodePath("CollisionShape3D")
 
 [node name="cylinder" type="MeshInstance3D" parent="Node/TomatoSlice"]
 mesh = SubResource("ArrayMesh_kneon")

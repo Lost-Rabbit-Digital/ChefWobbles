@@ -138,22 +138,22 @@ vertical_alignment = 1
 [node name="BurgerPatties" type="Node" parent="Interactables"]
 
 [node name="BurgerPatty" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3, -1.8)
+transform = Transform3D(-5.46392e-08, 0, 1.25, 0, 1.25, 0, -1.25, 0, -5.46392e-08, -5.31667, 2.1, 10.5167)
 
 [node name="BurgerPatty2" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3, -2.5)
+transform = Transform3D(-5.46392e-08, 0, 1.25, 0, 1.25, 0, -1.25, 0, -5.46392e-08, -6.01667, 2.1, 10.5167)
 
 [node name="BurgerPatty3" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3, -3.2)
+transform = Transform3D(-5.46392e-08, 0, 1.25, 0, 1.25, 0, -1.25, 0, -5.46392e-08, -6.71667, 2.1, 10.5167)
 
 [node name="BurgerPatty4" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3.2, -2.8)
+transform = Transform3D(-5.46392e-08, 0, 1.25, 0, 1.25, 0, -1.25, 0, -5.46392e-08, -6.31667, 2.3, 10.5167)
 
 [node name="BurgerPatty5" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3.2, -2.1)
+transform = Transform3D(-5.46392e-08, 0, 1.25, 0, 1.25, 0, -1.25, 0, -5.46392e-08, -5.61667, 2.3, 10.5167)
 
 [node name="BurgerPatty6" parent="Interactables/BurgerPatties" instance=ExtResource("5_oa4ri")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -9, 3.4, -2.5)
+transform = Transform3D(-5.46392e-08, 0, 1.25, 0, 1.25, 0, -1.25, 0, -5.46392e-08, -6.01667, 2.5, 10.5167)
 
 [node name="CardboardBoxes" type="Node" parent="Interactables"]
 
@@ -223,24 +223,24 @@ transform = Transform3D(-0.984807, 0, 0.173648, 0, 1, 0, -0.173648, 0, -0.984807
 [node name="TomatoSlices" type="Node" parent="Interactables"]
 
 [node name="TomatoSlice" parent="Interactables/TomatoSlices" instance=ExtResource("9_dygic")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3, 4)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.01667, 2.2, 10.0167)
 
 [node name="TomatoSlice2" parent="Interactables/TomatoSlices" instance=ExtResource("9_dygic")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3, 4.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.51667, 2.2, 10.0167)
 
 [node name="TomatoSlice3" parent="Interactables/TomatoSlices" instance=ExtResource("9_dygic")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3.1, 4.3)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.71667, 2.3, 10.0167)
 
 [node name="LettuceLeaves" type="Node" parent="Interactables"]
 
 [node name="LettuceLeaf" parent="Interactables/LettuceLeaves" instance=ExtResource("10_tqr6a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2.7, 6)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.01667, 2.2, 10.0167)
 
 [node name="LettuceLeaf2" parent="Interactables/LettuceLeaves" instance=ExtResource("10_tqr6a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2.7, 5.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.51667, 2.2, 10.0167)
 
 [node name="LettuceLeaf3" parent="Interactables/LettuceLeaves" instance=ExtResource("10_tqr6a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2.9, 5.8)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.21667, 2.4, 10.0167)
 
 [node name="OnionSlices" type="Node" parent="Interactables"]
 
@@ -249,7 +249,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2.9, 5.8)
 [node name="Plates" type="Node" parent="Interactables"]
 
 [node name="Plate" parent="Interactables/Plates" instance=ExtResource("11_kpw02")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.7, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.1, 10.3)
+
+[node name="Plate2" parent="Interactables/Plates" instance=ExtResource("11_kpw02")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 2.1, 10.3)
+
+[node name="Plate3" parent="Interactables/Plates" instance=ExtResource("11_kpw02")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 2.1, 10.3)
 
 [node name="Music" type="Node" parent="."]
 script = ExtResource("12_iv3v3")
@@ -524,12 +530,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -32)
 [node name="StoveStations" type="Node" parent="Stations"]
 
 [node name="StoveStation" parent="Stations/StoveStations" groups=["metal_objects"] instance=ExtResource("23_dbthe")]
-transform = Transform3D(-1.74846e-07, 0, -4, 0, 4, 0, 4, 0, -1.74846e-07, -9, 0, 1)
+transform = Transform3D(0.00769824, -0.00787014, -3.99998, -0.0193512, 3.99995, -0.0079073, 3.99995, 0.0193663, 0.00766007, -10.4952, -0.0120945, 5.89997)
+
+[node name="StoveStation2" parent="Stations/StoveStations" groups=["metal_objects"] instance=ExtResource("23_dbthe")]
+transform = Transform3D(0.00769824, -0.00787014, -3.99998, -0.0193512, 3.99995, -0.0079073, 3.99995, 0.0193663, 0.00766007, -10.4952, -0.0120945, 1.89997)
 
 [node name="GenericStations" type="Node" parent="Stations"]
-
-[node name="GenericStation" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("24_vamcf")]
-transform = Transform3D(-1.74846e-07, 0, -4, 0, 4, 0, 4, 0, -1.74846e-07, -9, 0, -4)
 
 [node name="GenericStation2" parent="Stations/GenericStations" groups=["metal_objects"] instance=ExtResource("24_vamcf")]
 transform = Transform3D(3.99998, -0.000855585, -0.0119533, 0.000862663, 4, 0.00237523, 0.0119528, -0.00237778, 3.99998, -6.1, 0, 10.2)

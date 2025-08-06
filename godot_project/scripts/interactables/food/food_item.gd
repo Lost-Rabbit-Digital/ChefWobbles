@@ -32,7 +32,7 @@ enum FoodType {
 @export var food_type: FoodType = FoodType.MEAT
 @export var food_name: String = "Food Item"
 @export var base_cooking_time: float = 3.0
-@export var spoilage_time: float = 60.0
+@export var spoilage_time: float = 180.0
 
 # Public variables - food stats only
 var being_processed: bool = false
