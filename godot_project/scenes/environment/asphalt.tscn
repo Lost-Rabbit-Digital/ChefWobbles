@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://w0vy7wq354rt"]
+
+[ext_resource type="Material" uid="uid://epf86pihqwub" path="res://models/floors/floor_1_material.tres" id="1_vu8ih"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_d7jvx"]
+_surfaces = [{
+"aabb": AABB(-4, 0, -4, 8, 1e-05, 8),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6ob5v"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-4, 0, -4, 8, 1e-05, 8),
+"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 255, 255),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
+"material": ExtResource("1_vu8ih"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(255, 255, 0, 0, 255, 255, 255, 191, 0, 0, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_d7jvx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vu8ih"]
+diffuse_mode = 3
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.12549, 0.117647, 0.121569, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1vk6y"]
+points = PackedVector3Array(-4, 0, -4, -4, 0, 4, 4, 0, -4, 4, 0, 4)
+
+[node name="Asphalt" type="Node3D"]
+
+[node name="Node" type="Node3D" parent="."]
+
+[node name="plane" type="MeshInstance3D" parent="Node"]
+mesh = SubResource("ArrayMesh_6ob5v")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_vu8ih")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node/plane"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node/plane/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_1vk6y")
