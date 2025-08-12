@@ -1,10 +1,14 @@
-[gd_scene load_steps=20 format=4 uid="uid://jopkhuojs43j"]
+[gd_scene load_steps=24 format=4 uid="uid://jopkhuojs43j"]
 
 [ext_resource type="Script" uid="uid://b32cmsaifskkk" path="res://scripts/interactables/dumpster/dumpster_system.gd" id="1_5rj35"]
+[ext_resource type="Script" uid="uid://bvo5cvj1cygfd" path="res://scripts/interactables/dumpster/disposal_handler.gd" id="2_d54x1"]
 [ext_resource type="AudioStream" uid="uid://mn3e5xh08lla" path="res://audio/sound_effects/plops/plop_3.mp3" id="2_pnjjg"]
 [ext_resource type="AudioStream" uid="uid://xsc0u43xrhhy" path="res://audio/sound_effects/plops/plop_4.mp3" id="3_h2sc5"]
+[ext_resource type="Script" uid="uid://bhvhjwmkndh6j" path="res://scripts/interactables/dumpster/suction_handler.gd" id="3_pnjjg"]
+[ext_resource type="Script" uid="uid://clysxgbn53eeh" path="res://scripts/interactables/dumpster/dumpster_audio_manager.gd" id="4_veojv"]
 [ext_resource type="AudioStream" uid="uid://dyl7qh6ntwb78" path="res://audio/sound_effects/shrinks/shrink_1.mp3" id="4_y028r"]
 [ext_resource type="AudioStream" uid="uid://du21rt5cldekl" path="res://audio/sound_effects/shrinks/shrink_2.mp3" id="5_s7gqq"]
+[ext_resource type="AudioStream" uid="uid://brpvm0gnsxirl" path="res://audio/sound_effects/whooshes/whoosh_1.mp3" id="9_abmix"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_owcex"]
 resource_name = "Material"
@@ -147,9 +151,6 @@ data = PackedVector3Array(-0.0142117, -0.00331823, 0.0377931, -0.0142117, -0.001
 
 [node name="dumpster" type="Node3D"]
 script = ExtResource("1_5rj35")
-trans_type = 6
-disposal_sounds = Array[AudioStream]([ExtResource("2_pnjjg"), ExtResource("3_h2sc5")])
-shrinking_sounds = Array[AudioStream]([ExtResource("4_y028r"), ExtResource("5_s7gqq")])
 
 [node name="Base" type="MeshInstance3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, -4.37114e-06, 88.041, 0, -100, -3.84839e-06, 0, 0, 0)
@@ -176,7 +177,7 @@ transform = Transform3D(1, 0, 0, 0, 1, -8.98837e-13, 0, -7.10543e-15, 1, 0, -1.5
 shape = SubResource("BoxShape3D_y028r")
 debug_color = Color(0.588818, 0.000107428, 0.526895, 0.42)
 
-[node name="Lid_001" type="RigidBody3D" parent="."]
+[node name="Lid_001" type="RigidBody3D" parent="." groups=["non_trashable"]]
 transform = Transform3D(101, 0, 0, 0, 101, 0, 0, 0, 101, -1.3145, 2.37426, -1.89021)
 
 [node name="Lid_001" type="MeshInstance3D" parent="Lid_001"]
@@ -195,7 +196,7 @@ angular_limit/enable = true
 angular_limit/upper = 0.0
 angular_limit/lower = -2.53073
 
-[node name="Lid_002" type="RigidBody3D" parent="."]
+[node name="Lid_002" type="RigidBody3D" parent="." groups=["non_trashable"]]
 transform = Transform3D(101, 8.8297e-06, 0, -8.8297e-06, 101, 0, 0, 0, -101, 1.36894, 2.37426, -1.89021)
 
 [node name="Lid_002" type="MeshInstance3D" parent="Lid_002"]
@@ -214,4 +215,16 @@ angular_limit/enable = true
 angular_limit/upper = 2.53073
 angular_limit/lower = 0.0
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+[node name="DisposalHandler" type="Node" parent="."]
+script = ExtResource("2_d54x1")
+
+[node name="SuctionHandler" type="Node" parent="."]
+script = ExtResource("3_pnjjg")
+
+[node name="DumpsterAudioManager" type="Node" parent="."]
+script = ExtResource("4_veojv")
+disposal_sounds = Array[AudioStream]([ExtResource("2_pnjjg"), ExtResource("3_h2sc5")])
+shrinking_sounds = Array[AudioStream]([ExtResource("4_y028r"), ExtResource("5_s7gqq")])
+whoosh_sounds = Array[AudioStream]([ExtResource("9_abmix")])
+
+[node name="DisposalAudioPlayer" type="AudioStreamPlayer3D" parent="DumpsterAudioManager"]
