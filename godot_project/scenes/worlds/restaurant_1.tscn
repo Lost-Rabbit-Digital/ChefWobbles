@@ -294,12 +294,31 @@ physics_material_override = SubResource("PhysicsMaterial_mepk6")
 mesh = SubResource("BoxMesh_c7q25")
 surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Interactables/CardboardBoxes/CardboardBox8"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.64691, 0, -1.13477)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/CardboardBoxes/CardboardBox8"]
+shape = SubResource("BoxShape3D_doxh6")
+
+[node name="CardboardBox13" type="RigidBody3D" parent="Interactables/CardboardBoxes" groups=["paper_objects"]]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -26.1008, 2.64245, 8.62858)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/CardboardBoxes/CardboardBox13"]
 mesh = SubResource("BoxMesh_c7q25")
 surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/CardboardBoxes/CardboardBox8"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/CardboardBoxes/CardboardBox13"]
+shape = SubResource("BoxShape3D_doxh6")
+
+[node name="CardboardBox14" type="RigidBody3D" parent="Interactables/CardboardBoxes" groups=["paper_objects"]]
+transform = Transform3D(0.823453, 0, 0.567384, 0, 1, 0, -0.567384, 0, 0.823453, -26.1008, 2.64245, 10.6286)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_mepk6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/CardboardBoxes/CardboardBox14"]
+mesh = SubResource("BoxMesh_c7q25")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/CardboardBoxes/CardboardBox14"]
 shape = SubResource("BoxShape3D_doxh6")
 
 [node name="CardboardBox9" type="RigidBody3D" parent="Interactables/CardboardBoxes" groups=["paper_objects"]]
@@ -344,11 +363,6 @@ mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_mepk6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/CardboardBoxes/CardboardBox12"]
-mesh = SubResource("BoxMesh_c7q25")
-surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Interactables/CardboardBoxes/CardboardBox12"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.64691, 0, -1.13477)
 mesh = SubResource("BoxMesh_c7q25")
 surface_material_override/0 = SubResource("StandardMaterial3D_wbq8p")
 
