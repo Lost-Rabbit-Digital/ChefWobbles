@@ -622,6 +622,39 @@ surface_material_override/0 = SubResource("StandardMaterial3D_2d15h")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="YellowWalls/YellowWall2/Node/cuboid4/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_3xtqc")
 
+[node name="cuboid21" type="MeshInstance3D" parent="YellowWalls/YellowWall2/Node"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -7.59999, -0.0999999, 16.1)
+mesh = SubResource("ArrayMesh_iiwsh")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_2d15h")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="YellowWalls/YellowWall2/Node/cuboid21"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="YellowWalls/YellowWall2/Node/cuboid21/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_3xtqc")
+
+[node name="cuboid22" type="MeshInstance3D" parent="YellowWalls/YellowWall2/Node"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -15.6, -0.0999999, 16.1)
+mesh = SubResource("ArrayMesh_iiwsh")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_2d15h")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="YellowWalls/YellowWall2/Node/cuboid22"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="YellowWalls/YellowWall2/Node/cuboid22/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_3xtqc")
+
+[node name="cuboid23" type="MeshInstance3D" parent="YellowWalls/YellowWall2/Node"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -23.6, -0.0999999, 16.1)
+mesh = SubResource("ArrayMesh_iiwsh")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_2d15h")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="YellowWalls/YellowWall2/Node/cuboid23"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="YellowWalls/YellowWall2/Node/cuboid23/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_3xtqc")
+
 [node name="cuboid5" type="MeshInstance3D" parent="YellowWalls/YellowWall2/Node"]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -31.8, -0.0999999, 7.62939e-06)
 mesh = SubResource("ArrayMesh_iiwsh")
@@ -804,7 +837,7 @@ transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -23.627,
 [node name="Node" type="Node3D" parent="YellowWalls/YellowWall3"]
 
 [node name="cuboid" type="MeshInstance3D" parent="YellowWalls/YellowWall3/Node"]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, -0.0999999, 0)
 mesh = SubResource("ArrayMesh_iiwsh")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_2d15h")
@@ -820,7 +853,7 @@ transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -31.627,
 [node name="Node" type="Node3D" parent="YellowWalls/YellowWall4"]
 
 [node name="cuboid" type="MeshInstance3D" parent="YellowWalls/YellowWall4/Node"]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+transform = Transform3D(1.1, 0, 0, 0, 0, -1, 0, 1, 0, 0, -0.0999999, 0)
 mesh = SubResource("ArrayMesh_iiwsh")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_2d15h")
@@ -1378,6 +1411,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, -0.3, -8)
 
 [node name="Asphalt31" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -0.3, -8)
+
+[node name="Asphalt173" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -40, -0.602754, 0.0304422)
+
+[node name="Asphalt174" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -48, -0.602754, 0.0304422)
+
+[node name="Asphalt175" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -40, -1.3, 8)
+
+[node name="Asphalt176" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -48, -1.3, 8)
+
+[node name="Asphalt177" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -40, -1.99725, 15.9696)
+
+[node name="Asphalt178" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -48, -1.99725, 15.9696)
+
+[node name="Asphalt179" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -40, -2.59725, 23.9696)
+
+[node name="Asphalt180" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -48, -2.59725, 23.9696)
 
 [node name="Asphalt14" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, -24)
