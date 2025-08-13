@@ -3,12 +3,15 @@ extends Node
 ## Handles the suction effect that draws objects toward the disposal area
 ##
 ## Creates auto-aim functionality by smoothly tweening objects from the suction
-## area into the disposal area with bouncy, natural motion.
+## area into the disposal area with bouncy, natural motion. Includes lid detection
+## to enable/disable suction based on dumpster open/closed state.
 
 ## Signals
 signal object_reached_target(rigid_body: RigidBody3D)
 signal suction_started(rigid_body: RigidBody3D)
 signal suction_stopped(rigid_body: RigidBody3D)
+signal dumpster_opened()
+signal dumpster_closed()
 
 ## Export settings
 @export_group("Suction Physics")
@@ -27,12 +30,19 @@ signal suction_stopped(rigid_body: RigidBody3D)
 
 @export_group("Filtering")
 @export var ignored_group: String = "non_trashable"
+@export var lid_group: String = "dumpster_lid"
+
+@export_group("Lid Detection")
+@export var check_for_lids: bool = true
+@export var debug_lid_status: bool = false
 
 ## Internal references
 var suction_area: Area3D
 var trash_area: Area3D
 var audio_manager: DumpsterAudioManager
 var active_suctions: Dictionary = {}
+var lids_in_area: Array[RigidBody3D] = []
+var _dumpster_open_state: bool = true
 
 func setup(suction_zone: Area3D, disposal_zone: Area3D, audio_mgr: DumpsterAudioManager) -> void:
 	"""Initialize with required dependencies"""
@@ -42,17 +52,35 @@ func setup(suction_zone: Area3D, disposal_zone: Area3D, audio_mgr: DumpsterAudio
 
 func on_body_entered(body: Node3D) -> void:
 	"""Handle when a body enters the suction area"""
-	if body is RigidBody3D and _should_suction_object(body):
-		start_suction(body)
+	if body is RigidBody3D:
+		if _is_lid(body):
+			_add_lid_to_area(body)
+		elif _should_suction_object(body):
+			start_suction(body)
 
 func on_body_exited(body: Node3D) -> void:
 	"""Handle when a body exits the suction area"""
 	if body is RigidBody3D:
-		stop_suction(body)
+		if _is_lid(body):
+			_remove_lid_from_area(body)
+		else:
+			stop_suction(body)
 
 func _should_suction_object(rigid_body: RigidBody3D) -> bool:
-	"""Check if object should be suctioned (not in non_trashable group)"""
-	return not rigid_body.is_in_group(ignored_group)
+	"""Check if object should be suctioned (not in non_trashable group and dumpster is open)"""
+	if rigid_body.is_in_group(ignored_group):
+		return false
+	
+	if check_for_lids and not _dumpster_open_state:
+		if debug_lid_status:
+			print("SuctionHandler: Suction blocked - dumpster is closed")
+		return false
+	
+	return true
+
+func _is_lid(rigid_body: RigidBody3D) -> bool:
+	"""Check if object is a dumpster lid"""
+	return rigid_body.is_in_group(lid_group)
 
 func start_suction(rigid_body: RigidBody3D) -> void:
 	"""Begin suction effect for a RigidBody3D"""
@@ -60,6 +88,12 @@ func start_suction(rigid_body: RigidBody3D) -> void:
 		return # Already being suctioned
 	
 	if not is_instance_valid(rigid_body):
+		return
+	
+	# Double-check dumpster is open before starting suction
+	if check_for_lids and not _dumpster_open_state:
+		if debug_lid_status:
+			print("SuctionHandler: Cannot start suction - dumpster is closed")
 		return
 	
 	# Create suction data
@@ -162,6 +196,51 @@ func _cleanup_suction(rigid_body: RigidBody3D) -> void:
 	"""Clean up suction tracking data"""
 	active_suctions.erase(rigid_body)
 
+func _add_lid_to_area(lid: RigidBody3D) -> void:
+	"""Add lid to tracking and update dumpster state"""
+	if not lids_in_area.has(lid):
+		lids_in_area.append(lid)
+		_update_dumpster_state()
+		
+		if debug_lid_status:
+			print("SuctionHandler: Lid entered area - ", lid.name)
+
+func _remove_lid_from_area(lid: RigidBody3D) -> void:
+	"""Remove lid from tracking and update dumpster state"""
+	if lids_in_area.has(lid):
+		lids_in_area.erase(lid)
+		_update_dumpster_state()
+		
+		if debug_lid_status:
+			print("SuctionHandler: Lid exited area - ", lid.name)
+
+func _update_dumpster_state() -> void:
+	"""Update dumpster open/closed state based on lid presence"""
+	var was_open = _dumpster_open_state
+	_dumpster_open_state = lids_in_area.is_empty()
+	
+	# Emit signals when state changes
+	if was_open != _dumpster_open_state:
+		if _dumpster_open_state:
+			dumpster_opened.emit()
+			if debug_lid_status:
+				print("SuctionHandler: Dumpster opened - suction enabled")
+		else:
+			dumpster_closed.emit()
+			_handle_dumpster_closed()
+			if debug_lid_status:
+				print("SuctionHandler: Dumpster closed - suction disabled")
+
+func _handle_dumpster_closed() -> void:
+	"""Handle when dumpster closes - stop all active suctions"""
+	if not active_suctions.is_empty():
+		var objects_to_stop = active_suctions.keys()
+		for obj in objects_to_stop:
+			stop_suction(obj)
+		
+		if debug_lid_status:
+			print("SuctionHandler: Stopped %d active suctions due to lid closure" % objects_to_stop.size())
+
 ## Public API
 func get_active_count() -> int:
 	"""Get number of objects currently being suctioned"""
@@ -170,6 +249,46 @@ func get_active_count() -> int:
 func is_object_suctioned(rigid_body: RigidBody3D) -> bool:
 	"""Check if specific object is being suctioned"""
 	return active_suctions.has(rigid_body)
+
+func is_dumpster_open() -> bool:
+	"""Check if dumpster is open (no lids in suction area)"""
+	return _dumpster_open_state
+
+func get_lid_count() -> int:
+	"""Get number of lids currently in suction area"""
+	return lids_in_area.size()
+
+func get_lids_in_area() -> Array[RigidBody3D]:
+	"""Get array of lids currently in suction area"""
+	return lids_in_area.duplicate()
+
+func force_dumpster_state(open: bool) -> void:
+	"""Force dumpster open/closed state (for testing/special cases)"""
+	var was_open = _dumpster_open_state
+	_dumpster_open_state = open
+	
+	if was_open != _dumpster_open_state:
+		if _dumpster_open_state:
+			dumpster_opened.emit()
+		else:
+			dumpster_closed.emit()
+			_handle_dumpster_closed()
+
+func refresh_lid_detection() -> void:
+	"""Manually refresh lid detection (useful after scene changes)"""
+	var old_lid_count = lids_in_area.size()
+	lids_in_area.clear()
+	
+	# Re-scan suction area for lids
+	if suction_area:
+		for body in suction_area.get_overlapping_bodies():
+			if body is RigidBody3D and _is_lid(body):
+				lids_in_area.append(body)
+	
+	_update_dumpster_state()
+	
+	if debug_lid_status:
+		print("SuctionHandler: Refreshed lid detection - found %d lids (was %d)" % [lids_in_area.size(), old_lid_count])
 
 func cancel_all() -> void:
 	"""Cancel all active suctions"""

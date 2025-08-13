@@ -2,13 +2,14 @@ class_name DisposalHandler
 extends Node
 ## Handles the disposal animation and destruction of RigidBody3D objects
 ##
-## Manages mesh shrinking animations, audio coordination, and object cleanup
-## for the dumpster disposal process.
+## Manages mesh shrinking animations, audio coordination, object cleanup,
+## and delayed disposal for the dumpster disposal process.
 
 ## Signals
 signal disposal_started(rigid_body: RigidBody3D)
 signal disposal_completed(rigid_body: RigidBody3D)
 signal disposal_failed(rigid_body: RigidBody3D, reason: String)
+signal object_dropped_in_dumpster(rigid_body: RigidBody3D)
 
 ## Export settings
 @export_group("Disposal Animation")
@@ -17,6 +18,11 @@ signal disposal_failed(rigid_body: RigidBody3D, reason: String)
 @export var ease_type: Tween.EaseType = Tween.EASE_IN_OUT
 @export var trans_type: Tween.TransitionType = Tween.TRANS_BACK
 
+@export_group("Timing")
+@export var min_wait_time: float = 0.5
+@export var max_wait_time: float = 2.5
+@export var plop_sound_timing: float = 0.9  # At 90% of shrinking animation
+
 @export_group("Filtering")
 @export var ignored_group: String = "non_trashable"
 
@@ -24,6 +30,7 @@ signal disposal_failed(rigid_body: RigidBody3D, reason: String)
 var trash_area: Area3D
 var audio_manager: DumpsterAudioManager
 var active_disposals: Dictionary = {}
+var pending_disposals: Dictionary = {}
 
 func setup(area: Area3D, audio_mgr: DumpsterAudioManager) -> void:
 	"""Initialize with required dependencies"""
@@ -40,9 +47,18 @@ func _should_dispose_object(rigid_body: RigidBody3D) -> bool:
 	return not rigid_body.is_in_group(ignored_group)
 
 func attempt_disposal(rigid_body: RigidBody3D) -> void:
-	"""Attempt to dispose of a RigidBody3D"""
-	if active_disposals.has(rigid_body):
-		return # Already being disposed
+	"""Attempt to dispose of a RigidBody3D with immediate start"""
+	_start_disposal_with_delay(rigid_body, 0.0)
+
+func force_dispose(rigid_body: RigidBody3D) -> void:
+	"""Force disposal from suction system with random delay"""
+	var wait_time = randf_range(min_wait_time, max_wait_time)
+	_start_disposal_with_delay(rigid_body, wait_time)
+
+func _start_disposal_with_delay(rigid_body: RigidBody3D, delay: float) -> void:
+	"""Begin disposal process with optional delay"""
+	if active_disposals.has(rigid_body) or pending_disposals.has(rigid_body):
+		return # Already being processed
 	
 	if not is_instance_valid(rigid_body):
 		disposal_failed.emit(rigid_body, "Invalid object reference")
@@ -54,14 +70,40 @@ func attempt_disposal(rigid_body: RigidBody3D) -> void:
 		disposal_failed.emit(rigid_body, "No MeshInstance3D children found")
 		return
 	
-	_start_disposal_process(rigid_body, mesh_instances)
+	if delay > 0.0:
+		# Start delay period - object is "dropped" in dumpster
+		_start_delay_period(rigid_body, mesh_instances, delay)
+	else:
+		# Start disposal immediately
+		_start_disposal_process(rigid_body, mesh_instances)
 
-func force_dispose(rigid_body: RigidBody3D) -> void:
-	"""Force disposal regardless of location"""
-	attempt_disposal(rigid_body)
+func _start_delay_period(rigid_body: RigidBody3D, mesh_instances: Array[MeshInstance3D], delay: float) -> void:
+	"""Handle the delay period before disposal starts"""
+	# Store pending disposal data
+	var pending_data = PendingDisposalData.new()
+	pending_data.rigid_body = rigid_body
+	pending_data.mesh_instances = mesh_instances
+	pending_data.delay_timer = get_tree().create_timer(delay)
+	
+	pending_disposals[rigid_body] = pending_data
+	
+	# Emit dropped signal
+	object_dropped_in_dumpster.emit(rigid_body)
+	
+	# Wait for delay to complete
+	await pending_data.delay_timer.timeout
+	
+	# Check if still valid and not cancelled
+	if pending_disposals.has(rigid_body) and is_instance_valid(rigid_body):
+		pending_disposals.erase(rigid_body)
+		_start_disposal_process(rigid_body, mesh_instances)
 
 func _start_disposal_process(rigid_body: RigidBody3D, mesh_instances: Array[MeshInstance3D]) -> void:
 	"""Begin the disposal animation sequence"""
+	if not is_instance_valid(rigid_body):
+		disposal_failed.emit(rigid_body, "Object invalid at disposal start")
+		return
+	
 	# Store original scales
 	var original_scales = {}
 	for mesh in mesh_instances:
@@ -86,7 +128,7 @@ func _start_disposal_process(rigid_body: RigidBody3D, mesh_instances: Array[Mesh
 	_animate_disposal(disposal_data)
 
 func _animate_disposal(disposal_data: DisposalData) -> void:
-	"""Execute the disposal animation"""
+	"""Execute the disposal animation with timed plop sound"""
 	var rigid_body = disposal_data.rigid_body
 	
 	# Start shrinking audio
@@ -102,6 +144,9 @@ func _animate_disposal(disposal_data: DisposalData) -> void:
 			disposal_data.actual_duration = shrink_duration
 	else:
 		disposal_data.actual_duration = shrink_duration
+	
+	# Schedule plop sound at 90% completion
+	_schedule_plop_sound(disposal_data)
 	
 	# Animate all mesh instances
 	var tweens_added = 0
@@ -125,6 +170,23 @@ func _animate_disposal(disposal_data: DisposalData) -> void:
 	# Complete disposal
 	_complete_disposal(disposal_data)
 
+func _schedule_plop_sound(disposal_data: DisposalData) -> void:
+	"""Schedule the plop sound to play at specified timing"""
+	if not audio_manager:
+		return
+	
+	var plop_delay = disposal_data.actual_duration * plop_sound_timing
+	var plop_timer = get_tree().create_timer(plop_delay)
+	disposal_data.plop_timer = plop_timer
+	
+	# Wait for the timer and play plop sound
+	plop_timer.timeout.connect(func(): _play_plop_sound(disposal_data), CONNECT_ONE_SHOT)
+
+func _play_plop_sound(disposal_data: DisposalData) -> void:
+	"""Play the plop sound if disposal is still active"""
+	if active_disposals.has(disposal_data.rigid_body) and audio_manager:
+		audio_manager.play_disposal_sound()
+
 func _complete_disposal(disposal_data: DisposalData) -> void:
 	"""Complete the disposal process"""
 	var rigid_body = disposal_data.rigid_body
@@ -133,10 +195,6 @@ func _complete_disposal(disposal_data: DisposalData) -> void:
 		_cleanup_disposal(rigid_body)
 		disposal_failed.emit(rigid_body, "Object invalid at completion")
 		return
-	
-	# Play completion audio
-	if audio_manager:
-		audio_manager.play_disposal_sound()
 	
 	# Emit completion signal
 	disposal_completed.emit(rigid_body)
@@ -152,6 +210,9 @@ func _cleanup_disposal(rigid_body: RigidBody3D) -> void:
 		if disposal_data.tween and disposal_data.tween.is_valid():
 			disposal_data.tween.kill()
 		active_disposals.erase(rigid_body)
+	
+	if pending_disposals.has(rigid_body):
+		pending_disposals.erase(rigid_body)
 
 func _find_mesh_instances(node: Node) -> Array[MeshInstance3D]:
 	"""Recursively find all MeshInstance3D nodes"""
@@ -170,19 +231,26 @@ func get_active_count() -> int:
 	"""Get number of active disposals"""
 	return active_disposals.size()
 
+func get_pending_count() -> int:
+	"""Get number of pending disposals (waiting)"""
+	return pending_disposals.size()
+
 func cancel_disposal(rigid_body: RigidBody3D) -> void:
 	"""Cancel specific disposal"""
 	if active_disposals.has(rigid_body):
 		_cleanup_disposal(rigid_body)
 		disposal_failed.emit(rigid_body, "Disposal cancelled")
+	elif pending_disposals.has(rigid_body):
+		pending_disposals.erase(rigid_body)
+		disposal_failed.emit(rigid_body, "Pending disposal cancelled")
 
 func cancel_all() -> void:
-	"""Cancel all active disposals"""
-	var objects_to_cancel = active_disposals.keys()
+	"""Cancel all active and pending disposals"""
+	var objects_to_cancel = active_disposals.keys() + pending_disposals.keys()
 	for obj in objects_to_cancel:
 		cancel_disposal(obj)
 
-## Internal data class
+## Internal data classes
 class DisposalData:
 	var rigid_body: RigidBody3D
 	var mesh_instances: Array[MeshInstance3D]
@@ -190,3 +258,9 @@ class DisposalData:
 	var tween: Tween
 	var audio_player: AudioStreamPlayer3D
 	var actual_duration: float
+	var plop_timer: SceneTreeTimer
+
+class PendingDisposalData:
+	var rigid_body: RigidBody3D
+	var mesh_instances: Array[MeshInstance3D]
+	var delay_timer: SceneTreeTimer

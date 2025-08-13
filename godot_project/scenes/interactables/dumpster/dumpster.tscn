@@ -57,7 +57,7 @@ data = PackedVector3Array(0.028189, -0.0187341, 0.0214655, -0.0263633, -0.017797
 size = Vector3(0.0412598, 0.0251465, 0.00752832)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y028r"]
-size = Vector3(0.0507813, 0.0332031, 0.039541)
+size = Vector3(0.0507813, 0.029541, 0.0417432)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_40ku7"]
 resource_name = "Material.001"
@@ -151,6 +151,8 @@ data = PackedVector3Array(-0.0142117, -0.00331823, 0.0377931, -0.0142117, -0.001
 
 [node name="dumpster" type="Node3D"]
 script = ExtResource("1_5rj35")
+auto_setup_areas = null
+debug_mode = null
 
 [node name="Base" type="MeshInstance3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, -4.37114e-06, 88.041, 0, -100, -3.84839e-06, 0, 0, 0)
@@ -173,7 +175,7 @@ debug_color = Color(0.903802, 0.775461, 0, 0.42)
 transform = Transform3D(1, 0, 0, 0, 1, -1.06581e-14, 0, -7.10543e-15, 1, 0, -5.24537e-10, 0.01363)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Base/SuctionArea"]
-transform = Transform3D(1, 0, 0, 0, 1, -9.34364e-13, 0, -3.55271e-15, 1, -0.000251466, 0.000125977, 0.0341864)
+transform = Transform3D(1, 0, 0, 0, 1, -9.34364e-13, 0, -3.55271e-15, 1, -0.000251466, -0.00170507, 0.0330853)
 shape = SubResource("BoxShape3D_y028r")
 debug_color = Color(0.588818, 0.000107428, 0.526895, 0.42)
 
@@ -194,7 +196,7 @@ node_b = NodePath("..")
 exclude_nodes_from_collision = false
 angular_limit/enable = true
 angular_limit/upper = 0.0
-angular_limit/lower = -2.53073
+angular_limit/lower = -2.35619
 
 [node name="Lid_002" type="RigidBody3D" parent="." groups=["non_trashable"]]
 transform = Transform3D(101, 8.8297e-06, 0, -8.8297e-06, 101, 0, 0, 0, -101, 1.36894, 2.37426, -1.89021)
@@ -212,7 +214,7 @@ node_a = NodePath("../../Base/StaticBody3D")
 node_b = NodePath("..")
 exclude_nodes_from_collision = false
 angular_limit/enable = true
-angular_limit/upper = 2.53073
+angular_limit/upper = 2.35619
 angular_limit/lower = 0.0
 
 [node name="DisposalHandler" type="Node" parent="."]

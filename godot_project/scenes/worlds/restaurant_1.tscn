@@ -1954,6 +1954,10 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -11.62
 
 [node name="dumpster" parent="Dumpsters" instance=ExtResource("31_dygic")]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -25, -0.3, 16)
+auto_setup_areas = null
+debug_mode = null
 
 [node name="dumpster2" parent="Dumpsters" instance=ExtResource("31_dygic")]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -32, -0.3, 16)
+auto_setup_areas = null
+debug_mode = null
