@@ -164,3 +164,7 @@ func _on_join_dialog_canceled() -> void:
 # Actual confirmation is through the join_confirmation_button
 func _on_join_dialog_confirmed() -> void:
 	main_menu.show()
+
+
+func _on_discord_button_pressed() -> void:
+	OS.shell_open("https://discord.com/invite/Y7caBf7gBj")

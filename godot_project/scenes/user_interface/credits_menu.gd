@@ -3,7 +3,7 @@ extends Control
 
 @export var credits_file_path: String = "res://CREDITS.md"
 @export var slide_duration: float = 0.8
-@export var scroll_speed: float = 50.0
+@export var scroll_speed: float = 30.0  # Pixels per second - industry standard for readable speed
 @export var user_idle_timeout: float = 3.0
 @export var auto_hide_delay: float = 2.0
 
@@ -14,22 +14,25 @@ var is_sliding_in: bool = false
 var is_auto_scrolling: bool = false
 var is_user_scrolling: bool = false
 var user_idle_timer: float = 0.0
-var auto_hide_timer: float = 0.0
 var original_position: Vector2
-var target_scroll_position: float = 0.0
-var scroll_tween: Tween
+
+# Manual interpolation variables - Industry approach
+var target_scroll: float = 0.0
+var current_scroll: float = 0.0
+var scroll_velocity: float = 0.0
 
 func _ready() -> void:
 	# Store original position and move off-screen
 	original_position = position
 	position.x = get_viewport().get_visible_rect().size.x
 	
-	# Setup rich text label
+	# Setup rich text label - Critical settings for smooth scrolling
 	rich_text.bbcode_enabled = true
-	rich_text.fit_content = true
-	rich_text.scroll_active = false
+	rich_text.fit_content = false  # Must be false for scrolling
+	rich_text.scroll_active = true
+	rich_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	
-	# Connect mouse events for user interaction
+	# Connect mouse events
 	rich_text.mouse_entered.connect(_on_mouse_entered)
 	rich_text.mouse_exited.connect(_on_mouse_exited)
 	
@@ -43,6 +46,9 @@ func show_credits() -> void:
 		
 	is_sliding_in = true
 	visible = true
+	
+	# Reset scroll state
+	_reset_scroll_state()
 	
 	# Slide in animation
 	var slide_tween = create_tween()
@@ -67,7 +73,7 @@ func hide_credits() -> void:
 	await slide_tween.finished
 	
 	visible = false
-	rich_text.scroll_to_line(0)
+	_reset_scroll_state()
 
 func _load_credits_text() -> void:
 	"""Load credits from text file"""
@@ -81,68 +87,121 @@ func _load_credits_text() -> void:
 		rich_text.text = file.get_as_text()
 		file.close()
 		
-		# Wait a frame for the text to be processed
+		# Wait for layout to stabilize
 		await get_tree().process_frame
-		_calculate_scroll_target()
+		await get_tree().process_frame
 	else:
 		push_error("Failed to open credits file: " + credits_file_path)
 
-func _calculate_scroll_target() -> void:
-	"""Calculate how far we need to scroll to show all content"""
-	var content_height = rich_text.get_content_height()
-	var visible_height = rich_text.size.y
-	target_scroll_position = max(0, content_height - visible_height)
+func _reset_scroll_state() -> void:
+	"""Reset all scroll-related state"""
+	current_scroll = 0.0
+	target_scroll = 0.0
+	scroll_velocity = 0.0
+	var v_scroll = rich_text.get_v_scroll_bar()
+	v_scroll.value = 0
 
 func _start_auto_scroll() -> void:
-	"""Begin automatic scrolling"""
-	if target_scroll_position <= 0:
-		# No need to scroll, start auto-hide timer
+	"""Begin automatic scrolling using industry-standard technique"""
+	# Wait for content to be fully loaded
+	await get_tree().process_frame
+	
+	var v_scroll = rich_text.get_v_scroll_bar()
+	var max_scroll = v_scroll.max_value - v_scroll.page
+	
+	print("Max scroll available: ", max_scroll)
+	
+	if max_scroll <= 0:
+		print("No content to scroll, auto-hiding")
 		_start_auto_hide_timer()
 		return
 	
 	is_auto_scrolling = true
-	rich_text.scroll_active = true
+	target_scroll = max_scroll
 	
-	# Calculate scroll duration based on content length
-	var scroll_duration = target_scroll_position / scroll_speed
-	
-	scroll_tween = create_tween()
-	scroll_tween.set_ease(Tween.EASE_IN)
-	
-	scroll_tween.tween_method(_update_scroll, 0.0, target_scroll_position, scroll_duration)
-	await scroll_tween.finished
-	
-	if is_auto_scrolling:  # Check if still auto-scrolling (user might have taken over)
-		_start_auto_hide_timer()
+	print("Starting smooth scroll to: ", target_scroll)
 
 func _start_auto_hide_timer() -> void:
 	"""Start timer to auto-hide credits when finished"""
-	auto_hide_timer = auto_hide_delay
-	
-	var hide_tween = create_tween()
-	hide_tween.tween_callback(hide_credits).set_delay(auto_hide_delay)
-
-func _update_scroll(scroll_pos: float) -> void:
-	"""Update scroll position during animation"""
-	rich_text.scroll_to_line(int(scroll_pos / rich_text.get_theme_default_font().get_height()))
+	await get_tree().create_timer(auto_hide_delay).timeout
+	if visible and not is_user_scrolling:
+		hide_credits()
 
 func _stop_all_scrolling() -> void:
-	"""Stop all scrolling animations"""
+	"""Stop all scrolling"""
 	is_auto_scrolling = false
 	is_user_scrolling = false
+	scroll_velocity = 0.0
+
+func _process(delta: float) -> void:
+	"""Manual interpolation approach - Industry standard for smooth scrolling"""
+	if not visible or is_sliding_in:
+		return
 	
-	if scroll_tween:
-		scroll_tween.kill()
-		scroll_tween = null
+	# Handle auto-scrolling with manual interpolation
+	if is_auto_scrolling:
+		_update_smooth_scroll(delta)
+	
+	# Handle user idle timeout
+	if is_user_scrolling:
+		user_idle_timer += delta
+		
+		if user_idle_timer >= user_idle_timeout:
+			is_user_scrolling = false
+			user_idle_timer = 0.0
+			_resume_auto_scroll()
+
+func _update_smooth_scroll(delta: float) -> void:
+	"""Industry-standard smooth scrolling using manual interpolation with velocity"""
+	var distance_to_target = target_scroll - current_scroll
+	
+	# Check if we've reached the target
+	if abs(distance_to_target) < 1.0:
+		current_scroll = target_scroll
+		is_auto_scrolling = false
+		_start_auto_hide_timer()
+		return
+	
+	# Use velocity-based smooth scrolling (common in AAA games)
+	# This creates natural acceleration/deceleration
+	var acceleration = distance_to_target * 2.0  # Acceleration factor
+	scroll_velocity += acceleration * delta
+	
+	# Apply velocity damping for smooth motion
+	scroll_velocity *= pow(0.95, delta * 60.0)  # Frame-rate independent damping
+	
+	# Ensure minimum velocity to prevent stalling
+	var min_velocity = scroll_speed * 0.1
+	if abs(scroll_velocity) < min_velocity and abs(distance_to_target) > 10.0:
+		scroll_velocity = min_velocity if distance_to_target > 0 else -min_velocity
+	
+	# Update position
+	current_scroll += scroll_velocity * delta
+	current_scroll = clamp(current_scroll, 0.0, target_scroll)
+	
+	# Apply to UI
+	var v_scroll = rich_text.get_v_scroll_bar()
+	v_scroll.value = current_scroll
+
+func _resume_auto_scroll() -> void:
+	"""Resume auto-scrolling from current position"""
+	if not is_auto_scrolling:
+		var v_scroll = rich_text.get_v_scroll_bar()
+		var max_scroll = v_scroll.max_value - v_scroll.page
+		var remaining = max_scroll - current_scroll
+		
+		if remaining > 10:
+			is_auto_scrolling = true
+			target_scroll = max_scroll
+		else:
+			_start_auto_hide_timer()
 
 func _input(event: InputEvent) -> void:
 	if not visible or is_sliding_in:
 		return
 		
 	# Handle mouse wheel scrolling
-	if event is InputEventMouseMotion and _is_mouse_over_credits():
-		_on_user_interaction()
-	elif event is InputEventMouseButton and _is_mouse_over_credits():
+	if event is InputEventMouseButton and _is_mouse_over_credits():
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP or event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_on_user_scroll(event)
 	
@@ -156,73 +215,37 @@ func _is_mouse_over_credits() -> bool:
 	var mouse_pos = get_global_mouse_position()
 	return rich_text.get_global_rect().has_point(mouse_pos)
 
-func _on_user_interaction() -> void:
-	"""Handle any user interaction"""
-	if is_auto_scrolling:
-		_stop_all_scrolling()
-		is_user_scrolling = true
-	
-	user_idle_timer = 0.0
-
 func _on_user_scroll(event: InputEventMouseButton) -> void:
-	"""Handle user mouse wheel scrolling"""
-	_on_user_interaction()
+	"""Handle user mouse wheel scrolling with smooth interpolation"""
+	_stop_all_scrolling()
+	is_user_scrolling = true
+	user_idle_timer = 0.0
 	
-	var scroll_delta = 0
+	var v_scroll = rich_text.get_v_scroll_bar()
+	var scroll_amount = v_scroll.step * 3  # Scroll sensitivity
+	
 	if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-		scroll_delta = -3
+		current_scroll = max(0, current_scroll - scroll_amount)
 	elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-		scroll_delta = 3
+		var max_scroll = v_scroll.max_value - v_scroll.page
+		current_scroll = min(max_scroll, current_scroll + scroll_amount)
 	
-	# Manual scroll
-	var current_line = rich_text.get_v_scroll_bar().value / rich_text.get_theme_default_font().get_height()
-	var new_line = clamp(current_line + scroll_delta, 0, rich_text.get_line_count())
-	rich_text.scroll_to_line(int(new_line))
+	# Apply immediately for responsive feel
+	v_scroll.value = current_scroll
 
 func _on_mouse_entered() -> void:
 	"""Mouse entered credits area"""
-	_on_user_interaction()
+	if is_auto_scrolling:
+		_stop_all_scrolling()
+		is_user_scrolling = true
+		user_idle_timer = 0.0
 
 func _on_mouse_exited() -> void:
 	"""Mouse left credits area"""
 	pass
 
-func _process(delta: float) -> void:
-	if not visible or is_sliding_in:
-		return
-	
-	# Handle user idle timeout
-	if is_user_scrolling:
-		user_idle_timer += delta
-		
-		if user_idle_timer >= user_idle_timeout:
-			is_user_scrolling = false
-			user_idle_timer = 0.0
-			
-			# Resume auto-scrolling from current position
-			_resume_auto_scroll()
-
-func _resume_auto_scroll() -> void:
-	"""Resume auto-scrolling from current position"""
-	var current_scroll = rich_text.get_v_scroll_bar().value
-	var remaining_scroll = target_scroll_position - current_scroll
-	
-	if remaining_scroll <= 0:
-		_start_auto_hide_timer()
-		return
-	
-	is_auto_scrolling = true
-	var remaining_duration = remaining_scroll / scroll_speed
-	
-	scroll_tween = create_tween()
-	scroll_tween.set_ease(Tween.EASE_IN)
-	
-	scroll_tween.tween_method(_update_scroll, current_scroll, target_scroll_position, remaining_duration)
-	await scroll_tween.finished
-	
-	if is_auto_scrolling:
-		_start_auto_hide_timer()
-
-
-func _on_credits_button_pressed() -> void:
-	show_credits()
+func _on_credits_button_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		show_credits()
+	else:
+		hide_credits()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ddlj3gyuqhkn5"]
+[gd_scene load_steps=26 format=3 uid="uid://ddlj3gyuqhkn5"]
 
 [ext_resource type="Script" uid="uid://c5s8axkpyr1u0" path="res://scripts/user_interface/main_menu.gd" id="1_xsm3n"]
 [ext_resource type="Theme" uid="uid://dq1tetwaiurgt" path="res://resources/themes/general_theme.tres" id="2_n0nnf"]
@@ -11,6 +11,10 @@
 [ext_resource type="Script" uid="uid://cwyphgrwfjfof" path="res://scripts/user_interface/text_wobble.gd" id="5_qv2sr"]
 [ext_resource type="Texture2D" uid="uid://clefhi21g7gmg" path="res://user_interface/main_menu_background.png" id="6_g1hdb"]
 
+[sub_resource type="Theme" id="Theme_qv2sr"]
+default_font = ExtResource("4_urexa")
+default_font_size = 60
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_upnmg"]
 shader = ExtResource("4_ua8qe")
 shader_parameter/spotlight_radius = 150.0
@@ -22,9 +26,53 @@ shader_parameter/invert_effect = true
 shader_parameter/animation_speed = 0.0
 shader_parameter/pulse_intensity = 0.0
 
-[sub_resource type="Theme" id="Theme_qv2sr"]
-default_font = ExtResource("4_urexa")
-default_font_size = 60
+[sub_resource type="InputEventKey" id="InputEventKey_sdd6a"]
+device = -1
+keycode = 72
+unicode = 104
+
+[sub_resource type="Shortcut" id="Shortcut_ua8qe"]
+events = [SubResource("InputEventKey_sdd6a")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_upnmg"]
+device = -1
+keycode = 80
+unicode = 112
+
+[sub_resource type="Shortcut" id="Shortcut_44fa0"]
+events = [SubResource("InputEventKey_upnmg")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_74puq"]
+device = -1
+keycode = 83
+unicode = 115
+
+[sub_resource type="Shortcut" id="Shortcut_5jtc4"]
+events = [SubResource("InputEventKey_74puq")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_kdjlw"]
+device = -1
+keycode = 67
+unicode = 99
+
+[sub_resource type="Shortcut" id="Shortcut_moaoo"]
+events = [SubResource("InputEventKey_kdjlw")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_1kbg2"]
+device = -1
+keycode = 68
+unicode = 100
+
+[sub_resource type="Shortcut" id="Shortcut_us386"]
+events = [SubResource("InputEventKey_1kbg2")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_3riln"]
+device = -1
+keycode = 81
+unicode = 113
+
+[sub_resource type="Shortcut" id="Shortcut_52db7"]
+events = [SubResource("InputEventKey_3riln")]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_edk11"]
 bg_color = Color(0.0745098, 0.0745098, 0.0745098, 0.866667)
@@ -37,6 +85,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xsm3n")
+
+[node name="BackgroundImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_g1hdb")
 
 [node name="CharacterCustomiser" type="Control" parent="."]
 visible = false
@@ -67,14 +124,51 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainMenu"]
+[node name="Title" type="RichTextLabel" parent="MainMenu"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 79.0
+offset_right = 315.0
+offset_bottom = 153.0
 grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("6_g1hdb")
+theme = SubResource("Theme_qv2sr")
+theme_override_colors/default_color = Color(0.994014, 0.904402, 0.819316, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/shadow_offset_x = -8
+bbcode_enabled = true
+text = "Chef"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_qv2sr")
+
+[node name="Title2" type="RichTextLabel" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 152.0
+offset_right = 315.0
+offset_bottom = 226.0
+grow_horizontal = 2
+theme = SubResource("Theme_qv2sr")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/shadow_offset_x = -8
+bbcode_enabled = true
+text = "Wobbles"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_qv2sr")
 
 [node name="MouseSpotlight" type="Panel" parent="MainMenu"]
 material = SubResource("ShaderMaterial_upnmg")
@@ -110,8 +204,20 @@ alignment = 1
 
 [node name="HostButton" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "Host a game with up to four (4) other players"
+focus_neighbor_left = NodePath("../QuitGameButton")
+focus_neighbor_top = NodePath("../QuitGameButton")
+focus_neighbor_right = NodePath("../SinglePlayerButton")
+focus_neighbor_bottom = NodePath("../SinglePlayerButton")
+focus_next = NodePath("../SinglePlayerButton")
+focus_previous = NodePath("../QuitGameButton")
 theme = ExtResource("2_n0nnf")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+shortcut = SubResource("Shortcut_ua8qe")
 text = "Host Game"
+flat = true
 
 [node name="HSeparator2" type="HSeparator" parent="MainMenu/VBoxContainer"]
 visible = false
@@ -119,76 +225,100 @@ layout_mode = 2
 
 [node name="SinglePlayerButton" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
+focus_neighbor_left = NodePath("../HostButton")
+focus_neighbor_top = NodePath("../HostButton")
+focus_neighbor_right = NodePath("../SettingsButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../HostButton")
 theme = ExtResource("2_n0nnf")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+shortcut = SubResource("Shortcut_44fa0")
 text = "Play Offline"
+flat = true
 
 [node name="JoinButton" type="Button" parent="MainMenu/VBoxContainer"]
 visible = false
 layout_mode = 2
 theme = ExtResource("2_n0nnf")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
 text = "Join lobby"
+flat = true
 
 [node name="HSeparator3" type="HSeparator" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 
 [node name="SettingsButton" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
+focus_neighbor_left = NodePath("../SinglePlayerButton")
+focus_neighbor_top = NodePath("../SinglePlayerButton")
+focus_neighbor_right = NodePath("../CreditsButton")
+focus_neighbor_bottom = NodePath("../CreditsButton")
+focus_next = NodePath("../CreditsButton")
+focus_previous = NodePath("../SinglePlayerButton")
 theme = ExtResource("2_n0nnf")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+shortcut = SubResource("Shortcut_5jtc4")
 text = "Settings"
+flat = true
 
 [node name="CreditsButton" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
+focus_neighbor_left = NodePath("../SettingsButton")
+focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_right = NodePath("../DiscordButton")
+focus_neighbor_bottom = NodePath("../DiscordButton")
+focus_next = NodePath("../DiscordButton")
+focus_previous = NodePath("../SettingsButton")
 theme = ExtResource("2_n0nnf")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+toggle_mode = true
+shortcut = SubResource("Shortcut_moaoo")
 text = "Credits"
+flat = true
 
 [node name="DiscordButton" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
+focus_neighbor_left = NodePath("../CreditsButton")
+focus_neighbor_top = NodePath("../CreditsButton")
+focus_neighbor_right = NodePath("../QuitGameButton")
+focus_neighbor_bottom = NodePath("../QuitGameButton")
+focus_next = NodePath("../QuitGameButton")
+focus_previous = NodePath("../CreditsButton")
 theme = ExtResource("2_n0nnf")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+shortcut = SubResource("Shortcut_us386")
 text = "Discord"
+flat = true
 
 [node name="HSeparator" type="HSeparator" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 
 [node name="QuitGameButton" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
+focus_neighbor_left = NodePath("../DiscordButton")
+focus_neighbor_top = NodePath("../DiscordButton")
+focus_neighbor_right = NodePath("../HostButton")
+focus_neighbor_bottom = NodePath("../HostButton")
+focus_next = NodePath("../HostButton")
+focus_previous = NodePath("../DiscordButton")
 theme = ExtResource("2_n0nnf")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+shortcut = SubResource("Shortcut_52db7")
 text = "Quit game"
-
-[node name="Title" type="RichTextLabel" parent="MainMenu"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -315.0
-offset_top = 79.0
-offset_right = 315.0
-offset_bottom = 153.0
-grow_horizontal = 2
-theme = SubResource("Theme_qv2sr")
-bbcode_enabled = true
-text = "Chef"
-scroll_active = false
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("5_qv2sr")
-
-[node name="Title2" type="RichTextLabel" parent="MainMenu"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -315.0
-offset_top = 152.0
-offset_right = 315.0
-offset_bottom = 226.0
-grow_horizontal = 2
-theme = SubResource("Theme_qv2sr")
-bbcode_enabled = true
-text = "Wobbles"
-scroll_active = false
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("5_qv2sr")
+flat = true
 
 [node name="CreditsMenu" type="Control" parent="."]
 layout_mode = 1
@@ -217,128 +347,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_n0nnf")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
 bbcode_enabled = true
-text = "[center][font_size=56][color=orange]CHEF WOBBLES[/color][/font_size][/center]
-[center][font_size=24][color=yellow]A Physics-Based Cooking Adventure[/color][/font_size][/center]
-
-[center][img=300x100]godot_project/icon.png[/img][/center]
-
-[center][font_size=32][color=cyan]DEVELOPMENT TEAM[/color][/font_size][/center]
-[center][font_size=28][color=yellow]LOST RABBIT DIGITAL LLC[/color][/font_size][/center]
-
-[center][color=white]Game Design • Programming • Art Direction
-Sound Design • Quality Assurance • Publishing[/color][/center]
-
-[hr]
-
-[center][font_size=32][color=lime]SPECIAL THANKS[/color][/font_size][/center]
-
-[center][font_size=24][color=cyan]CORE TECHNOLOGY[/color][/font_size][/center]
-
-[center][color=yellow]GODOT ENGINE COMMUNITY[/color]
-[color=white]For creating the amazing open-source engine
-that powers Chef Wobbles[/color][/center]
-
-[center][color=yellow]PICODE9560[/color]
-[color=white]Godot-4-Active-ragdoll
-Foundation for our wobbly character physics[/color]
-[color=gray]https://github.com/PiCode9560/Godot-4-Active-ragdoll[/color][/center]
-
-[center][color=yellow]MAAACK[/color]
-[color=white]Godot-Music-Controller
-Audio management system[/color]
-[color=gray]https://github.com/Maaack/Godot-Music-Controller[/color][/center]
-
-[hr]
-
-[center][font_size=24][color=cyan]AUDIO & MUSIC[/color][/font_size][/center]
-
-[center][color=yellow]PIZZADOGGY[/color]
-[color=white]Cozy Tunes - Background Music[/color]
-[color=gray]https://pizzadoggy.itch.io/cozy-tunes[/color][/center]
-
-[center][color=yellow]SHAPEFORMS[/color]
-[color=white]Audio SFX Collection[/color]
-[color=gray]https://shapeforms.itch.io/shapeforms-audio-free-sfx[/color][/center]
-
-[hr]
-
-[center][font_size=24][color=cyan]FONTS & TYPOGRAPHY[/color][/font_size][/center]
-
-[center][color=yellow]GGBOT[/color]
-[color=white]Kaph Font Family[/color]
-[color=gray]https://ggbot.itch.io/kaph-font[/color][/center]
-
-[hr]
-
-[center][font_size=24][color=cyan]COMMUNITY & INSPIRATION[/color][/font_size][/center]
-
-[center][color=yellow]GODOT COMMUNITY[/color]
-[color=white]For endless tutorials, plugins, and support[/color][/center]
-
-[center][color=yellow]OVERCOOKED! TEAM[/color]
-[color=white]For inspiring chaotic cooking gameplay[/color][/center]
-
-[center][color=yellow]DISCORD COMMUNITY[/color]
-[color=white]Beta testers and feedback providers[/color]
-[color=gray]Join us: https://discord.gg/Y7caBf7gBj[/color][/center]
-
-[hr]
-
-[center][font_size=24][color=cyan]TOOLS & PLATFORMS[/color][/font_size][/center]
-
-[center][color=yellow]GODOT ENGINE 4.4+[/color]
-[color=white]Game Development Platform[/color][/center]
-
-[center][color=yellow]GITHUB[/color]
-[color=white]Version Control & Collaboration[/color][/center]
-
-[center][color=yellow]STEAM & ITCH.IO[/color]
-[color=white]Distribution Platforms[/color][/center]
-
-[hr]
-
-[center][font_size=24][color=cyan]ASSET REFERENCES[/color][/font_size][/center]
-
-[center][color=gray]The following assets inspired our art direction:[/color][/center]
-
-[center][color=white]ToonLab - Fruit & Vegetable Pack
-3mrys - Low Poly Mushrooms
-AcornBringer - Nature Assets
-Godot Shaders Community[/color][/center]
-
-[hr]
-
-[center][font_size=24][color=cyan]BETA TESTERS[/color][/font_size][/center]
-
-[center][color=white]Thank you to all our Discord community members
-who provided invaluable feedback during development[/color][/center]
-
-[hr]
-
-[center][font_size=32][color=orange]LICENSE[/color][/font_size][/center]
-
-[center][color=white]This game is released under the
-[color=yellow]Mozilla Public License 2.0[/color]
-
-See LICENSE file for full details[/color][/center]
-
-[hr]
-
-[center][font_size=24][color=cyan]CONTACT[/color][/font_size][/center]
-
-[center][color=yellow]LOST RABBIT DIGITAL LLC[/color]
-[color=white]Email: contact@lostrabbitdigital.com
-Discord: https://discord.gg/Y7caBf7gBj
-Steam: Lost Rabbit Digital
-Itch.io: lost-rabbit-digital.itch.io[/color][/center]
-
-[hr]
-
-[center][font_size=20][color=gray]Made with ❤️ and lots of wobbly physics[/color][/font_size][/center]
-[center][font_size=16][color=gray]© 2025 Lost Rabbit Digital LLC[/color][/font_size][/center]
-
-[center][color=orange]🐰 THANK YOU FOR PLAYING! 🐰[/color][/center]"
 
 [node name="Lobby" type="Control" parent="."]
 visible = false
@@ -429,7 +442,8 @@ layout_mode = 2
 theme = ExtResource("2_n0nnf")
 text = "Join lobby"
 
-[connection signal="pressed" from="MainMenu/VBoxContainer/CreditsButton" to="CreditsMenu" method="_on_credits_button_pressed"]
+[connection signal="toggled" from="MainMenu/VBoxContainer/CreditsButton" to="CreditsMenu" method="_on_credits_button_toggled"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/DiscordButton" to="." method="_on_discord_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/QuitGameButton" to="." method="_on_quit_game_button_pressed"]
 [connection signal="canceled" from="JoinDialog" to="." method="_on_join_dialog_canceled"]
 [connection signal="confirmed" from="JoinDialog" to="." method="_on_join_dialog_confirmed"]
