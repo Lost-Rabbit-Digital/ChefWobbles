@@ -62,33 +62,51 @@ grow_vertical = 2
 theme_override_constants/separation = 8
 
 [node name="PlayerNameInput" type="LineEdit" parent="MainMenu/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme = ExtResource("2_n0nnf")
 placeholder_text = "Chef Name"
 alignment = 1
-
-[node name="HSeparator2" type="HSeparator" parent="MainMenu/VBoxContainer"]
-layout_mode = 2
-
-[node name="SinglePlayerButton" type="Button" parent="MainMenu/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_n0nnf")
-text = "Singleplayer"
-
-[node name="HSeparator" type="HSeparator" parent="MainMenu/VBoxContainer"]
-layout_mode = 2
 
 [node name="HostButton" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_n0nnf")
 text = "Host Game"
 
+[node name="HSeparator2" type="HSeparator" parent="MainMenu/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SinglePlayerButton" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Play Offline"
+
 [node name="JoinButton" type="Button" parent="MainMenu/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme = ExtResource("2_n0nnf")
 text = "Join lobby"
 
 [node name="HSeparator3" type="HSeparator" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="SettingsButton" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Settings"
+
+[node name="CreditsButton" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Credits"
+
+[node name="DiscordButton" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Discord"
+
+[node name="HSeparator" type="HSeparator" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 
 [node name="QuitGameButton" type="Button" parent="MainMenu/VBoxContainer"]

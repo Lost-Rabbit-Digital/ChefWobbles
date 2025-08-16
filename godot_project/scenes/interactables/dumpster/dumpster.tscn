@@ -1,14 +1,9 @@
-[gd_scene load_steps=24 format=4 uid="uid://jopkhuojs43j"]
+[gd_scene load_steps=19 format=4 uid="uid://jopkhuojs43j"]
 
 [ext_resource type="Script" uid="uid://b32cmsaifskkk" path="res://scripts/interactables/dumpster/dumpster_system.gd" id="1_5rj35"]
 [ext_resource type="Script" uid="uid://bvo5cvj1cygfd" path="res://scripts/interactables/dumpster/disposal_handler.gd" id="2_d54x1"]
-[ext_resource type="AudioStream" uid="uid://mn3e5xh08lla" path="res://audio/sound_effects/plops/plop_3.mp3" id="2_pnjjg"]
-[ext_resource type="AudioStream" uid="uid://xsc0u43xrhhy" path="res://audio/sound_effects/plops/plop_4.mp3" id="3_h2sc5"]
 [ext_resource type="Script" uid="uid://bhvhjwmkndh6j" path="res://scripts/interactables/dumpster/suction_handler.gd" id="3_pnjjg"]
 [ext_resource type="Script" uid="uid://clysxgbn53eeh" path="res://scripts/interactables/dumpster/dumpster_audio_manager.gd" id="4_veojv"]
-[ext_resource type="AudioStream" uid="uid://dyl7qh6ntwb78" path="res://audio/sound_effects/shrinks/shrink_1.mp3" id="4_y028r"]
-[ext_resource type="AudioStream" uid="uid://du21rt5cldekl" path="res://audio/sound_effects/shrinks/shrink_2.mp3" id="5_s7gqq"]
-[ext_resource type="AudioStream" uid="uid://brpvm0gnsxirl" path="res://audio/sound_effects/whooshes/whoosh_1.mp3" id="9_abmix"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_owcex"]
 resource_name = "Material"
@@ -151,8 +146,6 @@ data = PackedVector3Array(-0.0142117, -0.00331823, 0.0377931, -0.0142117, -0.001
 
 [node name="dumpster" type="Node3D"]
 script = ExtResource("1_5rj35")
-auto_setup_areas = null
-debug_mode = null
 
 [node name="Base" type="MeshInstance3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, -4.37114e-06, 88.041, 0, -100, -3.84839e-06, 0, 0, 0)
@@ -225,8 +218,5 @@ script = ExtResource("3_pnjjg")
 
 [node name="DumpsterAudioManager" type="Node" parent="."]
 script = ExtResource("4_veojv")
-disposal_sounds = Array[AudioStream]([ExtResource("2_pnjjg"), ExtResource("3_h2sc5")])
-shrinking_sounds = Array[AudioStream]([ExtResource("4_y028r"), ExtResource("5_s7gqq")])
-whoosh_sounds = Array[AudioStream]([ExtResource("9_abmix")])
 
 [node name="DisposalAudioPlayer" type="AudioStreamPlayer3D" parent="DumpsterAudioManager"]

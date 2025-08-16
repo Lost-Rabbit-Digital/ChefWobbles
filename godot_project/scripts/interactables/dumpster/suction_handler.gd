@@ -35,6 +35,10 @@ signal dumpster_closed()
 @export_group("Lid Detection")
 @export var check_for_lids: bool = true
 @export var debug_lid_status: bool = false
+# TODO: Add the degree which the lids are considered closed and opened,
+# two variables 
+#@export var lid_open_angle: float = 135.0 and -135.0
+#@export var lid_closed_angle: float = 0.0
 
 ## Internal references
 var suction_area: Area3D
