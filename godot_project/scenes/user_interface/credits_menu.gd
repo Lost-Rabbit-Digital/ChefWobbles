@@ -150,9 +150,8 @@ func _process(delta: float) -> void:
 			is_user_scrolling = false
 			user_idle_timer = 0.0
 			_resume_auto_scroll()
-
 func _update_smooth_scroll(delta: float) -> void:
-	"""Industry-standard smooth scrolling using manual interpolation with velocity"""
+	"""Simplified smooth scrolling with constant velocity"""
 	var distance_to_target = target_scroll - current_scroll
 	
 	# Check if we've reached the target
@@ -162,23 +161,14 @@ func _update_smooth_scroll(delta: float) -> void:
 		_start_auto_hide_timer()
 		return
 	
-	# Use scroll_speed as the base velocity (pixels per second)
-	var base_velocity = scroll_speed
-	
-	# Calculate smooth acceleration towards target
-	var acceleration_factor = distance_to_target / target_scroll  # Normalized distance
-	var target_velocity = base_velocity * acceleration_factor
+	# Constant velocity - no deceleration
+	var target_velocity = scroll_speed if distance_to_target > 0 else -scroll_speed
 	
 	# Smooth velocity interpolation for natural movement
-	var velocity_lerp_speed = 2.0  # How quickly velocity changes
+	var velocity_lerp_speed = 3.0
 	scroll_velocity = lerp(scroll_velocity, target_velocity, velocity_lerp_speed * delta)
 	
-	# Ensure minimum velocity to prevent stalling
-	var min_velocity = base_velocity * 0.1
-	if abs(scroll_velocity) < min_velocity and abs(distance_to_target) > 10.0:
-		scroll_velocity = min_velocity if distance_to_target > 0 else -min_velocity
-	
-	# Update position using actual scroll_speed
+	# Update position
 	current_scroll += scroll_velocity * delta
 	current_scroll = clamp(current_scroll, 0.0, target_scroll)
 	
@@ -187,17 +177,43 @@ func _update_smooth_scroll(delta: float) -> void:
 	v_scroll.value = current_scroll
 
 func _resume_auto_scroll() -> void:
-	"""Resume auto-scrolling from current position"""
+	"""Resume auto-scrolling from current position - syncs with actual scroll position"""
 	if not is_auto_scrolling:
 		var v_scroll = rich_text.get_v_scroll_bar()
 		var max_scroll = v_scroll.max_value - v_scroll.page
+		
+		# Sync current_scroll with actual scroll position
+		current_scroll = v_scroll.value
+		
 		var remaining = max_scroll - current_scroll
 		
 		if remaining > 10:
 			is_auto_scrolling = true
 			target_scroll = max_scroll
+			print("Resuming auto-scroll from position: ", current_scroll, " to: ", target_scroll)
 		else:
 			_start_auto_hide_timer()
+
+func _on_user_scroll(event: InputEventMouseButton) -> void:
+	"""Handle user mouse wheel scrolling with smooth interpolation"""
+	_stop_all_scrolling()
+	is_user_scrolling = true
+	user_idle_timer = 0.0
+	
+	var v_scroll = rich_text.get_v_scroll_bar()
+	var scroll_amount = v_scroll.step * 3  # Scroll sensitivity
+	
+	# Update our tracking variable to match user input
+	current_scroll = v_scroll.value
+	
+	if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+		current_scroll = max(0, current_scroll - scroll_amount)
+	elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		var max_scroll = v_scroll.max_value - v_scroll.page
+		current_scroll = min(max_scroll, current_scroll + scroll_amount)
+	
+	# Apply immediately for responsive feel
+	v_scroll.value = current_scroll
 
 func _input(event: InputEvent) -> void:
 	if not visible or is_sliding_in:
@@ -218,24 +234,6 @@ func _is_mouse_over_credits() -> bool:
 	var mouse_pos = get_global_mouse_position()
 	return rich_text.get_global_rect().has_point(mouse_pos)
 
-func _on_user_scroll(event: InputEventMouseButton) -> void:
-	"""Handle user mouse wheel scrolling with smooth interpolation"""
-	_stop_all_scrolling()
-	is_user_scrolling = true
-	user_idle_timer = 0.0
-	
-	var v_scroll = rich_text.get_v_scroll_bar()
-	var scroll_amount = v_scroll.step * 3  # Scroll sensitivity
-	
-	if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-		current_scroll = max(0, current_scroll - scroll_amount)
-	elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-		var max_scroll = v_scroll.max_value - v_scroll.page
-		current_scroll = min(max_scroll, current_scroll + scroll_amount)
-	
-	# Apply immediately for responsive feel
-	v_scroll.value = current_scroll
-
 func _on_mouse_entered() -> void:
 	"""Mouse entered credits area"""
 	if is_auto_scrolling:
@@ -252,3 +250,9 @@ func _on_credits_button_toggled(toggled_on: bool) -> void:
 		show_credits()
 	else:
 		hide_credits()
+
+
+func _on_rich_text_label_meta_clicked(meta: Variant) -> void:
+	# `meta` is not guaranteed to be a String, so convert it to a String
+	# to avoid script errors at runtime.
+	OS.shell_open(str(meta))

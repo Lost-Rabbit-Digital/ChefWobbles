@@ -147,6 +147,8 @@ scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_qv2sr")
+wobble_interval_min = 3.0
+wobble_interval_max = 12.0
 
 [node name="Title2" type="RichTextLabel" parent="MainMenu"]
 layout_mode = 1
@@ -170,6 +172,8 @@ scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_qv2sr")
+wobble_interval_min = 3.0
+wobble_interval_max = 12.0
 
 [node name="MouseSpotlight" type="Panel" parent="MainMenu"]
 material = SubResource("ShaderMaterial_upnmg")
@@ -335,7 +339,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_5t0xv")
-scroll_speed = 35.0
+scroll_speed = 40.0
 
 [node name="Panel" type="Panel" parent="CreditsMenu"]
 custom_minimum_size = Vector2(384, 0)
@@ -456,5 +460,6 @@ text = "Join lobby"
 [connection signal="toggled" from="MainMenu/VBoxContainer/CreditsButton" to="CreditsMenu" method="_on_credits_button_toggled"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/DiscordButton" to="." method="_on_discord_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/QuitGameButton" to="." method="_on_quit_game_button_pressed"]
+[connection signal="meta_clicked" from="CreditsMenu/Panel/RichTextLabel" to="CreditsMenu" method="_on_rich_text_label_meta_clicked"]
 [connection signal="canceled" from="JoinDialog" to="." method="_on_join_dialog_canceled"]
 [connection signal="confirmed" from="JoinDialog" to="." method="_on_join_dialog_confirmed"]
