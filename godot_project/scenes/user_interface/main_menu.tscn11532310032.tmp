@@ -240,7 +240,6 @@ theme_override_constants/outline_size = 16
 shortcut = SubResource("Shortcut_44fa0")
 text = "Play Offline"
 flat = true
-script = ExtResource("9_ua8qe")
 
 [node name="JoinButton" type="Button" parent="MainMenu/VBoxContainer"]
 visible = false
@@ -270,7 +269,6 @@ theme_override_constants/outline_size = 16
 shortcut = SubResource("Shortcut_5jtc4")
 text = "Settings"
 flat = true
-script = ExtResource("9_ua8qe")
 
 [node name="CreditsButton" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
@@ -288,7 +286,6 @@ toggle_mode = true
 shortcut = SubResource("Shortcut_moaoo")
 text = "Credits"
 flat = true
-script = ExtResource("9_ua8qe")
 
 [node name="DiscordButton" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
@@ -305,7 +302,6 @@ theme_override_constants/outline_size = 16
 shortcut = SubResource("Shortcut_us386")
 text = "Discord"
 flat = true
-script = ExtResource("9_ua8qe")
 
 [node name="HSeparator" type="HSeparator" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
@@ -325,7 +321,6 @@ theme_override_constants/outline_size = 16
 shortcut = SubResource("Shortcut_52db7")
 text = "Quit game"
 flat = true
-script = ExtResource("9_ua8qe")
 
 [node name="CreditsMenu" type="Control" parent="."]
 layout_mode = 1
@@ -335,7 +330,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_5t0xv")
-scroll_speed = 35.0
 
 [node name="Panel" type="Panel" parent="CreditsMenu"]
 custom_minimum_size = Vector2(384, 0)
@@ -418,9 +412,6 @@ offset_right = 117.5
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("2_n0nnf")
-theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 16
 text = "Connection Status..."
 horizontal_alignment = 1
 

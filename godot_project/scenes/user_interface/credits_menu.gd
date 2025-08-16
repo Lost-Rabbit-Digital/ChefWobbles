@@ -3,7 +3,7 @@ extends Control
 
 @export var credits_file_path: String = "res://CREDITS.md"
 @export var slide_duration: float = 0.8
-@export var scroll_speed: float = 30.0  # Pixels per second - industry standard for readable speed
+@export var scroll_speed: float = 15.0  # Pixels per second - slower for better readability
 @export var user_idle_timeout: float = 3.0
 @export var auto_hide_delay: float = 2.0
 
@@ -162,20 +162,23 @@ func _update_smooth_scroll(delta: float) -> void:
 		_start_auto_hide_timer()
 		return
 	
-	# Use velocity-based smooth scrolling (common in AAA games)
-	# This creates natural acceleration/deceleration
-	var acceleration = distance_to_target * 2.0  # Acceleration factor
-	scroll_velocity += acceleration * delta
+	# Use scroll_speed as the base velocity (pixels per second)
+	var base_velocity = scroll_speed
 	
-	# Apply velocity damping for smooth motion
-	scroll_velocity *= pow(0.95, delta * 60.0)  # Frame-rate independent damping
+	# Calculate smooth acceleration towards target
+	var acceleration_factor = distance_to_target / target_scroll  # Normalized distance
+	var target_velocity = base_velocity * acceleration_factor
+	
+	# Smooth velocity interpolation for natural movement
+	var velocity_lerp_speed = 2.0  # How quickly velocity changes
+	scroll_velocity = lerp(scroll_velocity, target_velocity, velocity_lerp_speed * delta)
 	
 	# Ensure minimum velocity to prevent stalling
-	var min_velocity = scroll_speed * 0.1
+	var min_velocity = base_velocity * 0.1
 	if abs(scroll_velocity) < min_velocity and abs(distance_to_target) > 10.0:
 		scroll_velocity = min_velocity if distance_to_target > 0 else -min_velocity
 	
-	# Update position
+	# Update position using actual scroll_speed
 	current_scroll += scroll_velocity * delta
 	current_scroll = clamp(current_scroll, 0.0, target_scroll)
 	
