@@ -1,9 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddlj3gyuqhkn5"]
+[gd_scene load_steps=14 format=3 uid="uid://ddlj3gyuqhkn5"]
 
 [ext_resource type="Script" uid="uid://c5s8axkpyr1u0" path="res://scripts/user_interface/main_menu.gd" id="1_xsm3n"]
 [ext_resource type="Theme" uid="uid://dq1tetwaiurgt" path="res://resources/themes/general_theme.tres" id="2_n0nnf"]
 [ext_resource type="PackedScene" uid="uid://byrvfkvijm1xg" path="res://scenes/character_preview.tscn" id="3_n0nnf"]
+[ext_resource type="Script" uid="uid://b6omovm3nwljd" path="res://scenes/user_interface/credits_menu.gd" id="4_5t0xv"]
 [ext_resource type="Texture2D" uid="uid://dedv6nw43y5ih" path="res://icon.png" id="4_edk11"]
+[ext_resource type="Script" uid="uid://dgbf85hb6emat" path="res://user_interface/scripts/mouse_spotlight.gd" id="4_sdd6a"]
+[ext_resource type="Shader" uid="uid://cvtlgt3h7gqh1" path="res://user_interface/shaders/mouse_spotlight.gdshader" id="4_ua8qe"]
+[ext_resource type="FontFile" uid="uid://b0wjuv1dm2kwv" path="res://fonts/kaph_truetype/Kaph-Regular.ttf" id="4_urexa"]
+[ext_resource type="Script" uid="uid://cwyphgrwfjfof" path="res://scripts/user_interface/text_wobble.gd" id="5_qv2sr"]
+[ext_resource type="Texture2D" uid="uid://clefhi21g7gmg" path="res://user_interface/main_menu_background.png" id="6_g1hdb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_upnmg"]
+shader = ExtResource("4_ua8qe")
+shader_parameter/spotlight_radius = 150.0
+shader_parameter/spotlight_softness = 80.0
+shader_parameter/min_opacity = 0.2
+shader_parameter/max_opacity = 0.8
+shader_parameter/mouse_position = Vector2(0.5, 0.5)
+shader_parameter/invert_effect = true
+shader_parameter/animation_speed = 0.0
+shader_parameter/pulse_intensity = 0.0
+
+[sub_resource type="Theme" id="Theme_qv2sr"]
+default_font = ExtResource("4_urexa")
+default_font_size = 60
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_edk11"]
+bg_color = Color(0.0745098, 0.0745098, 0.0745098, 0.866667)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -15,6 +39,7 @@ grow_vertical = 2
 script = ExtResource("1_xsm3n")
 
 [node name="CharacterCustomiser" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -36,15 +61,30 @@ texture = ExtResource("4_edk11")
 
 [node name="MainMenu" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_top = -360.0
-offset_bottom = 360.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_g1hdb")
+
+[node name="MouseSpotlight" type="Panel" parent="MainMenu"]
+material = SubResource("ShaderMaterial_upnmg")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_sdd6a")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
 layout_mode = 1
@@ -53,10 +93,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -78.5
-offset_top = -78.0
-offset_right = 78.5
-offset_bottom = 78.0
+offset_left = -603.0
+offset_top = 87.0
+offset_right = -446.0
+offset_bottom = 313.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
@@ -114,21 +154,191 @@ layout_mode = 2
 theme = ExtResource("2_n0nnf")
 text = "Quit game"
 
-[node name="Label" type="Label" parent="MainMenu"]
+[node name="Title" type="RichTextLabel" parent="MainMenu"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -315.0
-offset_top = 82.0
+offset_top = 79.0
 offset_right = 315.0
-offset_bottom = 156.0
+offset_bottom = 153.0
 grow_horizontal = 2
-theme = ExtResource("2_n0nnf")
-theme_override_font_sizes/font_size = 64
-text = "Chef Wobbles"
+theme = SubResource("Theme_qv2sr")
+bbcode_enabled = true
+text = "Chef"
+scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("5_qv2sr")
+
+[node name="Title2" type="RichTextLabel" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 152.0
+offset_right = 315.0
+offset_bottom = 226.0
+grow_horizontal = 2
+theme = SubResource("Theme_qv2sr")
+bbcode_enabled = true
+text = "Wobbles"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_qv2sr")
+
+[node name="CreditsMenu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_5t0xv")
+
+[node name="Panel" type="Panel" parent="CreditsMenu"]
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_edk11")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CreditsMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center][font_size=56][color=orange]CHEF WOBBLES[/color][/font_size][/center]
+[center][font_size=24][color=yellow]A Physics-Based Cooking Adventure[/color][/font_size][/center]
+
+[center][img=300x100]godot_project/icon.png[/img][/center]
+
+[center][font_size=32][color=cyan]DEVELOPMENT TEAM[/color][/font_size][/center]
+[center][font_size=28][color=yellow]LOST RABBIT DIGITAL LLC[/color][/font_size][/center]
+
+[center][color=white]Game Design • Programming • Art Direction
+Sound Design • Quality Assurance • Publishing[/color][/center]
+
+[hr]
+
+[center][font_size=32][color=lime]SPECIAL THANKS[/color][/font_size][/center]
+
+[center][font_size=24][color=cyan]CORE TECHNOLOGY[/color][/font_size][/center]
+
+[center][color=yellow]GODOT ENGINE COMMUNITY[/color]
+[color=white]For creating the amazing open-source engine
+that powers Chef Wobbles[/color][/center]
+
+[center][color=yellow]PICODE9560[/color]
+[color=white]Godot-4-Active-ragdoll
+Foundation for our wobbly character physics[/color]
+[color=gray]https://github.com/PiCode9560/Godot-4-Active-ragdoll[/color][/center]
+
+[center][color=yellow]MAAACK[/color]
+[color=white]Godot-Music-Controller
+Audio management system[/color]
+[color=gray]https://github.com/Maaack/Godot-Music-Controller[/color][/center]
+
+[hr]
+
+[center][font_size=24][color=cyan]AUDIO & MUSIC[/color][/font_size][/center]
+
+[center][color=yellow]PIZZADOGGY[/color]
+[color=white]Cozy Tunes - Background Music[/color]
+[color=gray]https://pizzadoggy.itch.io/cozy-tunes[/color][/center]
+
+[center][color=yellow]SHAPEFORMS[/color]
+[color=white]Audio SFX Collection[/color]
+[color=gray]https://shapeforms.itch.io/shapeforms-audio-free-sfx[/color][/center]
+
+[hr]
+
+[center][font_size=24][color=cyan]FONTS & TYPOGRAPHY[/color][/font_size][/center]
+
+[center][color=yellow]GGBOT[/color]
+[color=white]Kaph Font Family[/color]
+[color=gray]https://ggbot.itch.io/kaph-font[/color][/center]
+
+[hr]
+
+[center][font_size=24][color=cyan]COMMUNITY & INSPIRATION[/color][/font_size][/center]
+
+[center][color=yellow]GODOT COMMUNITY[/color]
+[color=white]For endless tutorials, plugins, and support[/color][/center]
+
+[center][color=yellow]OVERCOOKED! TEAM[/color]
+[color=white]For inspiring chaotic cooking gameplay[/color][/center]
+
+[center][color=yellow]DISCORD COMMUNITY[/color]
+[color=white]Beta testers and feedback providers[/color]
+[color=gray]Join us: https://discord.gg/Y7caBf7gBj[/color][/center]
+
+[hr]
+
+[center][font_size=24][color=cyan]TOOLS & PLATFORMS[/color][/font_size][/center]
+
+[center][color=yellow]GODOT ENGINE 4.4+[/color]
+[color=white]Game Development Platform[/color][/center]
+
+[center][color=yellow]GITHUB[/color]
+[color=white]Version Control & Collaboration[/color][/center]
+
+[center][color=yellow]STEAM & ITCH.IO[/color]
+[color=white]Distribution Platforms[/color][/center]
+
+[hr]
+
+[center][font_size=24][color=cyan]ASSET REFERENCES[/color][/font_size][/center]
+
+[center][color=gray]The following assets inspired our art direction:[/color][/center]
+
+[center][color=white]ToonLab - Fruit & Vegetable Pack
+3mrys - Low Poly Mushrooms
+AcornBringer - Nature Assets
+Godot Shaders Community[/color][/center]
+
+[hr]
+
+[center][font_size=24][color=cyan]BETA TESTERS[/color][/font_size][/center]
+
+[center][color=white]Thank you to all our Discord community members
+who provided invaluable feedback during development[/color][/center]
+
+[hr]
+
+[center][font_size=32][color=orange]LICENSE[/color][/font_size][/center]
+
+[center][color=white]This game is released under the
+[color=yellow]Mozilla Public License 2.0[/color]
+
+See LICENSE file for full details[/color][/center]
+
+[hr]
+
+[center][font_size=24][color=cyan]CONTACT[/color][/font_size][/center]
+
+[center][color=yellow]LOST RABBIT DIGITAL LLC[/color]
+[color=white]Email: contact@lostrabbitdigital.com
+Discord: https://discord.gg/Y7caBf7gBj
+Steam: Lost Rabbit Digital
+Itch.io: lost-rabbit-digital.itch.io[/color][/center]
+
+[hr]
+
+[center][font_size=20][color=gray]Made with ❤️ and lots of wobbly physics[/color][/font_size][/center]
+[center][font_size=16][color=gray]© 2025 Lost Rabbit Digital LLC[/color][/font_size][/center]
+
+[center][color=orange]🐰 THANK YOU FOR PLAYING! 🐰[/color][/center]"
 
 [node name="Lobby" type="Control" parent="."]
 visible = false
@@ -219,24 +429,7 @@ layout_mode = 2
 theme = ExtResource("2_n0nnf")
 text = "Join lobby"
 
-[node name="QuitDialog" type="AcceptDialog" parent="."]
-auto_translate_mode = 1
-mode = 3
-title = "Quit the Game?"
-size = Vector2i(239, 115)
-theme = ExtResource("2_n0nnf")
-ok_button_text = "Yes, please!"
-
-[node name="QuitConfirmationButton" type="Button" parent="QuitDialog"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 151.0
-offset_bottom = 35.0
-theme = ExtResource("2_n0nnf")
-text = "No, thank you."
-
+[connection signal="pressed" from="MainMenu/VBoxContainer/CreditsButton" to="CreditsMenu" method="_on_credits_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/QuitGameButton" to="." method="_on_quit_game_button_pressed"]
 [connection signal="canceled" from="JoinDialog" to="." method="_on_join_dialog_canceled"]
 [connection signal="confirmed" from="JoinDialog" to="." method="_on_join_dialog_confirmed"]
-[connection signal="confirmed" from="QuitDialog" to="." method="_on_quit_dialog_confirmed"]
-[connection signal="pressed" from="QuitDialog/QuitConfirmationButton" to="." method="_on_quit_confirmation_button_pressed"]

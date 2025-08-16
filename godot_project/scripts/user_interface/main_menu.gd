@@ -30,9 +30,6 @@ var game_manager: Node3D = null
 @onready var connection_dialog = $ConnectionDialog
 @onready var connection_status = $ConnectionStatus
 
-# Quit UI
-@onready var quit_game_dialog = $QuitDialog
-
 # === PLAYER TRACKING ===
 var connected_players: Dictionary = {}
 var player_name: String = ""
@@ -157,17 +154,7 @@ func _process(delta):
 
 
 func _on_quit_game_button_pressed() -> void:
-	quit_game_dialog
-	main_menu.hide()
-	quit_game_dialog.popup_centered()
-
-func _on_quit_confirmation_button_pressed() -> void:
-	quit_game_dialog.hide()
-	main_menu.show()
-
-func _on_quit_dialog_confirmed() -> void:
 	get_tree().quit(0)
-
 
 # Show the main menu if the user closes the JoinDialog
 func _on_join_dialog_canceled() -> void:

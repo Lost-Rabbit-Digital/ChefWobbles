@@ -1,0 +1,467 @@
+[gd_scene load_steps=19 format=3 uid="uid://ddlj3gyuqhkn5"]
+
+[ext_resource type="Script" uid="uid://c5s8axkpyr1u0" path="res://scripts/user_interface/main_menu.gd" id="1_xsm3n"]
+[ext_resource type="Theme" uid="uid://dq1tetwaiurgt" path="res://resources/themes/general_theme.tres" id="2_n0nnf"]
+[ext_resource type="PackedScene" uid="uid://byrvfkvijm1xg" path="res://scenes/character_preview.tscn" id="3_n0nnf"]
+[ext_resource type="Script" uid="uid://b6omovm3nwljd" path="res://scenes/user_interface/credits_menu.gd" id="4_5t0xv"]
+[ext_resource type="Texture2D" uid="uid://dedv6nw43y5ih" path="res://icon.png" id="4_edk11"]
+[ext_resource type="Script" uid="uid://dgbf85hb6emat" path="res://user_interface/scripts/mouse_spotlight.gd" id="4_sdd6a"]
+[ext_resource type="Shader" uid="uid://cvtlgt3h7gqh1" path="res://user_interface/shaders/mouse_spotlight.gdshader" id="4_ua8qe"]
+[ext_resource type="FontFile" uid="uid://b0wjuv1dm2kwv" path="res://fonts/kaph_truetype/Kaph-Regular.ttf" id="4_urexa"]
+[ext_resource type="Script" uid="uid://cwyphgrwfjfof" path="res://scripts/user_interface/text_wobble.gd" id="5_qv2sr"]
+[ext_resource type="Shader" uid="uid://fvhwsavylcam" path="res://shaders/user_interface_dither.gdshader" id="5_wtf1b"]
+[ext_resource type="Texture2D" uid="uid://clefhi21g7gmg" path="res://user_interface/main_menu_background.png" id="6_g1hdb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_upnmg"]
+shader = ExtResource("4_ua8qe")
+
+[sub_resource type="Shader" id="Shader_qv2sr"]
+code = "shader_type canvas_item;
+
+// Authentic halftone controls
+uniform float fade_distance : hint_range(0.05, 0.8) = 0.25;
+uniform float halftone_frequency : hint_range(8.0, 40.0) = 18.0;
+uniform float dot_scale : hint_range(0.6, 2.0) = 1.4;
+uniform float gradient_power : hint_range(0.8, 3.0) = 1.6;
+uniform float dot_roundness : hint_range(0.7, 1.0) = 0.95;
+uniform float row_offset : hint_range(0.0, 1.0) = 0.5;
+uniform bool use_staggered_rows = true;
+
+// Edge selection controls
+uniform bool affect_left_edge = true;
+uniform bool affect_right_edge = false;
+uniform bool affect_top_edge = false;
+uniform bool affect_bottom_edge = false;
+
+// Calculate distance to selected edges
+float get_selective_edge_distance(vec2 uv) {
+    float min_distance = 2.0;
+    
+    if (affect_left_edge) min_distance = min(min_distance, uv.x);
+    if (affect_right_edge) min_distance = min(min_distance, 1.0 - uv.x);
+    if (affect_top_edge) min_distance = min(min_distance, 1.0 - uv.y);
+    if (affect_bottom_edge) min_distance = min(min_distance, uv.y);
+    
+    if (!affect_left_edge && !affect_right_edge && !affect_top_edge && !affect_bottom_edge) {
+        return 2.0;
+    }
+    
+    return min_distance;
+}
+
+// Authentic halftone dot generation with row staggering
+float halftone_dot(vec2 uv, float density) {
+    // Create grid with proper halftone frequency
+    vec2 grid_uv = uv * halftone_frequency;
+    vec2 grid_id = floor(grid_uv);
+    vec2 grid_pos = fract(grid_uv);
+    
+    // Add horizontal offset for alternating rows (brick pattern)
+    if (use_staggered_rows) {
+        if (mod(grid_id.y, 2.0) > 0.5) {
+            grid_pos.x = fract(grid_pos.x + row_offset);
+        }
+    }
+    
+    // Center position in grid cell
+    vec2 center = vec2(0.5);
+    vec2 delta = grid_pos - center;
+    
+    // Calculate distance from center
+    float dist = length(delta);
+    
+    // Create dot size based on density (halftone principle)
+    // Higher density = larger dots (darker areas)
+    // Lower density = smaller dots (lighter areas)
+    float dot_radius = density * dot_scale * 0.5;
+    
+    // Create the dot with proper roundness
+    float dot_edge = dot_radius * dot_roundness;
+    float dot_alpha = 1.0 - smoothstep(dot_edge - 0.05, dot_edge + 0.05, dist);
+    
+    return dot_alpha;
+}
+
+// Calculate halftone density based on distance from edge
+float calculate_halftone_density(float edge_distance) {
+    if (edge_distance >= fade_distance) {
+        return 1.0; // Solid area
+    }
+    
+    // Normalize distance (0 at edge, 1 at fade distance)
+    float normalized = edge_distance / fade_distance;
+    
+    // Apply power curve for natural halftone transition
+    float density = pow(normalized, gradient_power);
+    
+    return clamp(density, 0.0, 1.0);
+}
+
+// Smooth transition to solid
+float blend_to_solid_area(float halftone_alpha, float density, float edge_distance) {
+    // Create smooth transition zone near solid area
+    float transition_zone = fade_distance * 0.2;
+    
+    if (edge_distance > (fade_distance - transition_zone)) {
+        float blend_factor = (edge_distance - (fade_distance - transition_zone)) / transition_zone;
+        blend_factor = smoothstep(0.0, 1.0, blend_factor);
+        
+        // Blend from halftone to solid
+        halftone_alpha = mix(halftone_alpha, 1.0, blend_factor);
+    }
+    
+    return halftone_alpha;
+}
+
+void fragment() {
+    vec2 uv = UV;
+    
+    // Get distance to selected edges
+    float edge_distance = get_selective_edge_distance(uv);
+    
+    // Calculate halftone density (how \"dark\" this area should be)
+    float halftone_density = calculate_halftone_density(edge_distance);
+    
+    // Generate authentic halftone pattern
+    float halftone_alpha = halftone_dot(uv, halftone_density);
+    
+    // Smooth transition to solid area
+    halftone_alpha = blend_to_solid_area(halftone_alpha, halftone_density, edge_distance);
+    
+    // Areas beyond fade distance are completely solid
+    if (edge_distance >= fade_distance) {
+        halftone_alpha = 1.0;
+    }
+    
+    // Apply the authentic halftone effect
+    COLOR = vec4(COLOR.rgb, COLOR.a * halftone_alpha);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_urexa"]
+shader = SubResource("Shader_qv2sr")
+shader_parameter/fade_distance = 0.127
+shader_parameter/halftone_frequency = 40.0
+shader_parameter/dot_scale = 1.85
+shader_parameter/gradient_power = 1.045
+shader_parameter/dot_roundness = 0.95
+shader_parameter/row_offset = 0.5
+shader_parameter/use_staggered_rows = true
+shader_parameter/affect_left_edge = false
+shader_parameter/affect_right_edge = true
+shader_parameter/affect_top_edge = false
+shader_parameter/affect_bottom_edge = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wtf1b"]
+bg_color = Color(0.0745098, 0.0745098, 0.0745098, 0.866667)
+
+[sub_resource type="Theme" id="Theme_qv2sr"]
+default_font = ExtResource("4_urexa")
+default_font_size = 60
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wtf1b"]
+shader = ExtResource("5_wtf1b")
+shader_parameter/fade_distance = 0.182
+shader_parameter/halftone_frequency = 40.0
+shader_parameter/dot_scale = 2.0
+shader_parameter/gradient_power = 0.8
+shader_parameter/dot_roundness = 0.85
+shader_parameter/row_offset = 0.5
+shader_parameter/use_staggered_rows = true
+shader_parameter/affect_left_edge = true
+shader_parameter/affect_right_edge = false
+shader_parameter/affect_top_edge = false
+shader_parameter/affect_bottom_edge = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_edk11"]
+bg_color = Color(0.0745098, 0.0745098, 0.0745098, 0.866667)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xsm3n")
+
+[node name="CharacterCustomiser" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CharacterPreview" type="Sprite2D" parent="CharacterCustomiser"]
+position = Vector2(-350, 0)
+texture = ExtResource("4_edk11")
+
+[node name="CharacterPreview2" type="Sprite2D" parent="CharacterCustomiser"]
+position = Vector2(350, 0)
+texture = ExtResource("4_edk11")
+
+[node name="MainMenu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_g1hdb")
+
+[node name="MouseSpotlight" type="Panel" parent="MainMenu"]
+material = SubResource("ShaderMaterial_upnmg")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_sdd6a")
+
+[node name="Panel" type="Panel" parent="MainMenu"]
+material = SubResource("ShaderMaterial_urexa")
+custom_minimum_size = Vector2(248, 320)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wtf1b")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = -113.0
+offset_right = 70.0
+offset_bottom = 113.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="PlayerNameInput" type="LineEdit" parent="MainMenu/Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+placeholder_text = "Chef Name"
+alignment = 1
+
+[node name="HostButton" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Host Game"
+
+[node name="HSeparator2" type="HSeparator" parent="MainMenu/Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SinglePlayerButton" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Play Offline"
+
+[node name="JoinButton" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Join lobby"
+
+[node name="HSeparator3" type="HSeparator" parent="MainMenu/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="SettingsButton" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Settings"
+
+[node name="CreditsButton" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Credits"
+
+[node name="DiscordButton" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Discord"
+
+[node name="HSeparator" type="HSeparator" parent="MainMenu/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="QuitGameButton" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Quit game"
+
+[node name="Title" type="RichTextLabel" parent="MainMenu"]
+layout_mode = 1
+offset_left = 37.0
+offset_top = 74.0
+offset_right = 667.0
+offset_bottom = 148.0
+theme = SubResource("Theme_qv2sr")
+bbcode_enabled = true
+text = "Chef Wobbles"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_qv2sr")
+
+[node name="CreditsMenu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_5t0xv")
+
+[node name="Panel" type="Panel" parent="CreditsMenu"]
+material = SubResource("ShaderMaterial_wtf1b")
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_edk11")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CreditsMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+
+[node name="Lobby" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Lobby"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -143.5
+offset_right = 143.5
+offset_bottom = 54.0
+grow_horizontal = 2
+
+[node name="StatusLabel" type="Label" parent="Lobby/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Lobby Status"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Lobby/VBoxContainer"]
+layout_mode = 2
+
+[node name="StartGameButton" type="Button" parent="Lobby/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Start Game"
+
+[node name="LeaveLobbyButton" type="Button" parent="Lobby/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Leave Lobby"
+
+[node name="PlayerList" type="VBoxContainer" parent="Lobby/VBoxContainer"]
+layout_mode = 2
+
+[node name="ConnectionDialog" type="AcceptDialog" parent="."]
+theme = ExtResource("2_n0nnf")
+
+[node name="ConnectionStatus" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -117.5
+offset_top = -23.0
+offset_right = 117.5
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_n0nnf")
+text = "Connection Status..."
+horizontal_alignment = 1
+
+[node name="Preview" type="SubViewport" parent="."]
+
+[node name="CharacterPreview" parent="Preview" instance=ExtResource("3_n0nnf")]
+
+[node name="JoinDialog" type="AcceptDialog" parent="."]
+title = "Join a game"
+size = Vector2i(239, 115)
+theme = ExtResource("2_n0nnf")
+ok_button_text = "Cancel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="JoinDialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 231.0
+offset_bottom = 70.0
+
+[node name="IPInput" type="LineEdit" parent="JoinDialog/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+placeholder_text = "ip address"
+
+[node name="HSeparator" type="HSeparator" parent="JoinDialog/VBoxContainer"]
+layout_mode = 2
+
+[node name="JoinConfirmationButton" type="Button" parent="JoinDialog/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_n0nnf")
+text = "Join lobby"
+
+[node name="QuitDialog" type="AcceptDialog" parent="."]
+auto_translate_mode = 1
+mode = 3
+title = "Quit the Game?"
+size = Vector2i(239, 115)
+theme = ExtResource("2_n0nnf")
+ok_button_text = "Yes, please!"
+
+[node name="QuitConfirmationButton" type="Button" parent="QuitDialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 151.0
+offset_bottom = 35.0
+theme = ExtResource("2_n0nnf")
+text = "No, thank you."
+
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/CreditsButton" to="CreditsMenu" method="_on_credits_button_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/QuitGameButton" to="." method="_on_quit_game_button_pressed"]
+[connection signal="canceled" from="JoinDialog" to="." method="_on_join_dialog_canceled"]
+[connection signal="confirmed" from="JoinDialog" to="." method="_on_join_dialog_confirmed"]
+[connection signal="confirmed" from="QuitDialog" to="." method="_on_quit_dialog_confirmed"]
+[connection signal="pressed" from="QuitDialog/QuitConfirmationButton" to="." method="_on_quit_confirmation_button_pressed"]
