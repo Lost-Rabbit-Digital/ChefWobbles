@@ -1,10 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1li80ofvmj04"]
+[gd_scene load_steps=10 format=3 uid="uid://b1li80ofvmj04"]
 
 [ext_resource type="Script" uid="uid://dc27v1ly16nry" path="res://user_interface/scripts/pause_menu.gd" id="1_yasr7"]
 [ext_resource type="PackedScene" uid="uid://ddlj3gyuqhkn5" path="res://scenes/user_interface/main_menu.tscn" id="2_8p2u1"]
+[ext_resource type="Theme" uid="uid://dq1tetwaiurgt" path="res://resources/themes/general_theme.tres" id="3_jd7q4"]
+[ext_resource type="FontFile" uid="uid://b0wjuv1dm2kwv" path="res://fonts/kaph_truetype/Kaph-Regular.ttf" id="3_qheht"]
+[ext_resource type="Script" uid="uid://cwyphgrwfjfof" path="res://user_interface/scripts/text_wobble.gd" id="4_4okxu"]
+[ext_resource type="Script" uid="uid://dgvok4xyvhk7d" path="res://user_interface/scripts/version_label.gd" id="6_4okxu"]
+[ext_resource type="Script" uid="uid://c4oimoxwb0vl6" path="res://user_interface/scripts/hover_wobbler.gd" id="6_irus0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8p2u1"]
+bg_color = Color(0.0745098, 0.0745098, 0.0745098, 0.866667)
+
+[sub_resource type="Theme" id="Theme_irus0"]
+default_font = ExtResource("3_qheht")
+default_font_size = 60
 
 [node name="PauseMenu" type="Control"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,17 +27,62 @@ main_menu_scene = ExtResource("2_8p2u1")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -85.0
-offset_top = -85.0
-offset_right = 85.0
-offset_bottom = 85.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8p2u1")
+
+[node name="Title" type="RichTextLabel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 79.0
+offset_right = 315.0
+offset_bottom = 153.0
+grow_horizontal = 2
+theme = SubResource("Theme_irus0")
+theme_override_colors/default_color = Color(0.994014, 0.904402, 0.819316, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/shadow_offset_x = -8
+bbcode_enabled = true
+text = "Chef"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_4okxu")
+wobble_interval_min = 3.0
+wobble_interval_max = 12.0
+
+[node name="Title2" type="RichTextLabel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 152.0
+offset_right = 315.0
+offset_bottom = 226.0
+grow_horizontal = 2
+theme = SubResource("Theme_irus0")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/shadow_offset_x = -8
+bbcode_enabled = true
+text = "Wobbles"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_4okxu")
+wobble_interval_min = 3.0
+wobble_interval_max = 12.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
@@ -43,18 +99,69 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="ResumeButton" type="Button" parent="Panel/VBoxContainer"]
+[node name="BackButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "Resume"
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "Back"
+flat = true
+script = ExtResource("6_irus0")
 
-[node name="MainMenuButton" type="Button" parent="Panel/VBoxContainer"]
+[node name="AccoladesButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "Main Menu"
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "Accolades"
+flat = true
+script = ExtResource("6_irus0")
 
-[node name="DesktopButton" type="Button" parent="Panel/VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "Quit to Desktop"
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "Settings"
+flat = true
+script = ExtResource("6_irus0")
 
-[connection signal="pressed" from="Panel/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/DesktopButton" to="." method="_on_desktop_button_pressed"]
+[node name="ControlsButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "Controls"
+flat = true
+script = ExtResource("6_irus0")
+
+[node name="LeaveGameButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "Leave Game"
+flat = true
+script = ExtResource("6_irus0")
+
+[node name="VersionLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 12
+text = "v.1.0.0"
+horizontal_alignment = 1
+script = ExtResource("6_4okxu")
+
+[connection signal="pressed" from="Panel/VBoxContainer/BackButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/AccoladesButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/SettingsButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/ControlsButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/LeaveGameButton" to="." method="_on_desktop_button_pressed"]
