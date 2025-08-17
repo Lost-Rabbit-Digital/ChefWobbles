@@ -345,6 +345,7 @@ theme = ExtResource("2_n0nnf")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
 theme_override_constants/outline_size = 16
+toggle_mode = true
 shortcut = SubResource("Shortcut_5jtc4")
 text = "Settings"
 flat = true
@@ -513,6 +514,7 @@ text = "Join lobby"
 
 [connection signal="meta_clicked" from="MainMenu/CreditsMenu/Panel/RichTextLabel" to="MainMenu/CreditsMenu" method="_on_rich_text_label_meta_clicked"]
 [connection signal="meta_clicked" from="MainMenu/SettingsMenu/Panel/RichTextLabel" to="MainMenu/SettingsMenu" method="_on_rich_text_label_meta_clicked"]
+[connection signal="toggled" from="MainMenu/VBoxContainer/SettingsButton" to="MainMenu/SettingsMenu" method="_on_settings_button_toggled"]
 [connection signal="toggled" from="MainMenu/VBoxContainer/CreditsButton" to="MainMenu/CreditsMenu" method="_on_credits_button_toggled"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/DiscordButton" to="." method="_on_discord_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/QuitGameButton" to="." method="_on_quit_game_button_pressed"]
