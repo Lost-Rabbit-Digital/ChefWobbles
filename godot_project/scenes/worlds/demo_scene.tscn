@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bc0sl1rkq0hul" path="res://scripts/multiplayer/multiplayer_game_manager.gd" id="1_8sg6o"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="2_0cmys"]
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="2_8sg6o"]
-[ext_resource type="Script" uid="uid://b31777dpj7ckh" path="res://scripts/user_interface/item_display_controller.gd" id="3_hmwhd"]
+[ext_resource type="Script" uid="uid://b31777dpj7ckh" path="res://user_interface/scripts/item_display_controller.gd" id="3_hmwhd"]
 [ext_resource type="PackedScene" uid="uid://c03wrgomhlo4s" path="res://scenes/interactables/food/burger_patty.tscn" id="3_j51jv"]
 [ext_resource type="FontFile" uid="uid://b0wjuv1dm2kwv" path="res://fonts/kaph_truetype/Kaph-Regular.ttf" id="3_mcgj6"]
 [ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://textures/prototype_textures/PNG/logo_blue_512x512.png" id="5_g2hwh"]

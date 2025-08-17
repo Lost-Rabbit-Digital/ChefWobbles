@@ -1,15 +1,15 @@
 [gd_scene load_steps=29 format=3 uid="uid://ddlj3gyuqhkn5"]
 
-[ext_resource type="Script" uid="uid://c5s8axkpyr1u0" path="res://user_interface/scripts/main_menu.gd" id="1_xsm3n"]
+[ext_resource type="Script" uid="uid://c5s8axkpyr1u0" path="res://scripts/user_interface/main_menu.gd" id="1_xsm3n"]
 [ext_resource type="Theme" uid="uid://dq1tetwaiurgt" path="res://resources/themes/general_theme.tres" id="2_n0nnf"]
 [ext_resource type="PackedScene" uid="uid://byrvfkvijm1xg" path="res://scenes/character_preview.tscn" id="3_n0nnf"]
+[ext_resource type="Script" uid="uid://b6omovm3nwljd" path="res://scenes/user_interface/credits_menu.gd" id="4_5t0xv"]
 [ext_resource type="Texture2D" uid="uid://dedv6nw43y5ih" path="res://icon.png" id="4_edk11"]
 [ext_resource type="Script" uid="uid://dgbf85hb6emat" path="res://user_interface/scripts/mouse_spotlight.gd" id="4_sdd6a"]
 [ext_resource type="Shader" uid="uid://cvtlgt3h7gqh1" path="res://user_interface/shaders/mouse_spotlight.gdshader" id="4_ua8qe"]
 [ext_resource type="FontFile" uid="uid://b0wjuv1dm2kwv" path="res://fonts/kaph_truetype/Kaph-Regular.ttf" id="4_urexa"]
-[ext_resource type="Script" uid="uid://cwyphgrwfjfof" path="res://user_interface/scripts/text_wobble.gd" id="5_qv2sr"]
+[ext_resource type="Script" uid="uid://cwyphgrwfjfof" path="res://scripts/user_interface/text_wobble.gd" id="5_qv2sr"]
 [ext_resource type="Texture2D" uid="uid://clefhi21g7gmg" path="res://user_interface/main_menu_background.png" id="6_g1hdb"]
-[ext_resource type="Script" uid="uid://b6omovm3nwljd" path="res://scenes/user_interface/credits_menu.gd" id="8_44fa0"]
 [ext_resource type="Script" uid="uid://c4oimoxwb0vl6" path="res://user_interface/scripts/hover_wobbler.gd" id="9_ua8qe"]
 [ext_resource type="Script" uid="uid://cr38ks37gop2j" path="res://user_interface/scripts/settings_menu.gd" id="10_upnmg"]
 [ext_resource type="Script" uid="uid://dgvok4xyvhk7d" path="res://user_interface/scripts/version_label.gd" id="12_44fa0"]
@@ -194,7 +194,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("8_44fa0")
+script = ExtResource("4_5t0xv")
+scroll_speed = 40.0
 
 [node name="Panel" type="Panel" parent="MainMenu/CreditsMenu"]
 custom_minimum_size = Vector2(384, 0)
@@ -221,6 +222,7 @@ theme_override_constants/outline_size = 16
 bbcode_enabled = true
 
 [node name="SettingsMenu" type="Control" parent="MainMenu"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

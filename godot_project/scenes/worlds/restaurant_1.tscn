@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="1_hv4yo"]
 [ext_resource type="FontFile" uid="uid://b0wjuv1dm2kwv" path="res://fonts/kaph_truetype/Kaph-Regular.ttf" id="2_c64ng"]
 [ext_resource type="PackedScene" uid="uid://cd70x3de3pbl4" path="res://scenes/character.tscn" id="2_mton0"]
-[ext_resource type="Script" uid="uid://b31777dpj7ckh" path="res://scripts/user_interface/item_display_controller.gd" id="3_6735l"]
+[ext_resource type="Script" uid="uid://b31777dpj7ckh" path="res://user_interface/scripts/item_display_controller.gd" id="3_6735l"]
 [ext_resource type="PackedScene" uid="uid://b1li80ofvmj04" path="res://scenes/user_interface/pause_menu.tscn" id="4_mton0"]
 [ext_resource type="PackedScene" uid="uid://c03wrgomhlo4s" path="res://scenes/interactables/food/burger_patty.tscn" id="5_oa4ri"]
 [ext_resource type="Texture2D" uid="uid://p3vl4tw45c5r" path="res://textures/prototype_textures/PNG/logo_blue_512x512.png" id="7_5vn2u"]
