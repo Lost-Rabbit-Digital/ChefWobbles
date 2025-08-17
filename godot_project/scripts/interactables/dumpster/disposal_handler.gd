@@ -133,7 +133,7 @@ func _animate_disposal(disposal_data: DisposalData) -> void:
 	
 	# Start shrinking audio
 	if audio_manager:
-		var audio_player = audio_manager.play_shrinking_sound_on_object(rigid_body)
+		var audio_player = audio_manager.play_audio_on_object(rigid_body, "shrink")
 		disposal_data.audio_player = audio_player
 		
 		# Use audio length for animation duration if available
@@ -184,8 +184,10 @@ func _schedule_plop_sound(disposal_data: DisposalData) -> void:
 
 func _play_plop_sound(disposal_data: DisposalData) -> void:
 	"""Play the plop sound if disposal is still active"""
+	var rigid_body = disposal_data.rigid_body
+	
 	if active_disposals.has(disposal_data.rigid_body) and audio_manager:
-		audio_manager.play_disposal_sound()
+		audio_manager.play_audio_on_object(rigid_body, "destruction")
 
 func _complete_disposal(disposal_data: DisposalData) -> void:
 	"""Complete the disposal process"""

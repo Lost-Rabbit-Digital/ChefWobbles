@@ -171,8 +171,5 @@ text = "v.1.0.0"
 horizontal_alignment = 1
 script = ExtResource("6_4okxu")
 
-[connection signal="pressed" from="Panel/VBoxContainer/BackButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/AccoladesButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/SettingsButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/ControlsButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/LeaveGameButton" to="." method="_on_desktop_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]

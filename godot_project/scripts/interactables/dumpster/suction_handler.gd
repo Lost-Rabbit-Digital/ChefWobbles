@@ -126,7 +126,7 @@ func start_suction(rigid_body: RigidBody3D) -> void:
 	
 	# Play whoosh sound when suction starts
 	if audio_manager:
-		var whoosh_player = audio_manager.play_whoosh_sound_on_object(rigid_body)
+		var whoosh_player = audio_manager.play_audio_on_object(rigid_body, "whoosh")
 		suction_data.whoosh_audio_player = whoosh_player
 	
 	# Start animation
