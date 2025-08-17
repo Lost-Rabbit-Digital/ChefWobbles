@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://ddlj3gyuqhkn5"]
+[gd_scene load_steps=41 format=3 uid="uid://ddlj3gyuqhkn5"]
 
 [ext_resource type="Script" uid="uid://c5s8axkpyr1u0" path="res://user_interface/scripts/main_menu.gd" id="1_xsm3n"]
 [ext_resource type="Theme" uid="uid://dq1tetwaiurgt" path="res://resources/themes/general_theme.tres" id="2_n0nnf"]
@@ -13,6 +13,18 @@
 [ext_resource type="Script" uid="uid://c4oimoxwb0vl6" path="res://user_interface/scripts/hover_wobbler.gd" id="9_ua8qe"]
 [ext_resource type="Script" uid="uid://cr38ks37gop2j" path="res://user_interface/scripts/settings_menu.gd" id="10_upnmg"]
 [ext_resource type="Script" uid="uid://dgvok4xyvhk7d" path="res://user_interface/scripts/version_label.gd" id="12_44fa0"]
+[ext_resource type="Script" uid="uid://dw0ida62xutte" path="res://user_interface/scripts/menu_manager.gd" id="14_74puq"]
+[ext_resource type="Script" path="res://Scripts/audio/music_randomiser.gd" id="15_ut8l7"]
+[ext_resource type="AudioStream" uid="uid://0vhuw27xogj8" path="res://audio/music/Cuddle Clouds.ogg" id="16_ltuqm"]
+[ext_resource type="AudioStream" uid="uid://dbiunnd0wiff7" path="res://audio/music/Drifting Memories.ogg" id="17_ry7cu"]
+[ext_resource type="AudioStream" uid="uid://dempf1idxhdvw" path="res://audio/music/Evening Harmony.ogg" id="18_ckj3g"]
+[ext_resource type="AudioStream" uid="uid://bp1u1j3y0evjm" path="res://audio/music/Floating Dream.ogg" id="19_idisb"]
+[ext_resource type="AudioStream" uid="uid://c5b8mjpjj7txe" path="res://audio/music/Forgotten Biomes.ogg" id="20_54fjk"]
+[ext_resource type="AudioStream" uid="uid://d1n0obngvv6k4" path="res://audio/music/Gentle Breeze.ogg" id="21_5xclq"]
+[ext_resource type="AudioStream" uid="uid://bmq805hd2t7ae" path="res://audio/music/Wanderers Tale.ogg" id="22_qrxyp"]
+[ext_resource type="AudioStream" uid="uid://dppngpsx8ctmp" path="res://audio/music/Polar Lights.ogg" id="23_ue5nr"]
+[ext_resource type="AudioStream" uid="uid://d0bbu53enpg0v" path="res://audio/music/Golden Gleam.ogg" id="24_krlh6"]
+[ext_resource type="AudioStream" uid="uid://cyowywmbdvvh5" path="res://audio/music/Sunlight Through Leaves.ogg" id="25_r4yh7"]
 
 [sub_resource type="Theme" id="Theme_qv2sr"]
 default_font = ExtResource("4_urexa")
@@ -259,6 +271,18 @@ text = "Settings"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="CloseButton" type="Button" parent="MainMenu/SettingsMenu/Panel"]
+layout_mode = 1
+offset_right = 31.0
+offset_bottom = 45.0
+theme = ExtResource("2_n0nnf")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 32
+text = "X"
+flat = true
+
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
 layout_mode = 1
 anchors_preset = 8
@@ -345,7 +369,6 @@ theme = ExtResource("2_n0nnf")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
 theme_override_constants/outline_size = 16
-toggle_mode = true
 shortcut = SubResource("Shortcut_5jtc4")
 text = "Settings"
 flat = true
@@ -363,7 +386,6 @@ theme = ExtResource("2_n0nnf")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
 theme_override_constants/outline_size = 16
-toggle_mode = true
 shortcut = SubResource("Shortcut_moaoo")
 text = "Credits"
 flat = true
@@ -512,10 +534,59 @@ layout_mode = 2
 theme = ExtResource("2_n0nnf")
 text = "Join lobby"
 
+[node name="MenuManager" type="Control" parent="." node_paths=PackedStringArray("managed_menus")]
+anchors_preset = 0
+script = ExtResource("14_74puq")
+managed_menus = [NodePath("../MainMenu/CreditsMenu"), NodePath("../MainMenu/SettingsMenu")]
+
+[node name="Music" type="Node" parent="."]
+script = ExtResource("15_ut8l7")
+
+[node name="CuddleClouds" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("16_ltuqm")
+bus = &"Music"
+
+[node name="DriftingMemories" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("17_ry7cu")
+bus = &"Music"
+
+[node name="EveningHarmony" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("18_ckj3g")
+bus = &"Music"
+
+[node name="FloatingDream" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("19_idisb")
+bus = &"Music"
+
+[node name="ForgottonBiomes" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("20_54fjk")
+bus = &"Music"
+
+[node name="GentleBreeze" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("21_5xclq")
+bus = &"Music"
+
+[node name="WanderersTale" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("22_qrxyp")
+bus = &"Music"
+
+[node name="PolarLights" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("23_ue5nr")
+bus = &"Music"
+
+[node name="GoldenGleam" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("24_krlh6")
+bus = &"Music"
+
+[node name="SunlightThroughLeaves" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("25_r4yh7")
+bus = &"Music"
+
 [connection signal="meta_clicked" from="MainMenu/CreditsMenu/Panel/RichTextLabel" to="MainMenu/CreditsMenu" method="_on_rich_text_label_meta_clicked"]
 [connection signal="meta_clicked" from="MainMenu/SettingsMenu/Panel/RichTextLabel" to="MainMenu/SettingsMenu" method="_on_rich_text_label_meta_clicked"]
-[connection signal="toggled" from="MainMenu/VBoxContainer/SettingsButton" to="MainMenu/SettingsMenu" method="_on_settings_button_toggled"]
-[connection signal="toggled" from="MainMenu/VBoxContainer/CreditsButton" to="MainMenu/CreditsMenu" method="_on_credits_button_toggled"]
+[connection signal="pressed" from="MainMenu/SettingsMenu/Panel/CloseButton" to="MainMenu/SettingsMenu" method="_on_close_button_pressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/SettingsButton" to="MainMenu/SettingsMenu" method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/CreditsButton" to="MainMenu/CreditsMenu" method="_on_credits_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/DiscordButton" to="." method="_on_discord_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/QuitGameButton" to="." method="_on_quit_game_button_pressed"]
 [connection signal="canceled" from="JoinDialog" to="." method="_on_join_dialog_canceled"]
