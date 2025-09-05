@@ -49,6 +49,7 @@ paper_objects=""
 flesh_objects=""
 remote_players=""
 non_trashable="Objects which cannot be thrown into the trash"
+accolades=""
 
 [input]
 

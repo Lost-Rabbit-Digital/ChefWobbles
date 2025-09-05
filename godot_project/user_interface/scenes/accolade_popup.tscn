@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://ntwxbm2tynnr"]
+
+[ext_resource type="Texture2D" uid="uid://bek76xm8jrghr" path="res://user_interface/textures/accolades/accolade_popup.png" id="1_jaeln"]
+[ext_resource type="FontFile" uid="uid://b0wjuv1dm2kwv" path="res://fonts/kaph_truetype/Kaph-Regular.ttf" id="2_pha6d"]
+
+[node name="AccoladePopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AccoladePopup" type="Sprite2D" parent="."]
+texture = ExtResource("1_jaeln")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AccoladePopup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -188.0
+offset_top = -60.0
+offset_right = -196.0
+offset_bottom = -91.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="RichTextLabel" parent="AccoladePopup/VBoxContainer"]
+custom_minimum_size = Vector2(376, 28)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.16, 0.1464, 0.1328, 1)
+theme_override_fonts/normal_font = ExtResource("2_pha6d")
+theme_override_font_sizes/normal_font_size = 24
+text = "???"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Separator" type="RichTextLabel" parent="AccoladePopup/VBoxContainer"]
+custom_minimum_size = Vector2(376, 16)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.16, 0.1464, 0.1328, 1)
+theme_override_fonts/normal_font = ExtResource("2_pha6d")
+theme_override_font_sizes/normal_font_size = 16
+text = "--------------------------------------------"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Body" type="RichTextLabel" parent="AccoladePopup/VBoxContainer"]
+custom_minimum_size = Vector2(376, 38)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.16, 0.1464, 0.1328, 1)
+theme_override_fonts/normal_font = ExtResource("2_pha6d")
+theme_override_font_sizes/normal_font_size = 12
+text = "Achieve this through secret methods..."
+fit_content = true
+scroll_active = false

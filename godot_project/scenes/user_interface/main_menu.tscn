@@ -541,6 +541,7 @@ managed_menus = [NodePath("../MainMenu/CreditsMenu"), NodePath("../MainMenu/Sett
 
 [node name="Music" type="Node" parent="."]
 script = ExtResource("15_ut8l7")
+enable_debug_output = false
 
 [node name="CuddleClouds" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("16_ltuqm")

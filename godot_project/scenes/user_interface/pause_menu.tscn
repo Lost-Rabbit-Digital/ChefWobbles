@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1li80ofvmj04"]
+[gd_scene load_steps=23 format=3 uid="uid://b1li80ofvmj04"]
 
 [ext_resource type="Script" uid="uid://dc27v1ly16nry" path="res://user_interface/scripts/pause_menu.gd" id="1_yasr7"]
 [ext_resource type="PackedScene" uid="uid://ddlj3gyuqhkn5" path="res://scenes/user_interface/main_menu.tscn" id="2_8p2u1"]
@@ -7,6 +7,14 @@
 [ext_resource type="Script" uid="uid://cwyphgrwfjfof" path="res://user_interface/scripts/text_wobble.gd" id="4_4okxu"]
 [ext_resource type="Script" uid="uid://dgvok4xyvhk7d" path="res://user_interface/scripts/version_label.gd" id="6_4okxu"]
 [ext_resource type="Script" uid="uid://c4oimoxwb0vl6" path="res://user_interface/scripts/hover_wobbler.gd" id="6_irus0"]
+[ext_resource type="Script" uid="uid://duexaoouyqxm8" path="res://user_interface/scripts/accolades/accolade_wobbler.gd" id="8_qtm7a"]
+[ext_resource type="Texture2D" uid="uid://by3n8b0ogkbec" path="res://user_interface/textures/accolades/accolade_1.png" id="8_w0kvp"]
+[ext_resource type="Texture2D" uid="uid://d0hyd31pqaik4" path="res://user_interface/textures/accolades/accolade_2.png" id="9_75gvq"]
+[ext_resource type="Shader" uid="uid://la0bbtixjxxi" path="res://user_interface/shaders/hidden_accolade.gdshader" id="10_75gvq"]
+[ext_resource type="Texture2D" uid="uid://dmev42tpdrnnk" path="res://user_interface/textures/accolades/accolade_3.png" id="10_attwk"]
+[ext_resource type="Texture2D" uid="uid://c8ia8xen0pt8u" path="res://user_interface/textures/accolades/accolade_4.png" id="11_qtm7a"]
+[ext_resource type="Texture2D" uid="uid://bi18b7qhwqohu" path="res://user_interface/textures/controls_template.png" id="13_gijfb"]
+[ext_resource type="Script" uid="uid://bkq2bmuc65dfc" path="res://user_interface/scripts/accolades/accolade_popup_manager.gd" id="14_lt6ia"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8p2u1"]
 bg_color = Color(0.0745098, 0.0745098, 0.0745098, 0.866667)
@@ -14,6 +22,38 @@ bg_color = Color(0.0745098, 0.0745098, 0.0745098, 0.866667)
 [sub_resource type="Theme" id="Theme_irus0"]
 default_font = ExtResource("3_qheht")
 default_font_size = 60
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0kvp"]
+bg_color = Color(0.239991, 0.540989, 0.505794, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.992157, 0.905882, 0.819608, 1)
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 64
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_attwk"]
+shader = ExtResource("10_75gvq")
+shader_parameter/transparency = 0.5
+shader_parameter/grayscale_intensity = 1.0
+shader_parameter/brightness_reduction = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iv7aa"]
+shader = ExtResource("10_75gvq")
+shader_parameter/transparency = 0.5
+shader_parameter/grayscale_intensity = 1.0
+shader_parameter/brightness_reduction = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qtm7a"]
+shader = ExtResource("10_75gvq")
+shader_parameter/transparency = 0.5
+shader_parameter/grayscale_intensity = 1.0
+shader_parameter/brightness_reduction = 1.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3e12g"]
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -25,7 +65,8 @@ grow_vertical = 2
 script = ExtResource("1_yasr7")
 main_menu_scene = ExtResource("2_8p2u1")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="MainPanel" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,7 +75,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8p2u1")
 
-[node name="Title" type="RichTextLabel" parent="Panel"]
+[node name="Title" type="RichTextLabel" parent="MainPanel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -59,7 +100,7 @@ script = ExtResource("4_4okxu")
 wobble_interval_min = 3.0
 wobble_interval_max = 12.0
 
-[node name="Title2" type="RichTextLabel" parent="Panel"]
+[node name="Title2" type="RichTextLabel" parent="MainPanel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -84,7 +125,7 @@ script = ExtResource("4_4okxu")
 wobble_interval_min = 3.0
 wobble_interval_max = 12.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -99,7 +140,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="BackButton" type="Button" parent="Panel/VBoxContainer"]
+[node name="BackButton" type="Button" parent="MainPanel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_jd7q4")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -109,7 +150,7 @@ text = "Back"
 flat = true
 script = ExtResource("6_irus0")
 
-[node name="AccoladesButton" type="Button" parent="Panel/VBoxContainer"]
+[node name="AccoladesButton" type="Button" parent="MainPanel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_jd7q4")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -119,7 +160,7 @@ text = "Accolades"
 flat = true
 script = ExtResource("6_irus0")
 
-[node name="SettingsButton" type="Button" parent="Panel/VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="MainPanel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_jd7q4")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -129,7 +170,7 @@ text = "Settings"
 flat = true
 script = ExtResource("6_irus0")
 
-[node name="ControlsButton" type="Button" parent="Panel/VBoxContainer"]
+[node name="ControlsButton" type="Button" parent="MainPanel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_jd7q4")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -139,7 +180,7 @@ text = "Controls"
 flat = true
 script = ExtResource("6_irus0")
 
-[node name="LeaveGameButton" type="Button" parent="Panel/VBoxContainer"]
+[node name="LeaveGameButton" type="Button" parent="MainPanel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_jd7q4")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -149,7 +190,7 @@ text = "Leave Game"
 flat = true
 script = ExtResource("6_irus0")
 
-[node name="VersionLabel" type="Label" parent="Panel"]
+[node name="VersionLabel" type="Label" parent="MainPanel"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -171,5 +212,474 @@ text = "v.1.0.0"
 horizontal_alignment = 1
 script = ExtResource("6_4okxu")
 
-[connection signal="pressed" from="Panel/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
+[node name="AccoladesPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8p2u1")
+
+[node name="Title" type="RichTextLabel" parent="AccoladesPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 79.0
+offset_right = 315.0
+offset_bottom = 153.0
+grow_horizontal = 2
+theme = SubResource("Theme_irus0")
+theme_override_colors/default_color = Color(0.994014, 0.904402, 0.819316, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/shadow_offset_x = -8
+bbcode_enabled = true
+text = "Accolades"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_4okxu")
+wobble_interval_min = 3.0
+wobble_interval_max = 12.0
+
+[node name="Panel" type="Panel" parent="AccoladesPanel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -136.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w0kvp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AccoladesPanel/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -542.0
+offset_top = -93.5
+offset_right = 542.0
+offset_bottom = 93.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="AccoladesPanel/Panel"]
+layout_mode = 2
+offset_left = 98.0
+offset_top = 36.5
+offset_right = 1182.0
+offset_bottom = 180.5
+theme_override_constants/separation = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AccoladesPanel/Panel/VBoxContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="TextureRect2" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("9_75gvq")
+
+[node name="TextureRect3" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("10_attwk")
+
+[node name="TextureRect4" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="TextureRect5" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+layout_mode = 2
+texture = ExtResource("11_qtm7a")
+
+[node name="TextureRect6" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("9_75gvq")
+
+[node name="TextureRect7" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("10_attwk")
+
+[node name="TextureRect8" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="TextureRect9" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_iv7aa")
+layout_mode = 2
+texture = ExtResource("11_qtm7a")
+
+[node name="TextureRect10" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="TextureRect11" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("10_attwk")
+
+[node name="TextureRect12" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("11_qtm7a")
+
+[node name="TextureRect13" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="TextureRect14" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("11_qtm7a")
+
+[node name="TextureRect15" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+layout_mode = 2
+texture = ExtResource("9_75gvq")
+
+[node name="TextureRect16" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="AccoladesPanel/Panel/VBoxContainer2"]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="TextureRect2" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("9_75gvq")
+
+[node name="TextureRect3" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="TextureRect4" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("11_qtm7a")
+
+[node name="TextureRect5" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="TextureRect6" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+layout_mode = 2
+texture = ExtResource("10_attwk")
+
+[node name="TextureRect7" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("11_qtm7a")
+
+[node name="TextureRect8" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="TextureRect9" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("11_qtm7a")
+
+[node name="TextureRect10" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("10_attwk")
+
+[node name="TextureRect11" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("9_75gvq")
+
+[node name="TextureRect12" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("10_attwk")
+
+[node name="TextureRect13" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("11_qtm7a")
+
+[node name="TextureRect14" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("10_attwk")
+
+[node name="TextureRect15" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_attwk")
+layout_mode = 2
+texture = ExtResource("8_w0kvp")
+
+[node name="TextureRect16" type="TextureRect" parent="AccoladesPanel/Panel/VBoxContainer2/HBoxContainer2" groups=["accolades"]]
+material = SubResource("ShaderMaterial_qtm7a")
+layout_mode = 2
+texture = ExtResource("9_75gvq")
+
+[node name="VersionLabel" type="Label" parent="AccoladesPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -67.0
+offset_top = -31.0
+offset_right = 67.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 12
+text = "v.1.0.0"
+horizontal_alignment = 1
+script = ExtResource("6_4okxu")
+
+[node name="AccoladeBackButton" type="Button" parent="AccoladesPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = 115.0
+offset_right = 64.0
+offset_bottom = 142.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "Back"
+flat = true
+script = ExtResource("6_irus0")
+
+[node name="ControlsPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8p2u1")
+
+[node name="Title" type="RichTextLabel" parent="ControlsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 79.0
+offset_right = 315.0
+offset_bottom = 153.0
+grow_horizontal = 2
+theme = SubResource("Theme_irus0")
+theme_override_colors/default_color = Color(0.994014, 0.904402, 0.819316, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/shadow_offset_x = -8
+bbcode_enabled = true
+text = "Controls"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_4okxu")
+wobble_interval_min = 3.0
+wobble_interval_max = 12.0
+
+[node name="Panel" type="Panel" parent="ControlsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3e12g")
+
+[node name="TextureRect" type="TextureRect" parent="ControlsPanel/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -180.0
+offset_right = 320.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_gijfb")
+expand_mode = 1
+
+[node name="VersionLabel" type="Label" parent="ControlsPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -67.0
+offset_top = -31.0
+offset_right = 67.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 12
+text = "v.1.0.0"
+horizontal_alignment = 1
+script = ExtResource("6_4okxu")
+
+[node name="ControlsBackButton" type="Button" parent="ControlsPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -147.0
+offset_right = 64.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "Back"
+flat = true
+script = ExtResource("6_irus0")
+
+[node name="SettingsPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8p2u1")
+
+[node name="Title" type="RichTextLabel" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 79.0
+offset_right = 315.0
+offset_bottom = 153.0
+grow_horizontal = 2
+theme = SubResource("Theme_irus0")
+theme_override_colors/default_color = Color(0.994014, 0.904402, 0.819316, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/shadow_offset_x = -8
+bbcode_enabled = true
+text = "Settings"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_4okxu")
+wobble_interval_min = 3.0
+wobble_interval_max = 12.0
+
+[node name="VersionLabel" type="Label" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -67.0
+offset_top = -31.0
+offset_right = 67.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 12
+text = "v.1.0.0"
+horizontal_alignment = 1
+script = ExtResource("6_4okxu")
+
+[node name="SettingsBackButton" type="Button" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -147.0
+offset_right = 64.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "Back"
+flat = true
+script = ExtResource("6_irus0")
+
+[node name="AccoladeWobbler" type="Node" parent="."]
+script = ExtResource("8_qtm7a")
+
+[node name="AccoladePopup" type="Node2D" parent="."]
+script = ExtResource("14_lt6ia")
+
+[connection signal="pressed" from="MainPanel/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/AccoladesButton" to="." method="_on_accolades_button_pressed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/ControlsButton" to="." method="_on_controls_button_pressed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
+[connection signal="pressed" from="AccoladesPanel/AccoladeBackButton" to="." method="_on_accolade_back_button_pressed"]
+[connection signal="pressed" from="ControlsPanel/ControlsBackButton" to="." method="_on_controls_back_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/SettingsBackButton" to="." method="_on_settings_back_button_pressed"]
