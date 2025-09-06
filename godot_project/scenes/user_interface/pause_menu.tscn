@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b1li80ofvmj04"]
+[gd_scene load_steps=30 format=3 uid="uid://b1li80ofvmj04"]
 
 [ext_resource type="Script" uid="uid://dc27v1ly16nry" path="res://user_interface/scripts/pause_menu.gd" id="1_yasr7"]
 [ext_resource type="PackedScene" uid="uid://ddlj3gyuqhkn5" path="res://scenes/user_interface/main_menu.tscn" id="2_8p2u1"]
@@ -14,14 +14,15 @@
 [ext_resource type="Texture2D" uid="uid://dmev42tpdrnnk" path="res://user_interface/textures/accolades/accolade_3.png" id="10_attwk"]
 [ext_resource type="Texture2D" uid="uid://c8ia8xen0pt8u" path="res://user_interface/textures/accolades/accolade_4.png" id="11_qtm7a"]
 [ext_resource type="Texture2D" uid="uid://bi18b7qhwqohu" path="res://user_interface/textures/controls_template.png" id="13_gijfb"]
+[ext_resource type="Script" uid="uid://bl8c3g5st2oxd" path="res://user_interface/scripts/menus/settings_panel.gd" id="14_3e12g"]
 [ext_resource type="Script" uid="uid://bkq2bmuc65dfc" path="res://user_interface/scripts/accolades/accolade_popup_manager.gd" id="14_lt6ia"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8p2u1"]
-bg_color = Color(0.0745098, 0.0745098, 0.0745098, 0.866667)
+bg_color = Color(0.54, 0.4941, 0.4482, 0.286275)
 
 [sub_resource type="Theme" id="Theme_irus0"]
 default_font = ExtResource("3_qheht")
-default_font_size = 60
+default_font_size = 32
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0kvp"]
 bg_color = Color(0.239991, 0.540989, 0.505794, 1)
@@ -54,6 +55,26 @@ shader_parameter/grayscale_intensity = 1.0
 shader_parameter/brightness_reduction = 1.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3e12g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gijfb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t678s"]
+bg_color = Color(0.231373, 0.2, 0.172549, 0.784314)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_812qm"]
+bg_color = Color(0.23, 0.199333, 0.1725, 0.784314)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0ef5"]
+bg_color = Color(0.231373, 0.2, 0.172549, 0.490196)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_812qm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3e12g"]
+bg_color = Color(0.23, 0.200292, 0.1725, 0.490196)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -592,7 +613,6 @@ flat = true
 script = ExtResource("6_irus0")
 
 [node name="SettingsPanel" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -600,17 +620,34 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8p2u1")
+script = ExtResource("14_3e12g")
 
-[node name="Title" type="RichTextLabel" parent="SettingsPanel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -315.0
-offset_top = 79.0
-offset_right = 315.0
-offset_bottom = 153.0
+[node name="VersionLabel" type="Label" parent="SettingsPanel"]
+layout_mode = 2
+offset_left = 43.0
+offset_top = 689.0
+offset_right = 299.0
+offset_bottom = 704.0
 grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 12
+text = "v.1.0.0"
+horizontal_alignment = 1
+script = ExtResource("6_4okxu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel"]
+layout_mode = 2
+offset_left = 43.0
+offset_right = 299.0
+offset_bottom = 159.0
+
+[node name="Title" type="RichTextLabel" parent="SettingsPanel/VBoxContainer"]
+custom_minimum_size = Vector2(256, 128)
+layout_mode = 2
 theme = SubResource("Theme_irus0")
 theme_override_colors/default_color = Color(0.994014, 0.904402, 0.819316, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -626,41 +663,10 @@ script = ExtResource("4_4okxu")
 wobble_interval_min = 3.0
 wobble_interval_max = 12.0
 
-[node name="VersionLabel" type="Label" parent="SettingsPanel"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -67.0
-offset_top = -31.0
-offset_right = 67.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 0
-theme = ExtResource("3_jd7q4")
-theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 16
-theme_override_font_sizes/font_size = 12
-text = "v.1.0.0"
-horizontal_alignment = 1
-script = ExtResource("6_4okxu")
-
-[node name="SettingsBackButton" type="Button" parent="SettingsPanel"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -147.0
-offset_right = 64.0
-offset_bottom = -120.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="SettingsBackButton" type="Button" parent="SettingsPanel/VBoxContainer"]
+custom_minimum_size = Vector2(98, 0)
+layout_mode = 2
+size_flags_horizontal = 4
 theme = ExtResource("3_jd7q4")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
@@ -668,6 +674,1405 @@ theme_override_constants/outline_size = 16
 text = "Back"
 flat = true
 script = ExtResource("6_irus0")
+
+[node name="SettingsArea" type="Panel" parent="SettingsPanel"]
+custom_minimum_size = Vector2(1024, 720)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1024.0
+offset_top = -360.0
+offset_bottom = 360.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_gijfb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/SettingsArea"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -388.0
+offset_top = 31.0
+offset_right = 388.0
+offset_bottom = 707.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="GeneralTab" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(256, 24)
+layout_mode = 2
+
+[node name="GeneralTabButton" type="Button" parent="SettingsPanel/SettingsArea/VBoxContainer/HBoxContainer/GeneralTab"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_styles/focus = SubResource("StyleBoxFlat_t678s")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_812qm")
+theme_override_styles/normal = SubResource("StyleBoxFlat_y0ef5")
+text = "General"
+
+[node name="GraphicsTab" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(256, 24)
+layout_mode = 2
+
+[node name="GraphicsTabButton" type="Button" parent="SettingsPanel/SettingsArea/VBoxContainer/HBoxContainer/GraphicsTab"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_styles/focus = SubResource("StyleBoxFlat_t678s")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_812qm")
+theme_override_styles/normal = SubResource("StyleBoxFlat_y0ef5")
+text = "Graphics"
+
+[node name="AudioTab" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(256, 24)
+layout_mode = 2
+
+[node name="AudioTabButton" type="Button" parent="SettingsPanel/SettingsArea/VBoxContainer/HBoxContainer/AudioTab"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_styles/focus = SubResource("StyleBoxFlat_t678s")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_812qm")
+theme_override_styles/normal = SubResource("StyleBoxFlat_y0ef5")
+text = "Audio"
+
+[node name="GeneralTabPanel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer"]
+custom_minimum_size = Vector2(0, 640)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_812qm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="LanguageRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/LanguageRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 5
+popup/item_0/text = "English"
+popup/item_0/id = 0
+popup/item_1/text = "Deutsch"
+popup/item_1/id = 1
+popup/item_2/text = "Korean"
+popup/item_2/id = 2
+popup/item_3/text = "Japanese"
+popup/item_3/id = 3
+popup/item_4/id = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/LanguageRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Language"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FoVRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/FoVRow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/FoVRow/HBoxContainer"]
+custom_minimum_size = Vector2(96, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/FoVRow/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/FoVRow/HBoxContainer"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+min_value = 60.0
+value = 100.0
+rounded = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/FoVRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Field of View"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MouseSensRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/MouseSensRow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/MouseSensRow/HBoxContainer"]
+custom_minimum_size = Vector2(96, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/MouseSensRow/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "2.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/MouseSensRow/HBoxContainer"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+min_value = 0.1
+max_value = 5.0
+value = 2.1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/MouseSensRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Mouse Sensitivity"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ControllerSensRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/ControllerSensRow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/ControllerSensRow/HBoxContainer"]
+custom_minimum_size = Vector2(96, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/ControllerSensRow/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "2.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/ControllerSensRow/HBoxContainer"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+min_value = 0.1
+max_value = 5.0
+value = 2.1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/ControllerSensRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Controller Sensitivity"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ControllerIconsRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/ControllerIconsRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 3
+popup/item_0/text = "Auto"
+popup/item_0/id = 0
+popup/item_1/text = "Playstation"
+popup/item_1/id = 1
+popup/item_2/text = "Xbox"
+popup/item_2/id = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/ControllerIconsRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Controller Icons"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InvertXRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/InvertXRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "On"
+popup/item_1/id = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/InvertXRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Invert X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InvertYRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/InvertYRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "On"
+popup/item_1/id = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/InvertYRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Invert Y"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LobbyModeRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/LobbyModeRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Invite only"
+popup/item_0/id = 0
+popup/item_1/text = "Open to friends"
+popup/item_1/id = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GeneralTabPanel/VBoxContainer/LobbyModeRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Lobby Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GraphicsTabPanel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 640)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_812qm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="WindowModeRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/WindowModeRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 5
+popup/item_0/text = "English"
+popup/item_0/id = 0
+popup/item_1/text = "Deutsch"
+popup/item_1/id = 1
+popup/item_2/text = "Korean"
+popup/item_2/id = 2
+popup/item_3/text = "Japanese"
+popup/item_3/id = 3
+popup/item_4/id = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/WindowModeRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Window Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResolutionRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/ResolutionRow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/ResolutionRow/HBoxContainer"]
+custom_minimum_size = Vector2(96, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/ResolutionRow/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/ResolutionRow/HBoxContainer"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+min_value = 60.0
+value = 100.0
+rounded = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/ResolutionRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Resolution"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MaxFramerateRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/MaxFramerateRow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/MaxFramerateRow/HBoxContainer"]
+custom_minimum_size = Vector2(96, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/MaxFramerateRow/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "2.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/MaxFramerateRow/HBoxContainer"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+min_value = 0.1
+max_value = 5.0
+value = 2.1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/MaxFramerateRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Max Framerate"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VsyncRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/VsyncRow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/VsyncRow/HBoxContainer"]
+custom_minimum_size = Vector2(96, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/VsyncRow/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "2.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/VsyncRow/HBoxContainer"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+min_value = 0.1
+max_value = 5.0
+value = 2.1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/VsyncRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "VSync"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RenderScaleRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/RenderScaleRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 3
+popup/item_0/text = "Auto"
+popup/item_0/id = 0
+popup/item_1/text = "Playstation"
+popup/item_1/id = 1
+popup/item_2/text = "Xbox"
+popup/item_2/id = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/RenderScaleRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Render Scale"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShadowDistanceRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/ShadowDistanceRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "On"
+popup/item_1/id = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/ShadowDistanceRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Shadow Distance"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorldQualityRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/WorldQualityRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "On"
+popup/item_1/id = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/WorldQualityRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "World Quality"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AmbientOcclusionRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/AmbientOcclusionRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Invite only"
+popup/item_0/id = 0
+popup/item_1/text = "Open to friends"
+popup/item_1/id = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/GraphicsTabPanel/VBoxContainer/AmbientOcclusionRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Ambient Occlusion"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioTabPanel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 640)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_812qm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="MicrophoneRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MicrophoneRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 1
+popup/item_0/text = "Your mic"
+popup/item_0/id = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MicrophoneRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Microphone
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MicrophoneModeRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MicrophoneModeRow"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_jd7q4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.992157, 0.905882, 0.819608, 1)
+selected = 0
+fit_to_longest_item = false
+item_count = 3
+popup/item_0/text = "Voice Activation"
+popup/item_0/id = 0
+popup/item_1/text = "Push To Talk"
+popup/item_1/id = 1
+popup/item_2/text = "Push to Mute"
+popup/item_2/id = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MicrophoneModeRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Microphone Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MasterVolumeRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MasterVolumeRow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MasterVolumeRow/HBoxContainer"]
+custom_minimum_size = Vector2(96, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MasterVolumeRow/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "1.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MasterVolumeRow/HBoxContainer"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+value = 100.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MasterVolumeRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Master Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXVolumeRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/SFXVolumeRow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/SFXVolumeRow/HBoxContainer"]
+custom_minimum_size = Vector2(96, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/SFXVolumeRow/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "1.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/SFXVolumeRow/HBoxContainer"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+value = 100.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/SFXVolumeRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "SFX Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicVolumeRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MusicVolumeRow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MusicVolumeRow/HBoxContainer"]
+custom_minimum_size = Vector2(96, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MusicVolumeRow/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "1.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MusicVolumeRow/HBoxContainer"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+value = 100.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/MusicVolumeRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Music Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VoicesVolumeRow" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e12g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/VoicesVolumeRow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" type="Panel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/VoicesVolumeRow/HBoxContainer"]
+custom_minimum_size = Vector2(96, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/VoicesVolumeRow/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+text = "1.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/VoicesVolumeRow/HBoxContainer"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_jd7q4")
+value = 100.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsPanel/SettingsArea/VBoxContainer/AudioTabPanel/VBoxContainer/VoicesVolumeRow"]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 32.0
+theme = ExtResource("3_jd7q4")
+theme_override_colors/default_color = Color(0.992157, 0.905882, 0.819608, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Voices Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AccoladeWobbler" type="Node" parent="."]
 script = ExtResource("8_qtm7a")
@@ -682,4 +2087,7 @@ script = ExtResource("14_lt6ia")
 [connection signal="pressed" from="MainPanel/VBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
 [connection signal="pressed" from="AccoladesPanel/AccoladeBackButton" to="." method="_on_accolade_back_button_pressed"]
 [connection signal="pressed" from="ControlsPanel/ControlsBackButton" to="." method="_on_controls_back_button_pressed"]
-[connection signal="pressed" from="SettingsPanel/SettingsBackButton" to="." method="_on_settings_back_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/VBoxContainer/SettingsBackButton" to="." method="_on_settings_back_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/SettingsArea/VBoxContainer/HBoxContainer/GeneralTab/GeneralTabButton" to="SettingsPanel" method="_on_general_tab_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/SettingsArea/VBoxContainer/HBoxContainer/GraphicsTab/GraphicsTabButton" to="SettingsPanel" method="_on_graphics_tab_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/SettingsArea/VBoxContainer/HBoxContainer/AudioTab/AudioTabButton" to="SettingsPanel" method="_on_audio_tab_button_pressed"]

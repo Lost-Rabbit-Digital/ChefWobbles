@@ -6,22 +6,22 @@
 - Steady Aim: Throw an object into a dumpster from 10+ meters 
 
 ## Wobble Mastery Accolades
-1. Steady in the Storm - Successfully deliver 5 orders while everything's going wrong
-2. Grace Under Pressure - Complete a rush order with 3+ ingredients without dropping anything
+1. Steady in the Storm - Successfully deliver 5 orders in a row
+2. Grace Under Pressure - Complete an order with 3+ ingredients
 3. Wobble Warrior - Turn a near-disaster into a successful dish
-4. Kitchen Survivor - Keep cooking for 2 minutes straight during a chaotic rush
-5. Controlled Chaos - Successfully juggle 4+ tasks simultaneously
-6. Zen Chef - Complete a complex order while your teammates are struggling
-7. Last Stand - Single-handedly save the kitchen when all teammates are down
+4. **REWRITE** Kitchen Survivor - Keep cooking for 2 minutes straight during a chaotic rush
+5. Controlled Chaos - Successfully juggle 3+ orders simultaneously
+6. Zen Chef - Complete a complex order while your teammates are still cooking
+7. **REWRITE** Last Stand - Single-handedly save the kitchen when all teammates are down
 
 ## Teamwork & Communication Accolades
-8. Perfect Partnership - Complete 10 orders in perfect sync with a teammate
-9. Kitchen Coordinator - Successfully direct traffic during a 6+ order rush
+8. Perfect Partnership - Complete 5 orders in perfect sync with a teammate
+9. **REWRITE** Kitchen Coordinator - Successfully direct traffic during a 6+ order rush
 10. Rescue Mission - Help a struggling teammate complete their order
 11. Tag Team Champions - Pass ingredients back and forth 20+ times in one level
 12. United We Cook - Complete a level where everyone contributed to every order
 13. Smooth Handoffs - Successfully pass dishes between 3+ players without dropping
-14. Kitchen Telepathy - Anticipate and fulfill a teammate's needs 5+ times
+14. Kitchen Telepathy - Anticipate and fulfill a teammate's order 3+ times
 
 ## Restaurant-Specific Situational Accolades
 15. Pizza Virtuoso - Successfully toss and catch dough 10 times (Pizzeria)

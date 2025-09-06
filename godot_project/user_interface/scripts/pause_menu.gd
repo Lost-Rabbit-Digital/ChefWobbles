@@ -13,6 +13,7 @@ func _ready() -> void:
 		main_menu.visible = false
 		accolades_menu.visible = false
 		controls_menu.visible = false
+		settings_menu.visible = false
 	
 func _process(delta: float) -> void:
 	if is_paused:
