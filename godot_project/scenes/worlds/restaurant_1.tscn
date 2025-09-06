@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://f13l6bwvuyvw"]
+[gd_scene load_steps=51 format=4 uid="uid://f13l6bwvuyvw"]
 
 [ext_resource type="Script" uid="uid://bc0sl1rkq0hul" path="res://scripts/multiplayer/multiplayer_game_manager.gd" id="1_6735l"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="1_hv4yo"]
@@ -32,7 +32,7 @@
 [ext_resource type="Material" uid="uid://jwsb1qafwnvd" path="res://models/walls/wall_1_material.tres" id="28_oa4ri"]
 [ext_resource type="PackedScene" uid="uid://jopkhuojs43j" path="res://scenes/interactables/dumpster/dumpster.tscn" id="31_dygic"]
 [ext_resource type="PackedScene" uid="uid://bcg0tfqsyfjnc" path="res://scenes/delivery_truck/delivery_truck.tscn" id="32_dygic"]
-[ext_resource type="Script" uid="uid://cf8a0ghrxgupp" path="res://scripts/delivery_truck/delivery_truck_route.gd" id="32_kpw02"]
+[ext_resource type="Script" uid="uid://b6rv5pp0dirub" path="res://scripts/delivery_truck/delivery_route_network.gd" id="33_kpw02"]
 [ext_resource type="PackedScene" uid="uid://c244u7cpfoc7m" path="res://scenes/delivery_truck/DeliveryRouteNode.tscn" id="34_iv3v3"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8dkcp"]
@@ -110,6 +110,10 @@ points = PackedVector3Array(-4, 0.125, -4, -4, 0.375, -4, 4, 0.125, -4, -4, 0.12
 diffuse_mode = 3
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.901961, 0.682353, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_tqr6a"]
+script/source = "extends Node
+"
 
 [node name="Restaurant1" type="Node3D"]
 script = ExtResource("1_6735l")
@@ -2022,52 +2026,57 @@ transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -25, -
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -32, -0.3, 16)
 
 [node name="DeliveryTruckRoute" type="Node" parent="."]
-script = ExtResource("32_kpw02")
+script = SubResource("GDScript_tqr6a")
 
 [node name="DeliveryTruck" parent="DeliveryTruckRoute" instance=ExtResource("32_dygic")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 57, 2.2, -32)
 
-[node name="DeliveryRouteNode" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="RouteNetwork" type="Node3D" parent="DeliveryTruckRoute"]
+script = ExtResource("33_kpw02")
+
+[node name="DeliveryRouteNode1" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -32)
 
-[node name="DeliveryRouteNode2" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode2" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -32)
 
-[node name="DeliveryRouteNode3" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode3" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -24)
 
-[node name="DeliveryRouteNode4" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode4" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, -4)
 
-[node name="DeliveryRouteNode5" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode5" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, -2, 20)
 
-[node name="DeliveryRouteNode6" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode6" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, -2, 51)
 
-[node name="DeliveryRouteNode7" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode7" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, -2, 76)
 
-[node name="DeliveryRouteNode8" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode8" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -2, 84)
 
-[node name="DeliveryRouteNode9" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode9" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 72)
 
-[node name="DeliveryRouteNode10" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryMarker" type="Marker3D" parent="DeliveryTruckRoute/RouteNetwork/DeliveryRouteNode9"]
+
+[node name="DeliveryRouteNode10" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, -2, 84)
 
-[node name="DeliveryRouteNode11" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode11" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, -2, 44)
 
-[node name="DeliveryRouteNode12" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode12" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 11)
 
-[node name="DeliveryRouteNode13" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode13" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -20)
 
-[node name="DeliveryRouteNode14" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode14" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -50)
 
-[node name="DeliveryRouteNode15" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+[node name="DeliveryRouteNode15" parent="DeliveryTruckRoute/RouteNetwork" instance=ExtResource("34_iv3v3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -75)

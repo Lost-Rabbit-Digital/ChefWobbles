@@ -1,6 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c244u7cpfoc7m"]
-
-[ext_resource type="Script" uid="uid://b6rv5pp0dirub" path="res://scripts/delivery_truck/delivery_route_node.gd" id="1_bcw7b"]
+[gd_scene load_steps=4 format=3 uid="uid://c244u7cpfoc7m"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0wl8"]
 diffuse_mode = 3
@@ -13,7 +11,6 @@ material = SubResource("StandardMaterial3D_a0wl8")
 [sub_resource type="BoxShape3D" id="BoxShape3D_agvfs"]
 
 [node name="DeliveryRouteNode" type="Node3D"]
-script = ExtResource("1_bcw7b")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_bcw7b")
