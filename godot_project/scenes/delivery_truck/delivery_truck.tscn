@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://bcg0tfqsyfjnc"]
+
+[ext_resource type="Script" uid="uid://dxdrxg1fbjgnc" path="res://scripts/delivery_truck/delivery_truck.gd" id="1_5dk6m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qkffi"]
+diffuse_mode = 3
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.331935, 0.668477, 0.595699, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qkffi"]
+material = SubResource("StandardMaterial3D_qkffi")
+size = Vector3(5, 5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7oljv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7oljv"]
+diffuse_mode = 3
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.4941, 0.81, 0.794205, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bqh1c"]
+material = SubResource("StandardMaterial3D_7oljv")
+size = Vector3(5, 5, 5)
+
+[node name="DeliveryTruck" type="Node3D"]
+script = ExtResource("1_5dk6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.88, 0, 0, -1)
+mesh = SubResource("BoxMesh_qkffi")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_7oljv")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.8, 0, 0, 0, 0.792, 0, 0, 0, 0.84, 0, -0.5, 8.2)
+mesh = SubResource("BoxMesh_bqh1c")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+shape = SubResource("BoxShape3D_7oljv")

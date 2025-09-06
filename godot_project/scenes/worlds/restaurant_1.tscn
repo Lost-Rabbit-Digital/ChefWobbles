@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://f13l6bwvuyvw"]
+[gd_scene load_steps=50 format=4 uid="uid://f13l6bwvuyvw"]
 
 [ext_resource type="Script" uid="uid://bc0sl1rkq0hul" path="res://scripts/multiplayer/multiplayer_game_manager.gd" id="1_6735l"]
 [ext_resource type="Material" uid="uid://byhoa2glvt4rq" path="res://resources/sky.tres" id="1_hv4yo"]
@@ -31,6 +31,9 @@
 [ext_resource type="PackedScene" uid="uid://c04iuog12fbw3" path="res://models/walls/wall_1.gltf" id="27_mton0"]
 [ext_resource type="Material" uid="uid://jwsb1qafwnvd" path="res://models/walls/wall_1_material.tres" id="28_oa4ri"]
 [ext_resource type="PackedScene" uid="uid://jopkhuojs43j" path="res://scenes/interactables/dumpster/dumpster.tscn" id="31_dygic"]
+[ext_resource type="PackedScene" uid="uid://bcg0tfqsyfjnc" path="res://scenes/delivery_truck/delivery_truck.tscn" id="32_dygic"]
+[ext_resource type="Script" uid="uid://cf8a0ghrxgupp" path="res://scripts/delivery_truck/delivery_truck_route.gd" id="32_kpw02"]
+[ext_resource type="PackedScene" uid="uid://c244u7cpfoc7m" path="res://scenes/delivery_truck/DeliveryRouteNode.tscn" id="34_iv3v3"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8dkcp"]
 
@@ -1744,6 +1747,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, -32)
 [node name="Asphalt79" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -0.3, -40)
 
+[node name="Asphalt189" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, -0.3, -24)
+
+[node name="Asphalt190" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, -0.3, -32)
+
+[node name="Asphalt191" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, -0.3, -40)
+
+[node name="Asphalt192" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, -0.3, -24)
+
+[node name="Asphalt193" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, -0.3, -32)
+
+[node name="Asphalt194" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, -0.3, -40)
+
+[node name="Asphalt195" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, -0.3, -24)
+
+[node name="Asphalt196" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, -0.3, -32)
+
+[node name="Asphalt197" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, -0.3, -40)
+
 [node name="Asphalt80" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, -0.3, -40)
 
@@ -1785,6 +1815,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -0.3, -48)
 
 [node name="Asphalt93" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, -0.3, -48)
+
+[node name="Asphalt198" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, -0.3, -56)
+
+[node name="Asphalt199" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -0.3, -56)
+
+[node name="Asphalt200" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, -0.3, -56)
+
+[node name="Asphalt201" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, -0.3, -64)
+
+[node name="Asphalt202" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -0.3, -64)
+
+[node name="Asphalt203" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, -0.3, -64)
+
+[node name="Asphalt204" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, -0.3, -72)
+
+[node name="Asphalt205" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -0.3, -72)
+
+[node name="Asphalt206" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, -0.3, -72)
 
 [node name="Asphalt94" parent="ExteriorGround" instance=ExtResource("27_5vn2u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -0.3, -48)
@@ -1963,3 +2020,54 @@ transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -25, -
 
 [node name="dumpster2" parent="Dumpsters" instance=ExtResource("31_dygic")]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -32, -0.3, 16)
+
+[node name="DeliveryTruckRoute" type="Node" parent="."]
+script = ExtResource("32_kpw02")
+
+[node name="DeliveryTruck" parent="DeliveryTruckRoute" instance=ExtResource("32_dygic")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 57, 2.2, -32)
+
+[node name="DeliveryRouteNode" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -32)
+
+[node name="DeliveryRouteNode2" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -32)
+
+[node name="DeliveryRouteNode3" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -24)
+
+[node name="DeliveryRouteNode4" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, -4)
+
+[node name="DeliveryRouteNode5" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, -2, 20)
+
+[node name="DeliveryRouteNode6" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, -2, 51)
+
+[node name="DeliveryRouteNode7" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, -2, 76)
+
+[node name="DeliveryRouteNode8" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -2, 84)
+
+[node name="DeliveryRouteNode9" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 72)
+
+[node name="DeliveryRouteNode10" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, -2, 84)
+
+[node name="DeliveryRouteNode11" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, -2, 44)
+
+[node name="DeliveryRouteNode12" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 11)
+
+[node name="DeliveryRouteNode13" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -20)
+
+[node name="DeliveryRouteNode14" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -50)
+
+[node name="DeliveryRouteNode15" parent="DeliveryTruckRoute" instance=ExtResource("34_iv3v3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -75)

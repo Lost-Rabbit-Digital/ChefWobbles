@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c244u7cpfoc7m"]
+
+[ext_resource type="Script" uid="uid://b6rv5pp0dirub" path="res://scripts/delivery_truck/delivery_route_node.gd" id="1_bcw7b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0wl8"]
+diffuse_mode = 3
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.955493, 0.773426, 0.416081, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bcw7b"]
+material = SubResource("StandardMaterial3D_a0wl8")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_agvfs"]
+
+[node name="DeliveryRouteNode" type="Node3D"]
+script = ExtResource("1_bcw7b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_bcw7b")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_agvfs")
